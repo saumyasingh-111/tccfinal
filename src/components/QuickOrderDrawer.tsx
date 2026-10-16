@@ -163,17 +163,17 @@ Please confirm my order. Thank you!`;
               {step === "checkout" && (
                 <button
                   onClick={() => setStep("cart")}
-                  className="p-1 -ml-1 text-[#0F382A] hover:text-[#184D3B] transition-colors cursor-pointer"
+                  className="p-1 -ml-1 text-[#0F3A23] hover:text-[#154D30] transition-colors cursor-pointer"
                   title="Back to bag"
                 >
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               )}
-              <div className="w-9 h-9 rounded-full bg-[#E6F0EB] flex items-center justify-center text-[#0F382A]">
+              <div className="w-9 h-9 rounded-full bg-[#E6F0EB] flex items-center justify-center text-[#0F3A23]">
                 <ShoppingBag className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="font-serif text-base sm:text-lg font-bold text-[#0F382A]">
+                <h3 className="font-serif text-base sm:text-lg font-bold text-[#0F3A23]">
                   {step === "cart"
                     ? "Your Order Bag"
                     : step === "checkout"
@@ -192,7 +192,7 @@ Please confirm my order. Thank you!`;
 
             <button
               onClick={handleClose}
-              className="p-2 text-[#6E776F] hover:text-[#0F382A] rounded-lg transition-colors cursor-pointer"
+              className="p-2 text-[#6E776F] hover:text-[#0F3A23] rounded-lg transition-colors cursor-pointer"
               aria-label="Close drawer"
             >
               <X className="w-5 h-5" />
@@ -209,9 +209,9 @@ Please confirm my order. Thank you!`;
                 {items.length === 0 ? (
                   <div className="text-center py-20 flex flex-col items-center justify-center space-y-3">
                     <div className="w-16 h-16 rounded-full bg-[#E8DFD1]/50 flex items-center justify-center text-[#162820]">
-                      <ShoppingBag className="w-7 h-7 stroke-1 text-[#0F382A]" />
+                      <ShoppingBag className="w-7 h-7 stroke-1 text-[#0F3A23]" />
                     </div>
-                    <h4 className="font-serif text-xl font-bold text-[#0F382A]">Your bag is empty</h4>
+                    <h4 className="font-serif text-xl font-bold text-[#0F3A23]">Your bag is empty</h4>
                     <p className="text-xs text-[#6E776F] max-w-xs font-light">
                       Explore our 100% pure vegetarian menu and tap &ldquo;+ Add&rdquo; to begin your order.
                     </p>
@@ -220,7 +220,7 @@ Please confirm my order. Thank you!`;
                         handleClose();
                         window.location.href = "/menu";
                       }}
-                      className="mt-3 px-6 py-2.5 rounded-full bg-[#0F382A] hover:bg-[#184D3B] text-white text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer shadow-sm"
+                      className="mt-3 px-6 py-2.5 rounded-full bg-[#0F3A23] hover:bg-[#154D30] text-white text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer shadow-sm"
                     >
                       Browse Menu
                     </button>
@@ -228,7 +228,7 @@ Please confirm my order. Thank you!`;
                 ) : (
                   <>
                     <div className="flex items-center justify-between pb-2 border-b border-[#E2D9CC]">
-                      <span className="text-xs font-semibold text-[#0F382A] uppercase tracking-wider">
+                      <span className="text-xs font-semibold text-[#0F3A23] uppercase tracking-wider">
                         Selected Items ({totalCount})
                       </span>
                       <button
@@ -255,14 +255,14 @@ Please confirm my order. Thank you!`;
                             <div className="min-w-0">
                               <div className="flex items-center gap-1.5 flex-wrap">
                                 {item.isGift ? (
-                                  <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wider font-semibold bg-[#E6F0EB] text-[#0F382A] px-1.5 py-0.5 rounded-md">
+                                  <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wider font-semibold bg-[#E6F0EB] text-[#0F3A23] px-1.5 py-0.5 rounded-md">
                                     <Gift className="w-2.5 h-2.5" />
                                     <span>Gift Box</span>
                                   </span>
                                 ) : (
                                   <VegBadge size="sm" />
                                 )}
-                                <h5 className="font-serif font-bold text-sm text-[#0F382A] truncate">
+                                <h5 className="font-serif font-bold text-sm text-[#0F3A23] truncate">
                                   {item.name}
                                 </h5>
                               </div>
@@ -277,24 +277,24 @@ Please confirm my order. Thank you!`;
                             <div className="flex items-center gap-1.5 bg-[#FAF6F0] border border-[#E2D9CC] rounded-lg p-1">
                               <button
                                 onClick={() => updateQuantity(item.id, -1)}
-                                className="p-1 text-[#6E776F] hover:text-[#0F382A] cursor-pointer"
+                                className="p-1 text-[#6E776F] hover:text-[#0F3A23] cursor-pointer"
                                 aria-label="Decrease quantity"
                               >
                                 <Minus className="w-3 h-3" />
                               </button>
-                              <span className="text-xs font-bold w-4 text-center text-[#0F382A]">
+                              <span className="text-xs font-bold w-4 text-center text-[#0F3A23]">
                                 {quantity}
                               </span>
                               <button
                                 onClick={() => updateQuantity(item.id, 1)}
-                                className="p-1 text-[#6E776F] hover:text-[#0F382A] cursor-pointer"
+                                className="p-1 text-[#6E776F] hover:text-[#0F3A23] cursor-pointer"
                                 aria-label="Increase quantity"
                               >
                                 <Plus className="w-3 h-3" />
                               </button>
                             </div>
 
-                            <span className="text-xs font-bold font-serif text-[#0F382A] min-w-[40px] text-right">
+                            <span className="text-xs font-bold font-serif text-[#0F3A23] min-w-[40px] text-right">
                               ₹{item.price * quantity}
                             </span>
 
@@ -326,7 +326,7 @@ Please confirm my order. Thank you!`;
 
                 {/* Fulfillment Option Selector */}
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wider text-[#0F382A] block mb-2">
+                  <label className="text-xs font-semibold uppercase tracking-wider text-[#0F3A23] block mb-2">
                     Fulfillment Option
                   </label>
                   <div className="grid grid-cols-3 gap-2">
@@ -337,7 +337,7 @@ Please confirm my order. Thank you!`;
                         onClick={() => setOrderType(type)}
                         className={`py-2 px-2 rounded-xl text-xs font-semibold tracking-wide border transition-all cursor-pointer ${
                           orderType === type
-                            ? "bg-[#0F382A] text-[#FAF6F0] border-[#0F382A] shadow-xs"
+                            ? "bg-[#0F3A23] text-[#FAF6F0] border-[#0F3A23] shadow-xs"
                             : "bg-white text-[#162820] border-[#E2D9CC] hover:bg-[#FAF6F0]"
                         }`}
                       >
@@ -349,7 +349,7 @@ Please confirm my order. Thank you!`;
 
                 {/* Name */}
                 <div>
-                  <label className="text-xs font-semibold text-[#0F382A] block mb-1">
+                  <label className="text-xs font-semibold text-[#0F3A23] block mb-1">
                     Your Full Name *
                   </label>
                   <input
@@ -358,13 +358,13 @@ Please confirm my order. Thank you!`;
                     placeholder="e.g. Rahul Sharma"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F382A]"
+                    className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
                   />
                 </div>
 
                 {/* Phone */}
                 <div>
-                  <label className="text-xs font-semibold text-[#0F382A] block mb-1">
+                  <label className="text-xs font-semibold text-[#0F3A23] block mb-1">
                     Mobile Phone Number *
                   </label>
                   <input
@@ -373,14 +373,14 @@ Please confirm my order. Thank you!`;
                     placeholder="10-digit mobile number"
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F382A]"
+                    className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
                   />
                 </div>
 
                 {/* Contextual field: Table # for Dine-in */}
                 {orderType === "Dine-in" && (
                   <div>
-                    <label className="text-xs font-semibold text-[#0F382A] block mb-1">
+                    <label className="text-xs font-semibold text-[#0F3A23] block mb-1">
                       Table Number (Optional if already seated)
                     </label>
                     <input
@@ -388,7 +388,7 @@ Please confirm my order. Thank you!`;
                       placeholder="e.g. Table 4 / Window Corner"
                       value={tableNumber}
                       onChange={(e) => setTableNumber(e.target.value)}
-                      className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F382A]"
+                      className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
                     />
                   </div>
                 )}
@@ -396,7 +396,7 @@ Please confirm my order. Thank you!`;
                 {/* Contextual field: Address for Delivery */}
                 {orderType === "Delivery" && (
                   <div>
-                    <label className="text-xs font-semibold text-[#0F382A] block mb-1">
+                    <label className="text-xs font-semibold text-[#0F3A23] block mb-1">
                       Delivery Address &amp; Landmark *
                     </label>
                     <textarea
@@ -405,14 +405,14 @@ Please confirm my order. Thank you!`;
                       placeholder="House / Flat #, Building, Street, Landmark"
                       value={deliveryAddress}
                       onChange={(e) => setDeliveryAddress(e.target.value)}
-                      className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F382A]"
+                      className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
                     />
                   </div>
                 )}
 
                 {/* Special Instructions */}
                 <div>
-                  <label className="text-xs font-semibold text-[#0F382A] block mb-1">
+                  <label className="text-xs font-semibold text-[#0F3A23] block mb-1">
                     Special Cooking / Dietary Notes (Optional)
                   </label>
                   <input
@@ -420,13 +420,13 @@ Please confirm my order. Thank you!`;
                     placeholder="e.g. Extra chili flakes, less sweet cold coffee"
                     value={orderNotes}
                     onChange={(e) => setOrderNotes(e.target.value)}
-                    className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F382A]"
+                    className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
                   />
                 </div>
 
                 {/* Payment Notice */}
                 <div className="p-3 bg-white rounded-xl border border-[#E2D9CC] text-[11px] text-[#6E776F] space-y-1">
-                  <p className="font-semibold text-[#0F382A]">Payment Method:</p>
+                  <p className="font-semibold text-[#0F3A23]">Payment Method:</p>
                   <p>Cash, UPI (GPay/PhonePe/Paytm), or Card at the cafe counter / upon delivery.</p>
                 </div>
               </form>
@@ -435,15 +435,15 @@ Please confirm my order. Thank you!`;
             {/* -------------------- STEP 3: ORDER SUCCESS -------------------- */}
             {step === "success" && placedOrderInfo && (
               <div className="text-center py-8 space-y-5 animate-hero-fade">
-                <div className="w-16 h-16 rounded-full bg-[#E6F0EB] text-[#0F382A] flex items-center justify-center mx-auto shadow-sm">
+                <div className="w-16 h-16 rounded-full bg-[#E6F0EB] text-[#0F3A23] flex items-center justify-center mx-auto shadow-sm">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
 
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#0F382A] bg-[#E6F0EB] px-3 py-1 rounded-full">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#0F3A23] bg-[#E6F0EB] px-3 py-1 rounded-full">
                     Order Received
                   </span>
-                  <h4 className="font-serif text-2xl font-bold text-[#0F382A] mt-2">
+                  <h4 className="font-serif text-2xl font-bold text-[#0F3A23] mt-2">
                     Order #{placedOrderInfo.id}
                   </h4>
                   <p className="text-xs text-[#6E776F] mt-1">
@@ -455,19 +455,19 @@ Please confirm my order. Thank you!`;
                 <div className="bg-white rounded-2xl p-4 border border-[#E2D9CC] text-left text-xs space-y-2 shadow-2xs">
                   <div className="flex justify-between py-1 border-b border-[#FAF6F0]">
                     <span className="text-[#6E776F]">Fulfillment Type:</span>
-                    <span className="font-semibold text-[#0F382A]">{placedOrderInfo.orderType}</span>
+                    <span className="font-semibold text-[#0F3A23]">{placedOrderInfo.orderType}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-[#FAF6F0]">
                     <span className="text-[#6E776F]">Total Items:</span>
-                    <span className="font-semibold text-[#0F382A]">{placedOrderInfo.itemsCount} items</span>
+                    <span className="font-semibold text-[#0F3A23]">{placedOrderInfo.itemsCount} items</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-[#FAF6F0]">
                     <span className="text-[#6E776F]">Grand Total:</span>
-                    <span className="font-serif font-bold text-base text-[#0F382A]">₹{placedOrderInfo.totalAmount}</span>
+                    <span className="font-serif font-bold text-base text-[#0F3A23]">₹{placedOrderInfo.totalAmount}</span>
                   </div>
                   <div className="flex justify-between py-1">
                     <span className="text-[#6E776F]">Estimated Prep Time:</span>
-                    <span className="font-semibold text-[#0F382A]">~15-20 mins</span>
+                    <span className="font-semibold text-[#0F3A23]">~15-20 mins</span>
                   </div>
                 </div>
 
@@ -485,7 +485,7 @@ Please confirm my order. Thank you!`;
 
                   <button
                     onClick={handleClose}
-                    className="w-full py-2.5 text-xs font-semibold text-[#0F382A] hover:underline cursor-pointer"
+                    className="w-full py-2.5 text-xs font-semibold text-[#0F3A23] hover:underline cursor-pointer"
                   >
                     Done / Close
                   </button>
@@ -510,9 +510,9 @@ Please confirm my order. Thank you!`;
                     <span className="text-[#162820]">₹{deliveryFee}</span>
                   </div>
                 )}
-                <div className="flex items-center justify-between text-base font-bold text-[#0F382A] pt-2 border-t border-[#FAF6F0]">
+                <div className="flex items-center justify-between text-base font-bold text-[#0F3A23] pt-2 border-t border-[#FAF6F0]">
                   <span className="font-serif">Total Amount</span>
-                  <span className="font-serif text-xl text-[#0F382A]">
+                  <span className="font-serif text-xl text-[#0F3A23]">
                     ₹{grandTotal}
                   </span>
                 </div>
@@ -521,7 +521,7 @@ Please confirm my order. Thank you!`;
               {step === "cart" ? (
                 <button
                   onClick={handleProceedToCheckout}
-                  className="w-full py-3.5 bg-[#0F382A] hover:bg-[#184D3B] text-white font-semibold text-xs uppercase tracking-[0.16em] rounded-full flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer group"
+                  className="w-full py-3.5 bg-[#0F3A23] hover:bg-[#154D30] text-white font-semibold text-xs uppercase tracking-[0.16em] rounded-full flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer group"
                 >
                   <span>Proceed to Checkout</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -530,7 +530,7 @@ Please confirm my order. Thank you!`;
                 <button
                   onClick={handlePlaceOrder}
                   disabled={isSubmitting}
-                  className="w-full py-3.5 bg-[#0F382A] hover:bg-[#184D3B] text-white font-semibold text-xs uppercase tracking-[0.16em] rounded-full flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer disabled:opacity-50 group"
+                  className="w-full py-3.5 bg-[#0F3A23] hover:bg-[#154D30] text-white font-semibold text-xs uppercase tracking-[0.16em] rounded-full flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer disabled:opacity-50 group"
                 >
                   <span>{isSubmitting ? "Placing Order..." : `Confirm & Place Order (₹${grandTotal})`}</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />

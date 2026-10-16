@@ -15,7 +15,6 @@ import {
   Sparkles,
   ShieldCheck,
 } from "lucide-react";
-import { AwningStrip } from "../components/AwningStrip";
 import { CakesCelebrationBanner } from "../components/CakesCelebrationBanner";
 
 export const GiftDetailPage: React.FC = () => {
@@ -69,7 +68,7 @@ export const GiftDetailPage: React.FC = () => {
     return (
       <div className="min-h-[70vh] bg-[#F5EFEB] flex flex-col items-center justify-center p-6 text-center">
         <Gift className="w-12 h-12 text-[#E2D9CC] mb-3 stroke-1" />
-        <h2 className="font-serif text-2xl font-bold text-[#0F382A]">
+        <h2 className="font-serif text-2xl font-bold text-[#0F3A23]">
           Gift Bundle Not Found
         </h2>
         <p className="text-xs text-[#6E776F] max-w-sm mt-1 mb-6">
@@ -77,7 +76,7 @@ export const GiftDetailPage: React.FC = () => {
         </p>
         <Link
           to="/gifting"
-          className="px-6 py-2.5 bg-[#0F382A] hover:bg-[#184D3B] text-white rounded-full text-xs font-semibold uppercase tracking-wider"
+          className="px-6 py-2.5 bg-[#0F3A23] hover:bg-[#154D30] text-white rounded-full text-xs font-semibold uppercase tracking-wider"
         >
           Explore All Gifts
         </Link>
@@ -165,15 +164,12 @@ export const GiftDetailPage: React.FC = () => {
 
   return (
     <div className="bg-[#F5EFEB] min-h-screen text-[#162820]">
-      {/* Dental Awning Strip */}
-      <AwningStrip />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Breadcrumb */}
         <div className="mb-6 flex items-center justify-between">
           <Link
             to="/gifting"
-            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#0F382A] hover:underline transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#0F3A23] hover:underline transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to All Gifts</span>
@@ -196,7 +192,7 @@ export const GiftDetailPage: React.FC = () => {
               />
               <div className="absolute top-4 left-4 flex items-center gap-2">
                 {product.occasions[0] && (
-                  <span className="px-3 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-white/95 backdrop-blur-xs text-[#0F382A] border border-[#E2D9CC]">
+                  <span className="px-3 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-white/95 backdrop-blur-xs text-[#0F3A23] border border-[#E2D9CC]">
                     {product.occasions[0]}
                   </span>
                 )}
@@ -217,7 +213,7 @@ export const GiftDetailPage: React.FC = () => {
                     onClick={() => setSelectedImage(img)}
                     className={`w-18 h-18 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
                       selectedImage === img
-                        ? "border-[#0F382A] ring-2 ring-[#0F382A]/20"
+                        ? "border-[#0F3A23] ring-2 ring-[#0F3A23]/20"
                         : "border-[#E2D9CC] opacity-70 hover:opacity-100"
                     }`}
                   >
@@ -233,20 +229,20 @@ export const GiftDetailPage: React.FC = () => {
 
             {/* Fulfilment & Guarantee Card */}
             <div className="p-5 rounded-2xl bg-white border border-[#E2D9CC] space-y-3 text-xs text-[#162820]">
-              <div className="flex items-center gap-2 text-[#0F382A] font-serif font-bold text-sm">
-                <ShieldCheck className="w-4 h-4 text-[#0F382A]" />
+              <div className="flex items-center gap-2 text-[#0F3A23] font-serif font-bold text-sm">
+                <ShieldCheck className="w-4 h-4 text-[#0F3A23]" />
                 <span>The Classic Crush Freshness Promise</span>
               </div>
               <p className="font-light leading-relaxed text-[#6E776F]">
                 All bakes and pastries are prepared fresh in our bakery kitchen. Fresh floral arrangements are tied right before your scheduled pickup or dispatch.
               </p>
-              <div className="pt-2 border-t border-[#FAF6F0] flex flex-wrap gap-4 text-[11px] text-[#0F382A]">
+              <div className="pt-2 border-t border-[#FAF6F0] flex flex-wrap gap-4 text-[11px] text-[#0F3A23]">
                 <div className="flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#0F382A]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#0F3A23]" />
                   <span>Cafe Pickup Available</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-[#0F382A]" />
+                  <Clock className="w-3.5 h-3.5 text-[#0F3A23]" />
                   <span>{product.advanceNotice || "Notice: 3–4 hrs"}</span>
                 </div>
               </div>
@@ -256,10 +252,10 @@ export const GiftDetailPage: React.FC = () => {
           {/* Right Column: Product Details & Configurator */}
           <div className="lg:col-span-6 space-y-6">
             <div>
-              <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#0F382A]">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#0F3A23]">
                 Curated Gift Bundle
               </span>
-              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#0F382A] mt-1">
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#0F3A23] mt-1">
                 {product.name}
               </h1>
               {product.tagline && (
@@ -271,7 +267,7 @@ export const GiftDetailPage: React.FC = () => {
 
             {/* Price Badge */}
             <div className="flex items-baseline gap-3">
-              <span className="font-serif text-3xl font-bold text-[#0F382A]">
+              <span className="font-serif text-3xl font-bold text-[#0F3A23]">
                 {product.isPriceConfirmed ? (
                   `₹${totalPrice}`
                 ) : (
@@ -295,14 +291,14 @@ export const GiftDetailPage: React.FC = () => {
             {/* What's Inside */}
             {product.includedItems && product.includedItems.length > 0 && (
               <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E2D9CC] space-y-2">
-                <h3 className="font-serif font-bold text-sm text-[#0F382A] flex items-center gap-2">
+                <h3 className="font-serif font-bold text-sm text-[#0F3A23] flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#C99742]" />
                   <span>What&rsquo;s Inside This Bundle</span>
                 </h3>
                 <ul className="space-y-1.5 text-xs text-[#6E776F] font-light pl-2">
                   {product.includedItems.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0F382A] mt-1.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0F3A23] mt-1.5 shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -313,7 +309,7 @@ export const GiftDetailPage: React.FC = () => {
             {/* Configurable Add-ons */}
             {giftAddons.length > 0 && (
               <div className="space-y-3">
-                <h3 className="font-serif font-bold text-sm text-[#0F382A] flex items-center justify-between">
+                <h3 className="font-serif font-bold text-sm text-[#0F3A23] flex items-center justify-between">
                   <span>Available Add-ons (Optional)</span>
                   <span className="text-xs font-normal text-[#6E776F]">
                     Select to enhance
@@ -329,22 +325,22 @@ export const GiftDetailPage: React.FC = () => {
                         onClick={() => toggleAddon(addon.id)}
                         className={`p-3 rounded-xl border flex items-center justify-between gap-3 cursor-pointer transition-all ${
                           isChecked
-                            ? "border-[#0F382A] bg-[#FAF6F0] ring-1 ring-[#0F382A]/20"
-                            : "border-[#E2D9CC] bg-white hover:border-[#0F382A]"
+                            ? "border-[#0F3A23] bg-[#FAF6F0] ring-1 ring-[#0F3A23]/20"
+                            : "border-[#E2D9CC] bg-white hover:border-[#0F3A23]"
                         }`}
                       >
                         <div className="flex items-center gap-3">
                           <div
                             className={`w-4 h-4 rounded-md border flex items-center justify-center shrink-0 ${
                               isChecked
-                                ? "border-[#0F382A] bg-[#0F382A] text-white"
+                                ? "border-[#0F3A23] bg-[#0F3A23] text-white"
                                 : "border-[#E2D9CC]"
                             }`}
                           >
                             {isChecked && <Check className="w-3 h-3 stroke-2" />}
                           </div>
                           <div>
-                            <span className="text-xs font-semibold text-[#0F382A] block">
+                            <span className="text-xs font-semibold text-[#0F3A23] block">
                               {addon.name}
                             </span>
                             <span className="text-[10px] text-[#6E776F] font-light">
@@ -353,7 +349,7 @@ export const GiftDetailPage: React.FC = () => {
                           </div>
                         </div>
 
-                        <span className="text-xs font-bold font-serif text-[#0F382A] shrink-0">
+                        <span className="text-xs font-bold font-serif text-[#0F3A23] shrink-0">
                           +₹{addon.price}
                         </span>
                       </div>
@@ -366,8 +362,8 @@ export const GiftDetailPage: React.FC = () => {
             {/* Personal Message Card Input */}
             {product.supportsPersonalMessage && (
               <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E2D9CC] space-y-3">
-                <h3 className="font-serif font-bold text-sm text-[#0F382A] flex items-center gap-2">
-                  <Gift className="w-4 h-4 text-[#0F382A]" />
+                <h3 className="font-serif font-bold text-sm text-[#0F3A23] flex items-center gap-2">
+                  <Gift className="w-4 h-4 text-[#0F3A23]" />
                   <span>Complimentary Greeting Card Message</span>
                 </h3>
                 <p className="text-[11px] text-[#6E776F] font-light">
@@ -376,7 +372,7 @@ export const GiftDetailPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#0F382A] mb-1">
+                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#0F3A23] mb-1">
                       Recipient Name
                     </label>
                     <input
@@ -384,11 +380,11 @@ export const GiftDetailPage: React.FC = () => {
                       value={recipientName}
                       onChange={(e) => setRecipientName(e.target.value)}
                       placeholder="e.g. Ananya"
-                      className="w-full px-3 py-2 rounded-xl border border-[#E2D9CC] bg-[#FAF6F0] text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F382A]"
+                      className="w-full px-3 py-2 rounded-xl border border-[#E2D9CC] bg-[#FAF6F0] text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#0F382A] mb-1">
+                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#0F3A23] mb-1">
                       From (Your Name)
                     </label>
                     <input
@@ -396,13 +392,13 @@ export const GiftDetailPage: React.FC = () => {
                       value={senderName}
                       onChange={(e) => setSenderName(e.target.value)}
                       placeholder="e.g. Rahul"
-                      className="w-full px-3 py-2 rounded-xl border border-[#E2D9CC] bg-[#FAF6F0] text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F382A]"
+                      className="w-full px-3 py-2 rounded-xl border border-[#E2D9CC] bg-[#FAF6F0] text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#0F382A] mb-1">
+                  <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#0F3A23] mb-1">
                     Your Message
                   </label>
                   <textarea
@@ -410,7 +406,7 @@ export const GiftDetailPage: React.FC = () => {
                     value={personalMessage}
                     onChange={(e) => setPersonalMessage(e.target.value)}
                     placeholder="Write a sweet message (or choose a quick idea below)..."
-                    className="w-full px-3 py-2 rounded-xl border border-[#E2D9CC] bg-[#FAF6F0] text-xs font-serif text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F382A]"
+                    className="w-full px-3 py-2 rounded-xl border border-[#E2D9CC] bg-[#FAF6F0] text-xs font-serif text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
                   />
                 </div>
 
@@ -441,7 +437,7 @@ export const GiftDetailPage: React.FC = () => {
               <button
                 onClick={handleAddToBag}
                 disabled={!product.isAvailable}
-                className="py-3.5 px-6 bg-[#0F382A] hover:bg-[#184D3B] disabled:opacity-50 text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                className="py-3.5 px-6 bg-[#0F3A23] hover:bg-[#154D30] disabled:opacity-50 text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
                 <ShoppingBag className="w-4 h-4 text-[#C99742]" />
                 <span>Add to Bag</span>
@@ -453,7 +449,7 @@ export const GiftDetailPage: React.FC = () => {
         {/* Related Gifts */}
         {relatedGifts.length > 0 && (
           <div className="mt-20 pt-12 border-t border-[#E2D9CC]">
-            <h2 className="font-serif text-2xl font-bold text-[#0F382A] mb-6">
+            <h2 className="font-serif text-2xl font-bold text-[#0F3A23] mb-6">
               You might also love
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -472,7 +468,7 @@ export const GiftDetailPage: React.FC = () => {
                   </div>
                   <div className="p-4 flex-1 flex flex-col justify-between">
                     <div>
-                      <h4 className="font-serif font-bold text-base text-[#0F382A] group-hover:text-[#184D3B] transition-colors">
+                      <h4 className="font-serif font-bold text-base text-[#0F3A23] group-hover:text-[#154D30] transition-colors">
                         {rel.name}
                       </h4>
                       <p className="text-xs text-[#6E776F] line-clamp-1 mt-1 font-light">
@@ -480,10 +476,10 @@ export const GiftDetailPage: React.FC = () => {
                       </p>
                     </div>
                     <div className="mt-3 pt-2 border-t border-[#FAF6F0] flex items-center justify-between">
-                      <span className="font-serif font-bold text-xs text-[#0F382A]">
+                      <span className="font-serif font-bold text-xs text-[#0F3A23]">
                         {rel.priceDisplay || `₹${rel.price}`}
                       </span>
-                      <span className="text-[10px] font-semibold text-[#0F382A]">
+                      <span className="text-[10px] font-semibold text-[#0F3A23]">
                         View →
                       </span>
                     </div>

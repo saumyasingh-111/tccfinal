@@ -67,13 +67,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setMobileSidebarOpen(true)}
-            className="p-1.5 text-[#162820] hover:text-[#0F382A] rounded-lg hover:bg-white cursor-pointer"
+            className="p-1.5 text-[#162820] hover:text-[#0F3A23] rounded-lg hover:bg-white cursor-pointer"
             aria-label="Open sidebar"
           >
             <MenuIcon className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="font-serif font-bold text-base tracking-widest uppercase text-[#0F382A]">
+            <h1 className="font-serif font-bold text-base tracking-widest uppercase text-[#0F3A23]">
               THE CLASSIC CRUSH
             </h1>
             <p className="text-[10px] tracking-widest uppercase font-semibold text-[#6E776F]">
@@ -86,7 +86,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 text-[#6E776F] hover:text-[#0F382A]"
+          className="p-2 text-[#6E776F] hover:text-[#0F3A23]"
           title="View customer website"
         >
           <ExternalLink className="w-4 h-4" />
@@ -111,11 +111,11 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         <div className="p-6 border-b border-[#E2D9CC]">
           <div className="flex items-center justify-between">
             <div>
-              <span className="font-serif text-base font-bold tracking-[0.14em] uppercase text-[#0F382A] block">
+              <span className="font-serif text-base font-bold tracking-[0.14em] uppercase text-[#0F3A23] block">
                 THE CLASSIC CRUSH
               </span>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#0F382A]">
+                <span className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#0F3A23]">
                   ADMIN PORTAL
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
@@ -124,7 +124,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
             <button
               onClick={() => setMobileSidebarOpen(false)}
-              className="md:hidden p-1 text-[#6E776F] hover:text-[#0F382A]"
+              className="md:hidden p-1 text-[#6E776F] hover:text-[#0F3A23]"
               aria-label="Close sidebar"
             >
               <X className="w-5 h-5" />
@@ -145,19 +145,19 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                 onClick={() => setMobileSidebarOpen(false)}
                 className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium tracking-wide transition-all ${
                   isActive
-                    ? "bg-[#0F382A] text-[#FAF6F0] shadow-xs font-semibold"
-                    : "text-[#162820] hover:text-[#0F382A] hover:bg-white"
+                    ? "bg-[#0F3A23] text-[#FAF6F0] shadow-xs font-semibold"
+                    : "text-[#162820] hover:text-[#0F3A23] hover:bg-white"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 ${isActive ? "text-[#C99742]" : "text-[#0F382A]"}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? "text-[#C99742]" : "text-[#0F3A23]"}`} />
                   <span>{item.name}</span>
                 </div>
 
                 {typeof item.badge === "number" && item.badge > 0 && (
                   <span
                     className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${
-                      isActive ? "bg-[#C99742] text-[#0F382A]" : "bg-[#E6F0EB] text-[#0F382A]"
+                      isActive ? "bg-[#C99742] text-[#0F3A23]" : "bg-[#E6F0EB] text-[#0F3A23]"
                     }`}
                   >
                     {item.badge}
@@ -174,10 +174,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             href="/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-[#6E776F] hover:text-[#0F382A] hover:bg-white rounded-lg transition-colors"
+            className="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-[#6E776F] hover:text-[#0F3A23] hover:bg-white rounded-lg transition-colors"
           >
             <span className="flex items-center gap-2">
-              <ExternalLink className="w-3.5 h-3.5 text-[#0F382A]" />
+              <ExternalLink className="w-3.5 h-3.5 text-[#0F3A23]" />
               <span>View Website</span>
             </span>
             <span className="text-[10px] text-[#C99742] font-semibold">Live ↗</span>
@@ -185,7 +185,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
           <div className="pt-2 border-t border-[#E2D9CC] flex items-center justify-between">
             <div className="min-w-0 pr-2">
-              <p className="text-[11px] font-medium text-[#0F382A] truncate">
+              <p className="text-[11px] font-medium text-[#0F3A23] truncate">
                 {adminEmail || "Admin User"}
               </p>
               <p className="text-[10px] text-[#6E776F] font-light">Cafe Owner</p>
@@ -208,7 +208,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         {/* Desktop Top Header Bar */}
         <header className="hidden md:flex sticky top-0 z-30 bg-[#FAF6F0]/90 backdrop-blur-md border-b border-[#E2D9CC] px-8 py-4 items-center justify-between">
           <div>
-            <h1 className="font-serif text-2xl font-bold text-[#0F382A]">
+            <h1 className="font-serif text-2xl font-bold text-[#0F3A23]">
               {pageTitle || "Admin Panel"}
             </h1>
             {pageSubtitle && (
@@ -225,9 +225,9 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[#E2D9CC] bg-white text-xs font-semibold uppercase tracking-wider text-[#0F382A] hover:bg-[#FAF6F0] transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[#E2D9CC] bg-white text-xs font-semibold uppercase tracking-wider text-[#0F3A23] hover:bg-[#FAF6F0] transition-colors"
             >
-              <ExternalLink className="w-3 h-3 text-[#0F382A]" />
+              <ExternalLink className="w-3 h-3 text-[#0F3A23]" />
               <span>View Site</span>
             </a>
           </div>
@@ -239,7 +239,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           {pageTitle && (
             <div className="md:hidden mb-6 flex flex-col gap-2">
               <div className="flex items-center justify-between">
-                <h1 className="font-serif text-2xl font-bold text-[#0F382A]">
+                <h1 className="font-serif text-2xl font-bold text-[#0F3A23]">
                   {pageTitle}
                 </h1>
                 {actions}

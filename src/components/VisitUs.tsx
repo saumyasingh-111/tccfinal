@@ -11,7 +11,7 @@ export const VisitUs: React.FC = () => {
           <span className="text-[11px] sm:text-xs font-semibold tracking-[0.28em] uppercase text-[#755546] block mb-2">
             Location &amp; Hours
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-normal text-[#1C241E] tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold text-[#1C241E] tracking-tight">
             COME FIND US.
           </h2>
           <div className="w-12 h-0.5 bg-[#C59F54] mx-auto mt-4 mb-4" />

@@ -18,8 +18,8 @@ export const MobileStickyBar: React.FC = () => {
           to="/menu"
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-lg transition-colors cursor-pointer ${
             isMenuPage
-              ? "text-[#0F382A] font-bold"
-              : "text-[#6E776F] hover:text-[#0F382A]"
+              ? "text-[#0F3A23] font-bold"
+              : "text-[#6E776F] hover:text-[#0F3A23]"
           }`}
           aria-label="View menu page"
         >
@@ -34,8 +34,8 @@ export const MobileStickyBar: React.FC = () => {
           to="/gifting"
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-lg transition-colors cursor-pointer ${
             isGiftingPage
-              ? "text-[#0F382A] font-bold"
-              : "text-[#6E776F] hover:text-[#0F382A]"
+              ? "text-[#0F3A23] font-bold"
+              : "text-[#6E776F] hover:text-[#0F3A23]"
           }`}
           aria-label="View gifting page"
         >
@@ -49,7 +49,7 @@ export const MobileStickyBar: React.FC = () => {
         {totalCount > 0 ? (
           <button
             onClick={openDrawer}
-            className="flex-1 py-2.5 px-4 bg-[#0F382A] text-white rounded-full flex items-center justify-between text-xs font-semibold shadow-xs cursor-pointer"
+            className="flex-1 py-2.5 px-4 bg-[#0F3A23] text-white rounded-full flex items-center justify-between text-xs font-semibold shadow-xs cursor-pointer"
           >
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-4 h-4 text-[#D4A359]" />
@@ -63,7 +63,7 @@ export const MobileStickyBar: React.FC = () => {
         ) : (
           <button
             onClick={openDrawer}
-            className="flex-1 py-2.5 px-4 bg-[#0F382A] hover:bg-[#184D3B] text-white rounded-full flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider shadow-xs cursor-pointer"
+            className="flex-1 py-2.5 px-4 bg-[#0F3A23] hover:bg-[#154D30] text-white rounded-full flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider shadow-xs cursor-pointer"
           >
             <ShoppingBag className="w-4 h-4 text-white" />
             <span>Order Online</span>

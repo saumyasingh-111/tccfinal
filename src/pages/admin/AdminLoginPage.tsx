@@ -50,12 +50,12 @@ export const AdminLoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5EFEB] flex flex-col justify-center items-center p-4 antialiased selection:bg-[#E8DFD1] selection:text-[#0F382A]">
+    <div className="min-h-screen bg-[#F5EFEB] flex flex-col justify-center items-center p-4 antialiased selection:bg-[#E8DFD1] selection:text-[#0F3A23]">
       {/* Back to customer website link */}
       <div className="mb-6 w-full max-w-sm">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-[#0F382A] hover:underline transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-[#0F3A23] hover:underline transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to website</span>
@@ -68,7 +68,7 @@ export const AdminLoginPage: React.FC = () => {
         <div className="text-center mb-8">
           <BrandLogo size="md" className="mx-auto mb-3" />
           <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="font-serif text-2xl font-bold tracking-[0.16em] uppercase text-[#0F382A]">
+            <span className="font-serif text-2xl font-bold tracking-[0.16em] uppercase text-[#0F3A23]">
               THE CLASSIC CRUSH
             </span>
             <VegBadge size="sm" />
@@ -93,7 +93,7 @@ export const AdminLoginPage: React.FC = () => {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#0F382A] mb-1.5">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#0F3A23] mb-1.5">
               Email
             </label>
             <div className="relative">
@@ -103,14 +103,14 @@ export const AdminLoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@classiccrush.cafe"
-                className="w-full pl-9 pr-3.5 py-2.5 bg-[#FAF6F0] border border-[#E2D9CC] rounded-xl text-sm text-[#162820] placeholder-[#6E776F] focus:outline-none focus:ring-1 focus:ring-[#0F382A] focus:border-[#0F382A] transition-all"
+                className="w-full pl-9 pr-3.5 py-2.5 bg-[#FAF6F0] border border-[#E2D9CC] rounded-xl text-sm text-[#162820] placeholder-[#6E776F] focus:outline-none focus:ring-1 focus:ring-[#0F3A23] focus:border-[#0F3A23] transition-all"
               />
               <Mail className="w-4 h-4 text-[#6E776F] absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#0F382A] mb-1.5">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#0F3A23] mb-1.5">
               Password
             </label>
             <div className="relative">
@@ -120,7 +120,7 @@ export const AdminLoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-9 pr-3.5 py-2.5 bg-[#FAF6F0] border border-[#E2D9CC] rounded-xl text-sm text-[#162820] placeholder-[#6E776F] focus:outline-none focus:ring-1 focus:ring-[#0F382A] focus:border-[#0F382A] transition-all"
+                className="w-full pl-9 pr-3.5 py-2.5 bg-[#FAF6F0] border border-[#E2D9CC] rounded-xl text-sm text-[#162820] placeholder-[#6E776F] focus:outline-none focus:ring-1 focus:ring-[#0F3A23] focus:border-[#0F3A23] transition-all"
               />
               <Lock className="w-4 h-4 text-[#6E776F] absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
@@ -132,7 +132,7 @@ export const AdminLoginPage: React.FC = () => {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 rounded border-[#E2D9CC] text-[#0F382A] focus:ring-[#0F382A]"
+                className="w-4 h-4 rounded border-[#E2D9CC] text-[#0F3A23] focus:ring-[#0F3A23]"
               />
               <span>Remember me</span>
             </label>
@@ -140,7 +140,7 @@ export const AdminLoginPage: React.FC = () => {
             <button
               type="button"
               onClick={fillDemo}
-              className="text-[#0F382A] hover:underline cursor-pointer text-[11px] font-medium"
+              className="text-[#0F3A23] hover:underline cursor-pointer text-[11px] font-medium"
             >
               Fill Credentials
             </button>
@@ -149,7 +149,7 @@ export const AdminLoginPage: React.FC = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full mt-2 py-3.5 bg-[#0F382A] hover:bg-[#184D3B] text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-full transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
+            className="w-full mt-2 py-3.5 bg-[#0F3A23] hover:bg-[#154D30] text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-full transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
           >
             {isSubmitting ? (
               <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -162,7 +162,7 @@ export const AdminLoginPage: React.FC = () => {
         {/* Demo Helper Hint */}
         <div className="mt-6 pt-5 border-t border-[#FAF6F0] text-center">
           <p className="text-[11px] text-[#6E776F] font-light">
-            Demo Credentials: <span className="font-mono font-medium text-[#0F382A]">admin@classiccrush.cafe</span> / <span className="font-mono font-medium text-[#0F382A]">admin123</span>
+            Demo Credentials: <span className="font-mono font-medium text-[#0F3A23]">admin@classiccrush.cafe</span> / <span className="font-mono font-medium text-[#0F3A23]">admin123</span>
           </p>
         </div>
       </div>

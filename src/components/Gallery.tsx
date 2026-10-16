@@ -81,7 +81,7 @@ export const Gallery: React.FC = () => {
           <span className="text-[11px] sm:text-xs font-semibold tracking-[0.28em] uppercase text-[#755546] block mb-2">
             Moments &amp; Moods
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#1C241E] tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#1C241E] tracking-tight">
             Life at The Classic Crush
           </h2>
           <div className="w-12 h-0.5 bg-[#C59F54] mx-auto mt-4 mb-4" />
@@ -170,7 +170,7 @@ export const Gallery: React.FC = () => {
               <span className="text-[11px] font-semibold tracking-widest uppercase text-[#D8B774] block">
                 {GALLERY_IMAGES[selectedIdx].category}
               </span>
-              <h3 className="font-serif text-lg sm:text-xl font-normal mt-0.5">
+              <h3 className="font-serif text-lg sm:text-xl font-bold mt-0.5">
                 {GALLERY_IMAGES[selectedIdx].title}
               </h3>
             </div>

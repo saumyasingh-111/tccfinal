@@ -2,60 +2,55 @@ import React from "react";
 
 interface BrandLogoProps {
   className?: string;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   variant?: "badge" | "horizontal";
   showSubtitle?: boolean;
+  alt?: string;
 }
 
 export const BrandLogo: React.FC<BrandLogoProps> = ({
   className = "",
   size = "md",
   variant = "badge",
-  showSubtitle = true,
+  showSubtitle = false,
+  alt = "The Classic Crush Bakery & Café",
 }) => {
   const sizeMap = {
-    sm: "w-9 h-9",
-    md: "w-11 h-11",
-    lg: "w-14 h-14",
-    xl: "w-20 h-20",
+    xs: "w-8 h-8",
+    sm: "w-10 h-10",
+    md: "w-11 h-11 sm:w-14 sm:h-14 lg:w-16 lg:h-16",
+    lg: "w-16 h-16 sm:w-20 sm:h-20",
+    xl: "w-24 h-24 sm:w-28 sm:h-28",
   };
 
-  const badgeElement = (
-    <div
-      className={`relative rounded-full flex items-center justify-center shrink-0 shadow-xs border border-[#C99742]/80 bg-[#0F382A] text-[#FAF6F0] transition-transform duration-300 ${sizeMap[size]}`}
-    >
-      {/* Decorative Gold Inner Circle */}
-      <div className="absolute inset-[2.5px] rounded-full border border-[#C99742]/50 pointer-events-none" />
-
-      {/* TCC Monogram */}
-      <div className="flex flex-col items-center justify-center leading-none text-center">
-        <span className="font-serif tracking-[0.08em] font-bold text-white text-[13px] sm:text-[15px]">
-          TCC
-        </span>
-        <span className="text-[6.5px] tracking-[0.24em] font-sans font-medium text-[#C99742] uppercase -mt-0.5">
-          EST. 2024
-        </span>
-      </div>
-    </div>
+  const logoImg = (
+    <img
+      src="/tcc-logo-512.png"
+      srcSet="/tcc-logo-256.png 256w, /tcc-logo-512.png 512w, /tcc-logo-official.png 1024w"
+      sizes="(max-width: 640px) 44px, (max-width: 1024px) 60px, 64px"
+      alt={alt}
+      className={`rounded-full object-contain shrink-0 aspect-square select-none transition-transform duration-300 group-hover:scale-[1.02] shadow-xs ${sizeMap[size]}`}
+      loading="eager"
+      width={size === "xs" ? 32 : size === "sm" ? 44 : size === "md" ? 64 : size === "lg" ? 80 : 112}
+      height={size === "xs" ? 32 : size === "sm" ? 44 : size === "md" ? 64 : size === "lg" ? 80 : 112}
+    />
   );
 
-  if (variant === "badge") {
+  if (variant === "badge" && showSubtitle) {
     return (
       <div className={`inline-flex items-center gap-3 ${className}`}>
-        {badgeElement}
-        {showSubtitle && (
-          <div className="flex flex-col text-left">
-            <span className="font-serif text-lg sm:text-xl font-bold tracking-[0.14em] uppercase text-[#0F382A] leading-tight">
-              The Classic Crush
-            </span>
-            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] font-semibold text-[#6E776F]">
-              Bakery &amp; Café
-            </span>
-          </div>
-        )}
+        {logoImg}
+        <div className="flex flex-col text-left">
+          <span className="font-serif text-lg sm:text-xl font-bold tracking-[0.14em] uppercase text-[#0F3A23] leading-tight">
+            The Classic Crush
+          </span>
+          <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] font-semibold text-[#6E776F]">
+            Bakery &amp; Café
+          </span>
+        </div>
       </div>
     );
   }
 
-  return <div className={`inline-block ${className}`}>{badgeElement}</div>;
+  return <div className={`inline-block ${className}`}>{logoImg}</div>;
 };

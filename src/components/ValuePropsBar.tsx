@@ -9,23 +9,23 @@ interface ValuePropItem {
 export const ValuePropsBar: React.FC = () => {
   const items: ValuePropItem[] = [
     {
-      icon: <Croissant className="w-5 h-5 text-[#0F382A] stroke-[1.5]" />,
+      icon: <Croissant className="w-5 h-5 text-[#0F3A23] stroke-[1.5]" />,
       label: "Freshly Baked Everyday",
     },
     {
-      icon: <Coffee className="w-5 h-5 text-[#0F382A] stroke-[1.5]" />,
+      icon: <Coffee className="w-5 h-5 text-[#0F3A23] stroke-[1.5]" />,
       label: "Specialty Coffee",
     },
     {
-      icon: <Cake className="w-5 h-5 text-[#0F382A] stroke-[1.5]" />,
+      icon: <Cake className="w-5 h-5 text-[#0F3A23] stroke-[1.5]" />,
       label: "Cakes for Every Occasion",
     },
     {
-      icon: <Wheat className="w-5 h-5 text-[#0F382A] stroke-[1.5]" />,
+      icon: <Wheat className="w-5 h-5 text-[#0F3A23] stroke-[1.5]" />,
       label: "Quality Ingredients",
     },
     {
-      icon: <Heart className="w-5 h-5 text-[#0F382A] stroke-[1.5]" />,
+      icon: <Heart className="w-5 h-5 text-[#0F3A23] stroke-[1.5]" />,
       label: "A Cosy Space for Everyone",
     },
   ];
@@ -44,7 +44,7 @@ export const ValuePropsBar: React.FC = () => {
               <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/50 flex items-center justify-center mb-2.5 transition-transform hover:scale-110">
                 {item.icon}
               </div>
-              <span className="font-serif text-sm sm:text-base text-[#162820] font-medium leading-snug">
+              <span className="font-serif text-sm sm:text-base text-[#162820] font-bold leading-snug">
                 {item.label}
               </span>
             </div>

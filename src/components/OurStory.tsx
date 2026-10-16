@@ -43,7 +43,7 @@ export const OurStory: React.FC = () => {
               <span className="text-[11px] sm:text-xs font-semibold tracking-[0.28em] uppercase text-[#755546] block mb-2">
                 Our Story
               </span>
-              <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#1C241E] leading-tight">
+              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#1C241E] leading-tight">
                 Made for good food &amp; good company.
               </h2>
             </div>

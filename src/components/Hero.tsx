@@ -15,9 +15,9 @@ export const Hero: React.FC = () => {
             </span>
 
             {/* Oversized Serif Headline Matching PDF Page 1 */}
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-[76px] font-normal text-[#0F382A] leading-[1.05] tracking-tight">
+            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-[#0F3A23] leading-[1.05] tracking-tight">
               More Than<br />
-              <span className="italic font-light">Just a Bakery.</span>
+              <span className="italic font-bold">Just a Bakery.</span>
             </h1>
 
             {/* Descriptive Editorial Subtitle */}
@@ -29,7 +29,7 @@ export const Hero: React.FC = () => {
             <div className="pt-2">
               <Link
                 to="/menu"
-                className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#0F382A] hover:bg-[#184D3B] text-[#FAF6F0] text-xs sm:text-sm font-semibold uppercase tracking-[0.16em] rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 group"
+                className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#0F3A23] hover:bg-[#154D30] text-[#FAF6F0] text-xs sm:text-sm font-semibold uppercase tracking-[0.16em] rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 group"
               >
                 <span>Explore Our Menu</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -60,7 +60,7 @@ export const Hero: React.FC = () => {
               />
 
               {/* Decorative Awning Label Overlay (top right) */}
-              <div className="absolute top-4 right-4 bg-[#0F382A]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-[#FAF6F0] text-[10px] font-semibold tracking-[0.2em] uppercase">
+              <div className="absolute top-4 right-4 bg-[#0F3A23]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-[#FAF6F0] text-[10px] font-semibold tracking-[0.2em] uppercase">
                 THE CLASSIC CRUSH
               </div>
 

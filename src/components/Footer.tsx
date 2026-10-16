@@ -32,7 +32,7 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-[#0F382A] text-[#FAF6F0] border-t border-white/10 pt-16 pb-24 sm:pb-16">
+    <footer className="bg-[#0F3A23] text-[#FAF6F0] border-t border-white/10 pt-16 pb-24 sm:pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
           {/* Brand Info */}
@@ -63,7 +63,7 @@ export const Footer: React.FC = () => {
 
           {/* Quick Navigation */}
           <div className="md:col-span-3 space-y-3 text-left">
-            <h4 className="text-xs font-semibold tracking-[0.25em] uppercase text-[#D4A359]">
+            <h4 className="text-xs font-bold tracking-[0.25em] uppercase text-[#D4A359]">
               Explore
             </h4>
             <ul className="space-y-2">
@@ -82,7 +82,7 @@ export const Footer: React.FC = () => {
 
           {/* Menu Highlights */}
           <div className="md:col-span-4 space-y-3 text-left">
-            <h4 className="text-xs font-semibold tracking-[0.25em] uppercase text-[#D4A359]">
+            <h4 className="text-xs font-bold tracking-[0.25em] uppercase text-[#D4A359]">
               Menu Highlights
             </h4>
             <ul className="space-y-2">

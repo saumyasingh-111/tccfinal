@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useOrder } from "../context/OrderContext";
 import { useData } from "../context/DataContext";
-import { AwningStrip } from "../components/AwningStrip";
 import { BotanicalSprig } from "../components/BotanicalSprig";
 import { CakesCelebrationBanner } from "../components/CakesCelebrationBanner";
 import {
@@ -105,7 +104,7 @@ export const OrderPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <BotanicalSprig side="left" />
             <div className="text-left">
-              <span className="font-serif italic text-base sm:text-lg font-bold text-[#0F382A] block leading-tight">
+              <span className="font-serif italic text-base sm:text-lg font-bold text-[#0F3A23] block leading-tight">
                 More Stories Coming Soon...
               </span>
               <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-[#6E776F]">
@@ -118,15 +117,13 @@ export const OrderPage: React.FC = () => {
             href="https://instagram.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0F382A] text-white text-[11px] font-semibold uppercase tracking-wider hover:bg-[#184D3B] transition-colors shrink-0"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0F3A23] text-white text-[11px] font-semibold uppercase tracking-wider hover:bg-[#154D30] transition-colors shrink-0"
           >
             <span>Follow Us on Instagram</span>
             <ArrowRight className="w-3 h-3" />
           </a>
         </div>
       </div>
-
-      <AwningStrip />
 
       {/* ==================================================
           2. ORDER NOW HERO (Matching PDF Page 5)
@@ -140,9 +137,9 @@ export const OrderPage: React.FC = () => {
                 ORDER NOW
               </span>
 
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal text-[#0F382A] tracking-tight leading-tight">
+              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0F3A23] tracking-tight leading-tight">
                 Good Food,<br />
-                <span className="italic font-light">Right to Your Door.</span>
+                <span className="italic font-bold">Right to Your Door.</span>
               </h1>
 
               <p className="text-sm sm:text-base text-[#162820]/80 font-light max-w-md">
@@ -175,7 +172,7 @@ export const OrderPage: React.FC = () => {
               <span
                 className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
                   currentStep >= 1
-                    ? "bg-[#0F382A] text-white"
+                    ? "bg-[#0F3A23] text-white"
                     : "bg-[#E8DFD1] text-[#6E776F]"
                 }`}
               >
@@ -183,7 +180,7 @@ export const OrderPage: React.FC = () => {
               </span>
               <span
                 className={`text-xs uppercase tracking-wider font-semibold ${
-                  currentStep === 1 ? "text-[#0F382A]" : "text-[#6E776F]"
+                  currentStep === 1 ? "text-[#0F3A23]" : "text-[#6E776F]"
                 }`}
               >
                 Cart
@@ -197,7 +194,7 @@ export const OrderPage: React.FC = () => {
               <span
                 className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
                   currentStep >= 2
-                    ? "bg-[#0F382A] text-white"
+                    ? "bg-[#0F3A23] text-white"
                     : "bg-[#E8DFD1] text-[#6E776F]"
                 }`}
               >
@@ -205,7 +202,7 @@ export const OrderPage: React.FC = () => {
               </span>
               <span
                 className={`text-xs uppercase tracking-wider font-semibold ${
-                  currentStep === 2 ? "text-[#0F382A]" : "text-[#6E776F]"
+                  currentStep === 2 ? "text-[#0F3A23]" : "text-[#6E776F]"
                 }`}
               >
                 Delivery Details
@@ -219,7 +216,7 @@ export const OrderPage: React.FC = () => {
               <span
                 className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
                   currentStep >= 3
-                    ? "bg-[#0F382A] text-white"
+                    ? "bg-[#0F3A23] text-white"
                     : "bg-[#E8DFD1] text-[#6E776F]"
                 }`}
               >
@@ -227,7 +224,7 @@ export const OrderPage: React.FC = () => {
               </span>
               <span
                 className={`text-xs uppercase tracking-wider font-semibold ${
-                  currentStep === 3 ? "text-[#0F382A]" : "text-[#6E776F]"
+                  currentStep === 3 ? "text-[#0F3A23]" : "text-[#6E776F]"
                 }`}
               >
                 Payment
@@ -241,7 +238,7 @@ export const OrderPage: React.FC = () => {
               <span
                 className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
                   currentStep >= 4
-                    ? "bg-[#0F382A] text-white"
+                    ? "bg-[#0F3A23] text-white"
                     : "bg-[#E8DFD1] text-[#6E776F]"
                 }`}
               >
@@ -249,7 +246,7 @@ export const OrderPage: React.FC = () => {
               </span>
               <span
                 className={`text-xs uppercase tracking-wider font-semibold ${
-                  currentStep === 4 ? "text-[#0F382A]" : "text-[#6E776F]"
+                  currentStep === 4 ? "text-[#0F3A23]" : "text-[#6E776F]"
                 }`}
               >
                 Confirmation
@@ -267,45 +264,45 @@ export const OrderPage: React.FC = () => {
           {currentStep === 4 ? (
             /* Confirmation View */
             <div className="max-w-xl mx-auto bg-white rounded-3xl p-8 sm:p-10 border border-[#E2D9CC] text-center shadow-lg space-y-5">
-              <div className="w-16 h-16 rounded-full bg-[#E6F0EB] text-[#0F382A] flex items-center justify-center mx-auto">
+              <div className="w-16 h-16 rounded-full bg-[#E6F0EB] text-[#0F3A23] flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-9 h-9" />
               </div>
 
-              <h2 className="font-serif text-3xl font-bold text-[#0F382A]">
+              <h2 className="font-serif text-3xl font-bold text-[#0F3A23]">
                 Order Confirmed!
               </h2>
 
               <p className="text-sm text-[#6E776F] font-light max-w-sm mx-auto">
                 Thank you, {customerName}! Your order{" "}
-                <span className="font-bold text-[#0F382A]">#{placedOrder?.id}</span>{" "}
+                <span className="font-bold text-[#0F3A23]">#{placedOrder?.id}</span>{" "}
                 has been received and is being prepared fresh in the cafe.
               </p>
 
               <div className="bg-[#FAF6F0] rounded-2xl p-4 text-left text-xs space-y-2 border border-[#E2D9CC]">
                 <div className="flex justify-between">
                   <span className="text-[#6E776F]">Order Type</span>
-                  <span className="font-semibold text-[#0F382A]">{orderType}</span>
+                  <span className="font-semibold text-[#0F3A23]">{orderType}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#6E776F]">Total Amount</span>
-                  <span className="font-bold text-[#0F382A]">₹{grandTotal}</span>
+                  <span className="font-bold text-[#0F3A23]">₹{grandTotal}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#6E776F]">Estimated Ready</span>
-                  <span className="font-semibold text-[#0F382A]">15 - 25 mins</span>
+                  <span className="font-semibold text-[#0F3A23]">15 - 25 mins</span>
                 </div>
               </div>
 
               <div className="pt-3 flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   to="/"
-                  className="px-6 py-2.5 rounded-full bg-[#0F382A] text-white text-xs font-semibold uppercase tracking-wider hover:bg-[#184D3B]"
+                  className="px-6 py-2.5 rounded-full bg-[#0F3A23] text-white text-xs font-semibold uppercase tracking-wider hover:bg-[#154D30]"
                 >
                   Back to Home
                 </Link>
                 <Link
                   to="/menu"
-                  className="px-6 py-2.5 rounded-full border border-[#0F382A] text-[#0F382A] text-xs font-semibold uppercase tracking-wider hover:bg-[#FAF6F0]"
+                  className="px-6 py-2.5 rounded-full border border-[#0F3A23] text-[#0F3A23] text-xs font-semibold uppercase tracking-wider hover:bg-[#FAF6F0]"
                 >
                   Order More
                 </Link>
@@ -319,12 +316,12 @@ export const OrderPage: React.FC = () => {
                   /* Step 1: Cart Items List */
                   <div className="space-y-6">
                     <div className="flex items-center justify-between border-b border-[#E2D9CC] pb-3">
-                      <h2 className="font-serif text-2xl font-bold text-[#0F382A]">
+                      <h2 className="font-serif text-2xl font-bold text-[#0F3A23]">
                         Your Cart ({totalCount} {totalCount === 1 ? "item" : "items"})
                       </h2>
                       <Link
                         to="/menu"
-                        className="text-xs uppercase tracking-wider font-semibold text-[#0F382A] hover:underline"
+                        className="text-xs uppercase tracking-wider font-semibold text-[#0F3A23] hover:underline"
                       >
                         Continue Shopping
                       </Link>
@@ -333,7 +330,7 @@ export const OrderPage: React.FC = () => {
                     {items.length === 0 ? (
                       <div className="bg-white rounded-2xl p-12 text-center border border-[#E2D9CC] space-y-4">
                         <ShoppingBag className="w-12 h-12 text-[#6E776F] opacity-30 mx-auto" />
-                        <h3 className="font-serif text-xl font-bold text-[#0F382A]">
+                        <h3 className="font-serif text-xl font-bold text-[#0F3A23]">
                           Your bag is currently empty
                         </h3>
                         <p className="text-xs text-[#6E776F] max-w-sm mx-auto font-light">
@@ -341,7 +338,7 @@ export const OrderPage: React.FC = () => {
                         </p>
                         <Link
                           to="/menu"
-                          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0F382A] text-white text-xs font-semibold uppercase tracking-wider hover:bg-[#184D3B]"
+                          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0F3A23] text-white text-xs font-semibold uppercase tracking-wider hover:bg-[#154D30]"
                         >
                           Explore Menu
                         </Link>
@@ -360,13 +357,13 @@ export const OrderPage: React.FC = () => {
                                 className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover bg-[#3D271D] shrink-0"
                               />
                               <div className="min-w-0">
-                                <h4 className="font-serif text-lg font-bold text-[#0F382A] truncate">
+                                <h4 className="font-serif text-lg font-bold text-[#0F3A23] truncate">
                                   {item.name}
                                 </h4>
                                 <span className="text-xs text-[#6E776F] block">
                                   {item.category.replace("-", " ").toUpperCase()}
                                 </span>
-                                <span className="font-serif text-base font-bold text-[#0F382A] mt-1 block">
+                                <span className="font-serif text-base font-bold text-[#0F3A23] mt-1 block">
                                   ₹{item.price * quantity}
                                 </span>
                               </div>
@@ -377,16 +374,16 @@ export const OrderPage: React.FC = () => {
                               <div className="inline-flex items-center gap-2 bg-[#FAF6F0] border border-[#E2D9CC] rounded-full px-2.5 py-1">
                                 <button
                                   onClick={() => updateQuantity(item.id, quantity - 1)}
-                                  className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[#E8DFD1] text-[#0F382A]"
+                                  className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[#E8DFD1] text-[#0F3A23]"
                                 >
                                   <Minus className="w-3 h-3" />
                                 </button>
-                                <span className="text-xs font-bold text-[#0F382A] min-w-4 text-center">
+                                <span className="text-xs font-bold text-[#0F3A23] min-w-4 text-center">
                                   {quantity}
                                 </span>
                                 <button
                                   onClick={() => updateQuantity(item.id, quantity + 1)}
-                                  className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[#E8DFD1] text-[#0F382A]"
+                                  className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[#E8DFD1] text-[#0F3A23]"
                                 >
                                   <Plus className="w-3 h-3" />
                                 </button>
@@ -411,9 +408,9 @@ export const OrderPage: React.FC = () => {
                             className="w-full p-4.5 flex items-center justify-between text-left hover:bg-[#FAF6F0]/60 transition-colors"
                           >
                             <div className="flex items-center gap-3">
-                              <MessageCircle className="w-4 h-4 text-[#0F382A]" />
+                              <MessageCircle className="w-4 h-4 text-[#0F3A23]" />
                               <div>
-                                <span className="text-xs font-semibold text-[#0F382A] uppercase tracking-wider block">
+                                <span className="text-xs font-semibold text-[#0F3A23] uppercase tracking-wider block">
                                   Have a special request?
                                 </span>
                                 <span className="text-[11px] text-[#6E776F] font-light">
@@ -421,7 +418,7 @@ export const OrderPage: React.FC = () => {
                                 </span>
                               </div>
                             </div>
-                            <span className="text-xs text-[#0F382A] font-bold">
+                            <span className="text-xs text-[#0F3A23] font-bold">
                               {isNoteExpanded ? "▲" : "▼"}
                             </span>
                           </button>
@@ -433,7 +430,7 @@ export const OrderPage: React.FC = () => {
                                 value={specialRequest}
                                 onChange={(e) => setSpecialRequest(e.target.value)}
                                 placeholder="Write your special instructions here..."
-                                className="w-full p-3 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F382A]"
+                                className="w-full p-3 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F3A23]"
                               />
                             </div>
                           )}
@@ -447,13 +444,13 @@ export const OrderPage: React.FC = () => {
                   /* Step 2: Delivery Details Form */
                   <form onSubmit={handleProceedToPayment} className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E2D9CC] space-y-6">
                     <div className="flex items-center justify-between border-b border-[#FAF6F0] pb-3">
-                      <h2 className="font-serif text-2xl font-bold text-[#0F382A]">
+                      <h2 className="font-serif text-2xl font-bold text-[#0F3A23]">
                         Delivery &amp; Customer Details
                       </h2>
                       <button
                         type="button"
                         onClick={() => setCurrentStep(1)}
-                        className="text-xs text-[#6E776F] hover:text-[#0F382A] inline-flex items-center gap-1"
+                        className="text-xs text-[#6E776F] hover:text-[#0F3A23] inline-flex items-center gap-1"
                       >
                         <ArrowLeft className="w-3.5 h-3.5" />
                         <span>Back to Cart</span>
@@ -479,7 +476,7 @@ export const OrderPage: React.FC = () => {
                             onClick={() => setOrderType(type)}
                             className={`py-2.5 rounded-xl text-xs font-semibold tracking-wider transition-all border ${
                               orderType === type
-                                ? "bg-[#0F382A] text-white border-[#0F382A]"
+                                ? "bg-[#0F3A23] text-white border-[#0F3A23]"
                                 : "bg-white text-[#162820] border-[#E2D9CC] hover:bg-[#FAF6F0]"
                             }`}
                           >
@@ -501,7 +498,7 @@ export const OrderPage: React.FC = () => {
                           value={customerName}
                           onChange={(e) => setCustomerName(e.target.value)}
                           placeholder="e.g. Rahul Sharma"
-                          className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F382A]"
+                          className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F3A23]"
                         />
                       </div>
                       <div>
@@ -514,7 +511,7 @@ export const OrderPage: React.FC = () => {
                           value={customerPhone}
                           onChange={(e) => setCustomerPhone(e.target.value)}
                           placeholder="+91 98765 43210"
-                          className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F382A]"
+                          className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F3A23]"
                         />
                       </div>
                     </div>
@@ -531,7 +528,7 @@ export const OrderPage: React.FC = () => {
                           value={deliveryAddress}
                           onChange={(e) => setDeliveryAddress(e.target.value)}
                           placeholder="Flat / House no, street, landmark..."
-                          className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F382A]"
+                          className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F3A23]"
                         />
                       </div>
                     )}
@@ -546,14 +543,14 @@ export const OrderPage: React.FC = () => {
                           value={tableNumber}
                           onChange={(e) => setTableNumber(e.target.value)}
                           placeholder="e.g. Table 4"
-                          className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F382A]"
+                          className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F3A23]"
                         />
                       </div>
                     )}
 
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-full bg-[#0F382A] text-white text-xs font-semibold uppercase tracking-[0.16em] hover:bg-[#184D3B] transition-colors shadow-sm flex items-center justify-center gap-2"
+                      className="w-full py-3.5 rounded-full bg-[#0F3A23] text-white text-xs font-semibold uppercase tracking-[0.16em] hover:bg-[#154D30] transition-colors shadow-sm flex items-center justify-center gap-2"
                     >
                       <span>Continue to Payment</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -565,13 +562,13 @@ export const OrderPage: React.FC = () => {
                   /* Step 3: Payment Selection */
                   <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E2D9CC] space-y-6">
                     <div className="flex items-center justify-between border-b border-[#FAF6F0] pb-3">
-                      <h2 className="font-serif text-2xl font-bold text-[#0F382A]">
+                      <h2 className="font-serif text-2xl font-bold text-[#0F3A23]">
                         Select Payment Method
                       </h2>
                       <button
                         type="button"
                         onClick={() => setCurrentStep(2)}
-                        className="text-xs text-[#6E776F] hover:text-[#0F382A] inline-flex items-center gap-1"
+                        className="text-xs text-[#6E776F] hover:text-[#0F3A23] inline-flex items-center gap-1"
                       >
                         <ArrowLeft className="w-3.5 h-3.5" />
                         <span>Back to Details</span>
@@ -579,10 +576,10 @@ export const OrderPage: React.FC = () => {
                     </div>
 
                     <div className="space-y-3">
-                      <label className="flex items-center gap-3 p-4 rounded-xl border-2 border-[#0F382A] bg-[#FAF6F0] cursor-pointer">
-                        <input type="radio" name="payment" defaultChecked className="text-[#0F382A]" />
+                      <label className="flex items-center gap-3 p-4 rounded-xl border-2 border-[#0F3A23] bg-[#FAF6F0] cursor-pointer">
+                        <input type="radio" name="payment" defaultChecked className="text-[#0F3A23]" />
                         <div>
-                          <span className="text-xs font-bold text-[#0F382A] block">
+                          <span className="text-xs font-bold text-[#0F3A23] block">
                             UPI / QR / Cash on Pickup / Delivery
                           </span>
                           <span className="text-[11px] text-[#6E776F]">
@@ -594,7 +591,7 @@ export const OrderPage: React.FC = () => {
 
                     <button
                       onClick={handleConfirmOrder}
-                      className="w-full py-3.5 rounded-full bg-[#0F382A] text-white text-xs font-semibold uppercase tracking-[0.16em] hover:bg-[#184D3B] transition-colors shadow-md flex items-center justify-center gap-2"
+                      className="w-full py-3.5 rounded-full bg-[#0F3A23] text-white text-xs font-semibold uppercase tracking-[0.16em] hover:bg-[#154D30] transition-colors shadow-md flex items-center justify-center gap-2"
                     >
                       <span>Confirm &amp; Place Order (₹{grandTotal})</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -606,7 +603,7 @@ export const OrderPage: React.FC = () => {
               {/* Right Column (4/12): Order Summary Card (Matching PDF Page 5) */}
               <div className="lg:col-span-4 sticky top-36 space-y-5">
                 <div className="bg-white rounded-2xl p-6 border border-[#E2D9CC] shadow-lg space-y-5">
-                  <h3 className="font-serif text-xl font-bold text-[#0F382A] border-b border-[#FAF6F0] pb-3">
+                  <h3 className="font-serif text-xl font-bold text-[#0F3A23] border-b border-[#FAF6F0] pb-3">
                     Order Summary
                   </h3>
 
@@ -623,7 +620,7 @@ export const OrderPage: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className="flex justify-between text-base font-serif font-bold text-[#0F382A] pt-3 border-t border-[#FAF6F0]">
+                    <div className="flex justify-between text-base font-serif font-bold text-[#0F3A23] pt-3 border-t border-[#FAF6F0]">
                       <span>Total</span>
                       <span>₹{grandTotal}</span>
                     </div>
@@ -633,7 +630,7 @@ export const OrderPage: React.FC = () => {
                     <button
                       onClick={handleProceedToDetails}
                       disabled={items.length === 0}
-                      className="w-full py-3.5 rounded-full bg-[#0F382A] hover:bg-[#184D3B] disabled:opacity-50 text-white text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full py-3.5 rounded-full bg-[#0F3A23] hover:bg-[#154D30] disabled:opacity-50 text-white text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 shadow-sm flex items-center justify-center gap-2 cursor-pointer"
                     >
                       <span>Proceed to Delivery Details</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -643,31 +640,31 @@ export const OrderPage: React.FC = () => {
                   {/* Trust Badges (matching PDF Page 5) */}
                   <div className="border-t border-[#FAF6F0] pt-4 space-y-2.5 text-[11px] text-[#6E776F]">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-5 h-5 rounded-full bg-[#E6F0EB] flex items-center justify-center text-[#0F382A] shrink-0">
+                      <div className="w-5 h-5 rounded-full bg-[#E6F0EB] flex items-center justify-center text-[#0F3A23] shrink-0">
                         <Check className="w-3 h-3" />
                       </div>
                       <div>
-                        <span className="font-bold text-[#0F382A] block leading-tight">Freshly Baked</span>
+                        <span className="font-bold text-[#0F3A23] block leading-tight">Freshly Baked</span>
                         <span className="text-[10px] text-[#6E776F]">Made with love, everyday.</span>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2.5">
-                      <div className="w-5 h-5 rounded-full bg-[#E6F0EB] flex items-center justify-center text-[#0F382A] shrink-0">
+                      <div className="w-5 h-5 rounded-full bg-[#E6F0EB] flex items-center justify-center text-[#0F3A23] shrink-0">
                         <Check className="w-3 h-3" />
                       </div>
                       <div>
-                        <span className="font-bold text-[#0F382A] block leading-tight">Quality Ingredients</span>
+                        <span className="font-bold text-[#0F3A23] block leading-tight">Quality Ingredients</span>
                         <span className="text-[10px] text-[#6E776F]">Only the best, always.</span>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2.5">
-                      <div className="w-5 h-5 rounded-full bg-[#E6F0EB] flex items-center justify-center text-[#0F382A] shrink-0">
+                      <div className="w-5 h-5 rounded-full bg-[#E6F0EB] flex items-center justify-center text-[#0F3A23] shrink-0">
                         <Check className="w-3 h-3" />
                       </div>
                       <div>
-                        <span className="font-bold text-[#0F382A] block leading-tight">A Sweeter Day</span>
+                        <span className="font-bold text-[#0F3A23] block leading-tight">A Sweeter Day</span>
                         <span className="text-[10px] text-[#6E776F]">Good food, better days.</span>
                       </div>
                     </div>
@@ -675,11 +672,11 @@ export const OrderPage: React.FC = () => {
 
                   {/* Upsell Card (matching PDF Page 5 bottom right) */}
                   <div className="p-4 rounded-xl bg-[#FAF6F0] border border-[#E2D9CC] flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[#0F382A] text-white flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-[#0F3A23] text-white flex items-center justify-center shrink-0">
                       <Coffee className="w-5 h-5" />
                     </div>
                     <div>
-                      <span className="font-serif text-sm font-bold text-[#0F382A] block">
+                      <span className="font-serif text-sm font-bold text-[#0F3A23] block">
                         Add a little extra?
                       </span>
                       <p className="text-[10px] text-[#6E776F]">
@@ -687,7 +684,7 @@ export const OrderPage: React.FC = () => {
                       </p>
                       <Link
                         to="/menu?category=beverages"
-                        className="text-[11px] font-semibold text-[#0F382A] hover:underline mt-0.5 block"
+                        className="text-[11px] font-semibold text-[#0F3A23] hover:underline mt-0.5 block"
                       >
                         Explore Beverages →
                       </Link>

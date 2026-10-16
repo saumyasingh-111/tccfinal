@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { type MenuCategoryId, type MenuItem } from "../data/menuData";
 import { VegBadge } from "../components/VegBadge";
-import { AwningStrip } from "../components/AwningStrip";
 import { BotanicalSprig } from "../components/BotanicalSprig";
 import { CakesCelebrationBanner } from "../components/CakesCelebrationBanner";
 import { useOrder } from "../context/OrderContext";
@@ -95,14 +94,12 @@ export const MenuPage: React.FC = () => {
 
           <Link
             to="/visit-us"
-            className="px-4 py-1.5 rounded-full border border-[#0F382A] text-[#0F382A] hover:bg-[#0F382A] hover:text-[#FAF6F0] text-[11px] font-semibold uppercase tracking-wider transition-all duration-200 shrink-0"
+            className="px-4 py-1.5 rounded-full border border-[#0F3A23] text-[#0F3A23] hover:bg-[#0F3A23] hover:text-[#FAF6F0] text-[11px] font-semibold uppercase tracking-wider transition-all duration-200 shrink-0"
           >
             Visit Us
           </Link>
         </div>
       </div>
-
-      <AwningStrip />
 
       {/* ==================================================
           2. MENU HERO (Matching PDF Page 3)
@@ -116,9 +113,9 @@ export const MenuPage: React.FC = () => {
                 OUR MENU
               </span>
 
-              <h1 className="font-serif text-5xl sm:text-6xl lg:text-[72px] font-normal text-[#0F382A] tracking-tight leading-[1.05]">
+              <h1 className="font-serif text-5xl sm:text-6xl lg:text-[72px] font-bold text-[#0F3A23] tracking-tight leading-[1.05]">
                 Good Food<br />
-                <span className="italic font-light">for Every Mood.</span>
+                <span className="italic font-bold">for Every Mood.</span>
               </h1>
 
               <p className="text-sm sm:text-base text-[#162820]/80 font-light leading-relaxed max-w-lg">
@@ -127,13 +124,13 @@ export const MenuPage: React.FC = () => {
 
               {/* Three Pill Badges (matching PDF Page 3) */}
               <div className="flex flex-wrap items-center gap-2.5 pt-2">
-                <span className="px-3.5 py-1 rounded-full bg-[#FAF6F0] border border-[#E2D9CC] text-[10px] font-bold tracking-[0.2em] uppercase text-[#0F382A]">
+                <span className="px-3.5 py-1 rounded-full bg-[#FAF6F0] border border-[#E2D9CC] text-[10px] font-bold tracking-[0.2em] uppercase text-[#0F3A23]">
                   GOOD FOOD
                 </span>
-                <span className="px-3.5 py-1 rounded-full bg-[#FAF6F0] border border-[#E2D9CC] text-[10px] font-bold tracking-[0.2em] uppercase text-[#0F382A]">
+                <span className="px-3.5 py-1 rounded-full bg-[#FAF6F0] border border-[#E2D9CC] text-[10px] font-bold tracking-[0.2em] uppercase text-[#0F3A23]">
                   GREAT COFFEE
                 </span>
-                <span className="px-3.5 py-1 rounded-full bg-[#FAF6F0] border border-[#E2D9CC] text-[10px] font-bold tracking-[0.2em] uppercase text-[#0F382A]">
+                <span className="px-3.5 py-1 rounded-full bg-[#FAF6F0] border border-[#E2D9CC] text-[10px] font-bold tracking-[0.2em] uppercase text-[#0F3A23]">
                   BETTER DAYS
                 </span>
               </div>
@@ -178,8 +175,8 @@ export const MenuPage: React.FC = () => {
                   onClick={() => handleSelectCategory(cat.id as MenuCategoryId | "all")}
                   className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
                     isActive
-                      ? "bg-[#0F382A] text-[#FAF6F0] shadow-sm"
-                      : "bg-[#FAF6F0] text-[#162820] hover:text-[#0F382A] hover:bg-[#E8DFD1] border border-[#E2D9CC]"
+                      ? "bg-[#0F3A23] text-[#FAF6F0] shadow-sm"
+                      : "bg-[#FAF6F0] text-[#162820] hover:text-[#0F3A23] hover:bg-[#E8DFD1] border border-[#E2D9CC]"
                   }`}
                 >
                   {cat.id === "all" && <UtensilsCrossed className="w-3.5 h-3.5" />}
@@ -199,7 +196,7 @@ export const MenuPage: React.FC = () => {
               placeholder="Search dishes, drinks, treats..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-white rounded-full text-xs text-[#162820] placeholder-[#6E776F] border border-[#E2D9CC] focus:outline-hidden focus:border-[#0F382A] focus:ring-1 focus:ring-[#0F382A]"
+              className="w-full pl-9 pr-4 py-2 bg-white rounded-full text-xs text-[#162820] placeholder-[#6E776F] border border-[#E2D9CC] focus:outline-hidden focus:border-[#0F3A23] focus:ring-1 focus:ring-[#0F3A23]"
             />
             <Search className="w-3.5 h-3.5 text-[#6E776F] absolute left-3.5 top-1/2 -translate-y-1/2" />
           </div>
@@ -214,7 +211,7 @@ export const MenuPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-2 mb-6">
               <Star className="w-4 h-4 text-[#C99742] fill-[#C99742]" />
-              <span className="text-[11px] font-semibold tracking-[0.28em] uppercase text-[#0F382A]">
+              <span className="text-[11px] font-semibold tracking-[0.28em] uppercase text-[#0F3A23]">
                 SOME FAVOURITES — OUR MOST-LOVED TREATS
               </span>
             </div>
@@ -234,16 +231,16 @@ export const MenuPage: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <h4 className="font-serif text-base font-bold text-[#0F382A] line-clamp-1">
+                    <h4 className="font-serif text-base font-bold text-[#0F3A23] line-clamp-1">
                       {fav.name}
                     </h4>
                     <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#FAF6F0]">
-                      <span className="text-xs font-bold text-[#0F382A]">
+                      <span className="text-xs font-bold text-[#0F3A23]">
                         ₹{fav.price}
                       </span>
                       <button
                         onClick={() => addItem(fav)}
-                        className="px-3 py-1 rounded-full bg-[#0F382A] text-white text-[10px] font-semibold uppercase tracking-wider hover:bg-[#184D3B] transition-colors cursor-pointer"
+                        className="px-3 py-1 rounded-full bg-[#0F3A23] text-white text-[10px] font-semibold uppercase tracking-wider hover:bg-[#154D30] transition-colors cursor-pointer"
                       >
                         + Add
                       </button>
@@ -276,7 +273,7 @@ export const MenuPage: React.FC = () => {
                     {/* Category Title & Description */}
                     <div className="border-b border-[#E2D9CC] pb-3 flex items-end justify-between">
                       <div>
-                        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0F382A]">
+                        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0F3A23]">
                           {cat.label}
                         </h2>
                         <p className="text-xs text-[#6E776F] font-light mt-0.5">
@@ -307,7 +304,7 @@ export const MenuPage: React.FC = () => {
                                   loading="lazy"
                                 />
                                 {(item.isBestseller || item.isFeatured) && (
-                                  <span className="absolute top-2.5 left-2.5 bg-[#0F382A]/90 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full backdrop-blur-xs">
+                                  <span className="absolute top-2.5 left-2.5 bg-[#0F3A23]/90 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full backdrop-blur-xs">
                                     Popular
                                   </span>
                                 )}
@@ -315,7 +312,7 @@ export const MenuPage: React.FC = () => {
 
                               {/* Title & Description */}
                               <div className="p-4 space-y-1">
-                                <h3 className="font-serif text-lg font-bold text-[#0F382A] leading-tight">
+                                <h3 className="font-serif text-lg font-bold text-[#0F3A23] leading-tight">
                                   {item.name}
                                 </h3>
                                 <p className="text-xs text-[#6E776F] font-light line-clamp-2 leading-relaxed">
@@ -326,7 +323,7 @@ export const MenuPage: React.FC = () => {
 
                             {/* Card Bottom: Price, Quantity Stepper & Add to Cart Pill Button (Page 6) */}
                             <div className="p-4 pt-2 border-t border-[#FAF6F0] flex items-center justify-between gap-2">
-                              <span className="font-serif text-lg font-bold text-[#0F382A]">
+                              <span className="font-serif text-lg font-bold text-[#0F3A23]">
                                 ₹{item.price}
                               </span>
 
@@ -334,17 +331,17 @@ export const MenuPage: React.FC = () => {
                                 <div className="inline-flex items-center gap-2 bg-[#FAF6F0] border border-[#E2D9CC] rounded-full px-2 py-1">
                                   <button
                                     onClick={() => updateQuantity(item.id, qty - 1)}
-                                    className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[#E8DFD1] text-[#0F382A]"
+                                    className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[#E8DFD1] text-[#0F3A23]"
                                     aria-label="Decrease quantity"
                                   >
                                     <Minus className="w-3 h-3" />
                                   </button>
-                                  <span className="text-xs font-bold text-[#0F382A] min-w-4 text-center">
+                                  <span className="text-xs font-bold text-[#0F3A23] min-w-4 text-center">
                                     {qty}
                                   </span>
                                   <button
                                     onClick={() => updateQuantity(item.id, qty + 1)}
-                                    className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[#E8DFD1] text-[#0F382A]"
+                                    className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-[#E8DFD1] text-[#0F3A23]"
                                     aria-label="Increase quantity"
                                   >
                                     <Plus className="w-3 h-3" />
@@ -353,7 +350,7 @@ export const MenuPage: React.FC = () => {
                               ) : (
                                 <button
                                   onClick={() => addItem(item)}
-                                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#0F382A] hover:bg-[#184D3B] text-white text-xs font-semibold uppercase tracking-wider transition-all duration-200 shadow-2xs group cursor-pointer"
+                                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#0F3A23] hover:bg-[#154D30] text-white text-xs font-semibold uppercase tracking-wider transition-all duration-200 shadow-2xs group cursor-pointer"
                                 >
                                   <ShoppingBag className="w-3.5 h-3.5" />
                                   <span>Add</span>
@@ -374,8 +371,8 @@ export const MenuPage: React.FC = () => {
               <div className="bg-white rounded-2xl p-6 border border-[#E2D9CC] shadow-lg space-y-5">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-[#FAF6F0] pb-3.5">
-                  <div className="flex items-center gap-2 text-[#0F382A]">
-                    <ShoppingBag className="w-5 h-5 text-[#0F382A]" />
+                  <div className="flex items-center gap-2 text-[#0F3A23]">
+                    <ShoppingBag className="w-5 h-5 text-[#0F3A23]" />
                     <h3 className="font-serif text-xl font-bold">Your Order</h3>
                   </div>
                   <span className="text-xs font-medium text-[#6E776F]">
@@ -386,7 +383,7 @@ export const MenuPage: React.FC = () => {
                 {/* Items List */}
                 {orderItems.length === 0 ? (
                   <div className="text-center py-10 text-[#6E776F] space-y-2">
-                    <ShoppingBag className="w-8 h-8 mx-auto opacity-30 text-[#0F382A]" />
+                    <ShoppingBag className="w-8 h-8 mx-auto opacity-30 text-[#0F3A23]" />
                     <p className="text-xs">Your bag is currently empty.</p>
                     <p className="text-[11px] text-[#6E776F]/80">
                       Add delicious bakes and coffees from the menu.
@@ -405,26 +402,26 @@ export const MenuPage: React.FC = () => {
                           className="w-11 h-11 rounded-lg object-cover bg-[#3D271D] shrink-0"
                         />
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-serif text-sm font-semibold text-[#0F382A] truncate">
+                          <h4 className="font-serif text-sm font-bold text-[#0F3A23] truncate">
                             {item.name}
                           </h4>
-                          <span className="text-xs font-bold text-[#0F382A]">
+                          <span className="text-xs font-bold text-[#0F3A23]">
                             ₹{item.price * quantity}
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5">
                           <button
                             onClick={() => updateQuantity(item.id, quantity - 1)}
-                            className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-[#0F382A] text-xs hover:bg-[#E8DFD1]"
+                            className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-[#0F3A23] text-xs hover:bg-[#E8DFD1]"
                           >
                             <Minus className="w-2.5 h-2.5" />
                           </button>
-                          <span className="text-xs font-bold text-[#0F382A] min-w-3 text-center">
+                          <span className="text-xs font-bold text-[#0F3A23] min-w-3 text-center">
                             {quantity}
                           </span>
                           <button
                             onClick={() => updateQuantity(item.id, quantity + 1)}
-                            className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-[#0F382A] text-xs hover:bg-[#E8DFD1]"
+                            className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-[#0F3A23] text-xs hover:bg-[#E8DFD1]"
                           >
                             <Plus className="w-2.5 h-2.5" />
                           </button>
@@ -452,14 +449,14 @@ export const MenuPage: React.FC = () => {
                       <span>Delivery Fee</span>
                       <span>₹{deliveryFee}</span>
                     </div>
-                    <div className="flex justify-between text-base font-serif font-bold text-[#0F382A] pt-2 border-t border-[#FAF6F0]">
+                    <div className="flex justify-between text-base font-serif font-bold text-[#0F3A23] pt-2 border-t border-[#FAF6F0]">
                       <span>Total</span>
                       <span>₹{grandTotal}</span>
                     </div>
 
                     <button
                       onClick={openDrawer}
-                      className="w-full mt-3 py-3 rounded-full bg-[#0F382A] hover:bg-[#184D3B] text-white text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 shadow-sm flex items-center justify-center gap-2 group cursor-pointer"
+                      className="w-full mt-3 py-3 rounded-full bg-[#0F3A23] hover:bg-[#154D30] text-white text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 shadow-sm flex items-center justify-center gap-2 group cursor-pointer"
                     >
                       <span>Proceed to Checkout</span>
                       <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -470,15 +467,15 @@ export const MenuPage: React.FC = () => {
                 {/* Trust Badges matching PDF Page 6 bottom */}
                 <div className="border-t border-[#FAF6F0] pt-4 space-y-2.5 text-[11px] text-[#6E776F]">
                   <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#0F382A]" />
+                    <Check className="w-3.5 h-3.5 text-[#0F3A23]" />
                     <span>Freshly Baked — Made with love, everyday.</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#0F382A]" />
+                    <Check className="w-3.5 h-3.5 text-[#0F3A23]" />
                     <span>Quality Ingredients — Only the best, always.</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#0F382A]" />
+                    <Check className="w-3.5 h-3.5 text-[#0F3A23]" />
                     <span>A Sweeter Day — Good food, better days.</span>
                   </div>
                 </div>

@@ -42,7 +42,7 @@ const CustomerLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =
   const { settings } = useData();
 
   return (
-    <div className="min-h-screen bg-[#F5EFEB] text-[#162820] flex flex-col font-sans selection:bg-[#0F382A]/20 selection:text-[#0F382A]">
+    <div className="min-h-screen bg-[#F5EFEB] text-[#162820] flex flex-col font-sans selection:bg-[#0F3A23]/20 selection:text-[#0F3A23]">
       {settings.isMaintenanceMode && (
         <div className="bg-[#755546] text-[#FAF7F2] text-xs text-center py-2 px-4 font-medium tracking-wide">
           Notice: The cafe menu is currently in maintenance mode. Please call or WhatsApp us for instant assistance.

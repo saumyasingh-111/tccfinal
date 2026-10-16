@@ -1,57 +1,72 @@
 @import "tailwindcss";
 
+:root {
+  --color-primary: #0F3A23;
+  --color-primary-hover: #154D30;
+  --color-primary-dark: #0A2617;
+  --color-primary-light: #1A5E39;
+  --color-cream: #FAF6F0;
+  --color-cream-bg: #F5EFEB;
+  --color-cream-border: #E2D9CC;
+}
+
 @theme {
   --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-display: "Cinzel", "Cormorant Garamond", Georgia, serif;
   --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  /* Pantone-Derived Brand Palette — The Classic Crush Approved Reference */
-  /* Primary: British Racing Green / Deep Forest Pine (Pantone 5535 C / 3308 C) */
-  --color-forest-950: #082118;
-  --color-forest-900: #0F382A;
-  --color-forest-800: #144434;
-  --color-forest-700: #1B5643;
-  --color-forest-600: #267158;
+  /* Official Primary Brand Green — Exact HEX #0F3A23 */
+  --color-primary: #0F3A23;
+  --color-primary-hover: #154D30;
+  --color-primary-dark: #0A2617;
+  --color-primary-light: #1A5E39;
+
+  /* Deep Forest Brand Greens */
+  --color-forest-950: #0A2617;
+  --color-forest-900: #0F3A23;
+  --color-forest-800: #154D30;
+  --color-forest-700: #1A5E39;
+  --color-forest-600: #257D50;
   --color-forest-100: #E6F0EB;
   --color-forest-50: #F0F6F3;
 
-  /* Warm Bakery Ivory & Cream (Pantone 7527 C) */
+  /* Warm Bakery Ivory & Cream */
   --color-cream-50: #FAF6F0;
   --color-cream-100: #F5EFEB;
   --color-cream-200: #ECE4D8;
   --color-cream-300: #E2D9CC;
 
-  /* Soft Warm Oatmeal & Sand (Pantone 7528 C) */
+  /* Soft Warm Oatmeal & Sand */
   --color-sand-200: #E8DFD1;
   --color-sand-300: #D8CBB9;
   --color-sand-400: #C2B39E;
 
-  /* Rich Espresso & Warm Walnut (Pantone 4625 C) */
+  /* Rich Espresso & Warm Walnut */
   --color-espresso-700: #54392B;
   --color-espresso-800: #3D271D;
   --color-espresso-900: #291811;
 
-  /* Primary Deep Text (Pantone Black 7 C) */
+  /* Primary Deep Text */
   --color-charcoal-900: #162820;
   --color-charcoal-800: #23342C;
   --color-charcoal-700: #2F3E37;
 
-  /* Muted Olive Sage (Pantone 5625 C) */
+  /* Muted Olive Sage */
   --color-olive-600: #6E776F;
   --color-olive-500: #858E86;
 
-  /* Restrained Warm Honey Gold (Pantone 7555 C) */
+  /* Restrained Warm Honey Gold */
   --color-gold-400: #D4A359;
   --color-gold-500: #C99742;
   --color-gold-600: #B88738;
 
   /* Backward Compatibility Token Aliases */
-  --color-turquoise-500: #0F382A;
-  --color-turquoise-600: #144434;
-  --color-turquoise-700: #1B5643;
+  --color-turquoise-500: #0F3A23;
+  --color-turquoise-600: #154D30;
+  --color-turquoise-700: #1A5E39;
   --color-turquoise-100: #E6F0EB;
-  --color-teal-800: #0F382A;
-  --color-teal-900: #082118;
+  --color-teal-800: #0F3A23;
+  --color-teal-900: #0A2617;
 }
 
 html {
@@ -65,7 +80,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, .font-serif {
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 700;
+}
+
+.font-serif {
   font-family: "Cormorant Garamond", Georgia, serif;
 }
 

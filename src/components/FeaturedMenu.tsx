@@ -37,7 +37,7 @@ export const FeaturedMenu: React.FC = () => {
           <span className="text-[11px] sm:text-xs font-semibold tracking-[0.28em] uppercase text-[#755546] block mb-2">
             Local Classics
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#1C241E] tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#1C241E] tracking-tight">
             A few things we&apos;re known for.
           </h2>
           <div className="w-12 h-0.5 bg-[#C59F54] mx-auto mt-4 mb-4" />
@@ -87,7 +87,7 @@ export const FeaturedMenu: React.FC = () => {
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex items-start justify-between gap-3 mb-2">
-                      <h3 className="font-serif text-xl sm:text-2xl font-semibold text-[#1C241E] leading-snug group-hover:text-[#26332A] transition-colors">
+                      <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#1C241E] leading-snug group-hover:text-[#26332A] transition-colors">
                         {item.name}
                       </h3>
                     </div>

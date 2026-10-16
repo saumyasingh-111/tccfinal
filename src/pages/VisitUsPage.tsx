@@ -1,6 +1,5 @@
 import React from "react";
 import { useData } from "../context/DataContext";
-import { AwningStrip } from "../components/AwningStrip";
 import { CakesCelebrationBanner } from "../components/CakesCelebrationBanner";
 import { MapPin, Clock, Phone, Navigation, MessageCircle, ExternalLink } from "lucide-react";
 
@@ -14,8 +13,6 @@ export const VisitUsPage: React.FC = () => {
 
   return (
     <div className="bg-[#F5EFEB] text-[#162820]">
-      <AwningStrip />
-
       {/* ==================================================
           1. VISIT US HERO (Matching PDF Pages 1 & 2)
           ================================================== */}
@@ -26,9 +23,9 @@ export const VisitUsPage: React.FC = () => {
               VISIT US
             </span>
 
-            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-normal text-[#0F382A] tracking-tight leading-[1.05]">
+            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-[#0F3A23] tracking-tight leading-[1.05]">
               Come for the Food,<br />
-              <span className="italic font-light">Stay for the Vibe.</span>
+              <span className="italic font-bold">Stay for the Vibe.</span>
             </h1>
 
             <div className="w-12 h-0.5 bg-[#C99742] mx-auto" />
@@ -45,11 +42,11 @@ export const VisitUsPage: React.FC = () => {
               {/* Address Card */}
               <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E2D9CC] shadow-2xs space-y-2">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F382A]">
+                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F3A23]">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div className="space-y-1">
-                    <h2 className="font-serif text-xl font-bold text-[#0F382A]">
+                    <h2 className="font-serif text-xl font-bold text-[#0F3A23]">
                       Our Location
                     </h2>
                     <p className="text-sm text-[#162820]/80 leading-relaxed font-light">
@@ -58,7 +55,7 @@ export const VisitUsPage: React.FC = () => {
                     <p className="text-sm text-[#162820]/80 font-light">
                       {cafeInfo.address.area}
                     </p>
-                    <p className="text-sm font-semibold text-[#0F382A]">
+                    <p className="text-sm font-semibold text-[#0F3A23]">
                       {cafeInfo.address.city}
                     </p>
                     {cafeInfo.address.landmark && (
@@ -73,14 +70,14 @@ export const VisitUsPage: React.FC = () => {
               {/* Opening Hours Card */}
               <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E2D9CC] shadow-2xs space-y-2">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F382A]">
+                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F3A23]">
                     <Clock className="w-5 h-5" />
                   </div>
                   <div className="space-y-1">
-                    <h2 className="font-serif text-xl font-bold text-[#0F382A]">
+                    <h2 className="font-serif text-xl font-bold text-[#0F3A23]">
                       Opening Hours
                     </h2>
-                    <p className="text-sm font-semibold text-[#0F382A]">
+                    <p className="text-sm font-semibold text-[#0F3A23]">
                       {cafeInfo.timings.days}
                     </p>
                     <p className="text-sm text-[#162820]/80 font-light">
@@ -98,11 +95,11 @@ export const VisitUsPage: React.FC = () => {
               {/* Contact Card */}
               <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E2D9CC] shadow-2xs space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F382A]">
+                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F3A23]">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div className="space-y-1">
-                    <h2 className="font-serif text-xl font-bold text-[#0F382A]">
+                    <h2 className="font-serif text-xl font-bold text-[#0F3A23]">
                       Get in Touch
                     </h2>
                     <p className="text-xs text-[#6E776F]">
@@ -111,7 +108,7 @@ export const VisitUsPage: React.FC = () => {
                     <div className="pt-2 flex flex-col sm:flex-row gap-3">
                       <a
                         href={callLink}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FAF6F0] border border-[#E2D9CC] text-xs font-semibold text-[#0F382A] hover:bg-[#E8DFD1]"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FAF6F0] border border-[#E2D9CC] text-xs font-semibold text-[#0F3A23] hover:bg-[#E8DFD1]"
                       >
                         <Phone className="w-3.5 h-3.5" />
                         <span>{cafeInfo.phone}</span>
@@ -120,7 +117,7 @@ export const VisitUsPage: React.FC = () => {
                         href={whatsappLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0F382A] text-white text-xs font-semibold hover:bg-[#184D3B]"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0F3A23] text-white text-xs font-semibold hover:bg-[#154D30]"
                       >
                         <MessageCircle className="w-3.5 h-3.5" />
                         <span>WhatsApp Us</span>
@@ -136,7 +133,7 @@ export const VisitUsPage: React.FC = () => {
                   href={cafeInfo.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3.5 px-8 rounded-full bg-[#0F382A] hover:bg-[#184D3B] text-white text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 shadow-sm flex items-center justify-center gap-2 group"
+                  className="w-full py-3.5 px-8 rounded-full bg-[#0F3A23] hover:bg-[#154D30] text-white text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 shadow-sm flex items-center justify-center gap-2 group"
                 >
                   <Navigation className="w-4 h-4 text-[#D4A359]" />
                   <span>Get Directions on Google Maps</span>

@@ -43,7 +43,7 @@ export const SignatureSection: React.FC = () => {
               House Signatures
             </span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-normal tracking-wide text-white leading-[1.12]">
+          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-wide text-white leading-[1.12]">
             THE ONES YOU&apos;LL COME BACK FOR
           </h2>
           <p className="mt-4 text-sm sm:text-base text-[#E5DBCA]/80 font-light max-w-xl leading-relaxed">
@@ -90,7 +90,7 @@ export const SignatureSection: React.FC = () => {
               {/* Text & Order button */}
               <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-serif text-2xl sm:text-3xl font-medium text-white mb-2 group-hover:text-[#D8B774] transition-colors">
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white mb-2 group-hover:text-[#D8B774] transition-colors">
                     {sig.item.name}
                   </h3>
                   <p className="text-xs sm:text-sm text-[#E5DBCA]/70 font-light leading-relaxed">

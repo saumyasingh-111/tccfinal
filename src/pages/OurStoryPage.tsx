@@ -28,10 +28,10 @@ export const OurStoryPage: React.FC = () => {
                 ABOUT US
               </span>
 
-              <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-normal text-[#0F382A] tracking-tight leading-[1.08]">
+              <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-[#0F3A23] tracking-tight leading-[1.08]">
                 A Little<br />
                 Place With a<br />
-                <span className="italic font-light">Big Heart.</span>
+                <span className="italic font-bold">Big Heart.</span>
               </h1>
 
               <div className="w-12 h-0.5 bg-[#C99742]" />
@@ -43,7 +43,7 @@ export const OurStoryPage: React.FC = () => {
               <div className="pt-2">
                 <Link
                   to="/menu"
-                  className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-[#0F382A] text-[#FAF6F0] hover:bg-[#184D3B] text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 shadow-sm hover:shadow-md group"
+                  className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-[#0F3A23] text-[#FAF6F0] hover:bg-[#154D30] text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 shadow-sm hover:shadow-md group"
                 >
                   <span>Explore Menu</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -80,7 +80,7 @@ export const OurStoryPage: React.FC = () => {
       {/* ==================================================
           2. OUR BELIEF: GOOD FOOD BRINGS PEOPLE CLOSER (Matching PDF Page 2 Deep Green Section)
           ================================================== */}
-      <section className="py-20 sm:py-28 bg-[#0F382A] text-[#FAF6F0] relative overflow-hidden">
+      <section className="py-20 sm:py-28 bg-[#0F3A23] text-[#FAF6F0] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left: Copy */}
@@ -89,7 +89,7 @@ export const OurStoryPage: React.FC = () => {
                 OUR BELIEF
               </span>
 
-              <h2 className="font-serif text-3xl sm:text-5xl font-normal text-white tracking-tight leading-tight">
+              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
                 Good Food<br />Brings People Closer.
               </h2>
 
@@ -151,7 +151,7 @@ export const OurStoryPage: React.FC = () => {
                   className="w-full h-[360px] sm:h-[460px] object-cover transition-transform duration-700 hover:scale-103"
                   loading="lazy"
                 />
-                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#E2D9CC] text-xs font-semibold text-[#0F382A]">
+                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#E2D9CC] text-xs font-semibold text-[#0F3A23]">
                   Baked Fresh Every Morning
                 </div>
               </div>
@@ -163,7 +163,7 @@ export const OurStoryPage: React.FC = () => {
                 OUR STORY
               </span>
 
-              <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#0F382A] tracking-tight leading-tight">
+              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#0F3A23] tracking-tight leading-tight">
                 From a Simple Idea<br />to a Cosy Café.
               </h2>
 
@@ -174,28 +174,28 @@ export const OurStoryPage: React.FC = () => {
               {/* 3 Value Pillars (matching PDF Page 2) */}
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-[#E2D9CC]">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center text-[#0F382A] mb-2">
+                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center text-[#0F3A23] mb-2">
                     <Croissant className="w-5 h-5 stroke-[1.5]" />
                   </div>
-                  <span className="font-serif text-sm font-semibold text-[#0F382A]">
+                  <span className="font-serif text-sm font-bold text-[#0F3A23]">
                     Freshly Baked
                   </span>
                 </div>
 
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center text-[#0F382A] mb-2">
+                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center text-[#0F3A23] mb-2">
                     <Coffee className="w-5 h-5 stroke-[1.5]" />
                   </div>
-                  <span className="font-serif text-sm font-semibold text-[#0F382A]">
+                  <span className="font-serif text-sm font-bold text-[#0F3A23]">
                     Great Coffee
                   </span>
                 </div>
 
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center text-[#0F382A] mb-2">
+                  <div className="w-10 h-10 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center text-[#0F3A23] mb-2">
                     <Heart className="w-5 h-5 stroke-[1.5]" />
                   </div>
-                  <span className="font-serif text-sm font-semibold text-[#0F382A]">
+                  <span className="font-serif text-sm font-bold text-[#0F3A23]">
                     A Cosy Space
                   </span>
                 </div>
@@ -208,13 +208,13 @@ export const OurStoryPage: React.FC = () => {
       {/* ==================================================
           4. OUR JOURNEY (Matching PDF Page 2 Bottom 4-Stage Horizontal Flow)
           ================================================== */}
-      <section className="py-20 sm:py-28 bg-[#0F382A] text-[#FAF6F0] relative overflow-hidden">
+      <section className="py-20 sm:py-28 bg-[#0F3A23] text-[#FAF6F0] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-[10px] sm:text-xs font-semibold tracking-[0.32em] uppercase text-[#D4A359] block mb-3">
             OUR JOURNEY
           </span>
 
-          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-white tracking-tight mb-14">
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white tracking-tight mb-14">
             How We Grew
           </h2>
 
@@ -223,7 +223,7 @@ export const OurStoryPage: React.FC = () => {
             {/* Step 1 */}
             <div className="bg-[#144434] rounded-2xl p-6 sm:p-7 border border-white/10 text-left flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-full bg-[#0F382A] border border-[#D4A359]/40 flex items-center justify-center text-[#D4A359] mb-5">
+                <div className="w-12 h-12 rounded-full bg-[#0F3A23] border border-[#D4A359]/40 flex items-center justify-center text-[#D4A359] mb-5">
                   <Lightbulb className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-2">
@@ -241,7 +241,7 @@ export const OurStoryPage: React.FC = () => {
             {/* Step 2 */}
             <div className="bg-[#144434] rounded-2xl p-6 sm:p-7 border border-white/10 text-left flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-full bg-[#0F382A] border border-[#D4A359]/40 flex items-center justify-center text-[#D4A359] mb-5">
+                <div className="w-12 h-12 rounded-full bg-[#0F3A23] border border-[#D4A359]/40 flex items-center justify-center text-[#D4A359] mb-5">
                   <ChefHat className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-2">
@@ -259,7 +259,7 @@ export const OurStoryPage: React.FC = () => {
             {/* Step 3 */}
             <div className="bg-[#144434] rounded-2xl p-6 sm:p-7 border border-white/10 text-left flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-full bg-[#0F382A] border border-[#D4A359]/40 flex items-center justify-center text-[#D4A359] mb-5">
+                <div className="w-12 h-12 rounded-full bg-[#0F3A23] border border-[#D4A359]/40 flex items-center justify-center text-[#D4A359] mb-5">
                   <Store className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-2">
@@ -277,7 +277,7 @@ export const OurStoryPage: React.FC = () => {
             {/* Step 4 */}
             <div className="bg-[#144434] rounded-2xl p-6 sm:p-7 border border-white/10 text-left flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-full bg-[#0F382A] border border-[#D4A359]/40 flex items-center justify-center text-[#D4A359] mb-5">
+                <div className="w-12 h-12 rounded-full bg-[#0F3A23] border border-[#D4A359]/40 flex items-center justify-center text-[#D4A359] mb-5">
                   <Smile className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-2">

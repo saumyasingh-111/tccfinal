@@ -73,7 +73,7 @@ export const HomePage: React.FC = () => {
               <span className="text-[10px] sm:text-xs font-semibold tracking-[0.32em] uppercase text-[#6E776F] block mb-2">
                 OUR MENU
               </span>
-              <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#0F382A] tracking-tight">
+              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#0F3A23] tracking-tight">
                 A Little Bit of Everything
               </h2>
               <p className="text-xs sm:text-sm text-[#162820]/75 font-light mt-2 max-w-lg">
@@ -83,7 +83,7 @@ export const HomePage: React.FC = () => {
 
             <Link
               to="/menu"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#0F382A] text-[#0F382A] hover:bg-[#0F382A] hover:text-[#FAF6F0] text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 self-start sm:self-auto shrink-0 group"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#0F3A23] text-[#0F3A23] hover:bg-[#0F3A23] hover:text-[#FAF6F0] text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 self-start sm:self-auto shrink-0 group"
             >
               <span>View Full Menu</span>
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -112,7 +112,7 @@ export const HomePage: React.FC = () => {
                 {/* Card Content & Circular Arrow Button */}
                 <div className="p-5 flex items-end justify-between gap-3 bg-white">
                   <div>
-                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#0F382A] group-hover:text-[#184D3B] transition-colors">
+                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#0F3A23] group-hover:text-[#154D30] transition-colors">
                       {cat.title}
                     </h3>
                     <p className="text-xs text-[#6E776F] font-light mt-1">
@@ -121,7 +121,7 @@ export const HomePage: React.FC = () => {
                   </div>
 
                   {/* Circular Arrow Button (matching PDF) */}
-                  <div className="w-8 h-8 rounded-full border border-[#0F382A]/30 flex items-center justify-center shrink-0 text-[#0F382A] group-hover:bg-[#0F382A] group-hover:text-white transition-all duration-300">
+                  <div className="w-8 h-8 rounded-full border border-[#0F3A23]/30 flex items-center justify-center shrink-0 text-[#0F3A23] group-hover:bg-[#0F3A23] group-hover:text-white transition-all duration-300">
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
                   </div>
                 </div>
@@ -134,7 +134,7 @@ export const HomePage: React.FC = () => {
       {/* ==================================================
           4. ABOUT US: THE CLASSIC CRUSH (Matching PDF Page 1 Deep Forest Green Section)
           ================================================== */}
-      <section className="py-20 sm:py-28 bg-[#0F382A] text-[#FAF6F0] relative overflow-hidden">
+      <section className="py-20 sm:py-28 bg-[#0F3A23] text-[#FAF6F0] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             {/* Left Column: Story Copy & CTA */}
@@ -143,7 +143,7 @@ export const HomePage: React.FC = () => {
                 ABOUT US
               </span>
 
-              <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal text-white tracking-tight leading-tight">
+              <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
                 The Classic Crush
               </h2>
 
@@ -158,7 +158,7 @@ export const HomePage: React.FC = () => {
               <div className="pt-2">
                 <Link
                   to="/our-story"
-                  className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-[#FAF6F0] text-[#0F382A] hover:bg-white text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 group"
+                  className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-[#FAF6F0] text-[#0F3A23] hover:bg-white text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 group"
                 >
                   <span>Our Story</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -194,11 +194,11 @@ export const HomePage: React.FC = () => {
       <section className="py-20 sm:py-28 bg-[#FAF6F0] border-b border-[#E2D9CC]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12 sm:mb-16">
-            <span className="text-[10px] sm:text-xs font-semibold tracking-[0.28em] uppercase text-[#0F382A] block mb-2 flex items-center gap-2">
-              <Gift className="w-3.5 h-3.5 text-[#0F382A]" />
+            <span className="text-[10px] sm:text-xs font-semibold tracking-[0.28em] uppercase text-[#0F3A23] block mb-2 flex items-center gap-2">
+              <Gift className="w-3.5 h-3.5 text-[#0F3A23]" />
               <span>GIFTING BY THE CLASSIC CRUSH</span>
             </span>
-            <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#0F382A] tracking-tight leading-tight">
+            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#0F3A23] tracking-tight leading-tight">
               Make someone&apos;s day a little sweeter.
             </h2>
             <p className="text-sm sm:text-base text-[#162820]/75 font-light mt-3 leading-relaxed">
@@ -222,17 +222,17 @@ export const HomePage: React.FC = () => {
                       loading="lazy"
                     />
                     {gift.occasions[0] && (
-                      <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase text-[#0F382A] shadow-xs">
+                      <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase text-[#0F3A23] shadow-xs">
                         {gift.occasions[0]}
                       </span>
                     )}
-                    <span className="absolute bottom-3 right-3 bg-[#0F382A] text-white backdrop-blur-xs px-3 py-1 rounded-full text-xs font-bold shadow-xs">
+                    <span className="absolute bottom-3 right-3 bg-[#0F3A23] text-white backdrop-blur-xs px-3 py-1 rounded-full text-xs font-bold shadow-xs">
                       {gift.priceDisplay || `₹${gift.price}`}
                     </span>
                   </div>
 
                   <div className="p-5 sm:p-6 space-y-2">
-                    <h3 className="font-serif text-xl font-bold text-[#0F382A] group-hover:text-[#184D3B] transition-colors">
+                    <h3 className="font-serif text-xl font-bold text-[#0F3A23] group-hover:text-[#154D30] transition-colors">
                       {gift.name}
                     </h3>
                     <p className="text-xs text-[#6E776F] font-light line-clamp-2 leading-relaxed">
@@ -242,12 +242,12 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 <div className="p-5 sm:p-6 pt-0 border-t border-[#FAF6F0] mt-2 flex items-center justify-between">
-                  <span className="text-[11px] text-[#0F382A] font-medium">
+                  <span className="text-[11px] text-[#0F3A23] font-medium">
                     Same-day cafe pickup available
                   </span>
                   <Link
                     to={`/gifting/${gift.slug}`}
-                    className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[#0F382A] group-hover:text-[#184D3B]"
+                    className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[#0F3A23] group-hover:text-[#154D30]"
                   >
                     <span>View Gift</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -260,7 +260,7 @@ export const HomePage: React.FC = () => {
           <div className="text-center pt-2">
             <Link
               to="/gifting"
-              className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-[#0F382A] hover:bg-[#184D3B] text-[#FAF6F0] text-xs font-semibold uppercase tracking-[0.16em] rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 group"
+              className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-[#0F3A23] hover:bg-[#154D30] text-[#FAF6F0] text-xs font-semibold uppercase tracking-[0.16em] rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 group"
             >
               <span>Explore All Gifts</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -281,7 +281,7 @@ export const HomePage: React.FC = () => {
                 <span className="text-[10px] sm:text-xs font-semibold tracking-[0.32em] uppercase text-[#6E776F] block mb-2">
                   VISIT US
                 </span>
-                <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#0F382A] tracking-tight">
+                <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#0F3A23] tracking-tight">
                   Come for the Food,<br />Stay for the Vibe.
                 </h2>
                 <p className="text-xs sm:text-sm text-[#162820]/75 font-light mt-2 max-w-md">
@@ -292,50 +292,50 @@ export const HomePage: React.FC = () => {
               {/* Location Card */}
               <div className="bg-white rounded-2xl p-5 border border-[#E2D9CC] shadow-2xs space-y-3.5">
                 <div className="flex items-start gap-3.5">
-                  <div className="w-9 h-9 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F382A]">
+                  <div className="w-9 h-9 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F3A23]">
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="font-serif text-base font-bold text-[#0F382A]">
+                    <h3 className="font-serif text-base font-bold text-[#0F3A23]">
                       Our Location
                     </h3>
                     <p className="text-xs text-[#162820]/80 mt-0.5 leading-relaxed">
                       {cafeInfo.address.street}, {cafeInfo.address.area}
                     </p>
-                    <p className="text-xs font-semibold text-[#0F382A]">
+                    <p className="text-xs font-semibold text-[#0F3A23]">
                       {cafeInfo.address.city}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3.5 pt-3 border-t border-[#FAF6F0]">
-                  <div className="w-9 h-9 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F382A]">
+                  <div className="w-9 h-9 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F3A23]">
                     <Clock className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="font-serif text-base font-bold text-[#0F382A]">
+                    <h3 className="font-serif text-base font-bold text-[#0F3A23]">
                       Opening Hours
                     </h3>
                     <p className="text-xs text-[#162820]/80 mt-0.5">
                       {cafeInfo.timings.days}
                     </p>
-                    <p className="text-xs font-semibold text-[#0F382A]">
+                    <p className="text-xs font-semibold text-[#0F3A23]">
                       {cafeInfo.timings.hours}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3.5 pt-3 border-t border-[#FAF6F0]">
-                  <div className="w-9 h-9 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F382A]">
+                  <div className="w-9 h-9 rounded-full bg-[#E8DFD1]/60 flex items-center justify-center shrink-0 text-[#0F3A23]">
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="font-serif text-base font-bold text-[#0F382A]">
+                    <h3 className="font-serif text-base font-bold text-[#0F3A23]">
                       Get in Touch
                     </h3>
                     <a
                       href={`tel:${cafeInfo.phone}`}
-                      className="text-xs font-medium text-[#0F382A] hover:underline block mt-0.5"
+                      className="text-xs font-medium text-[#0F3A23] hover:underline block mt-0.5"
                     >
                       {cafeInfo.phone}
                     </a>
@@ -349,7 +349,7 @@ export const HomePage: React.FC = () => {
                   href={cafeInfo.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-7 py-3 bg-[#0F382A] hover:bg-[#184D3B] text-[#FAF6F0] text-xs font-semibold uppercase tracking-[0.16em] rounded-full transition-all duration-300 shadow-sm flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-7 py-3 bg-[#0F3A23] hover:bg-[#154D30] text-[#FAF6F0] text-xs font-semibold uppercase tracking-[0.16em] rounded-full transition-all duration-300 shadow-sm flex items-center justify-center gap-2"
                 >
                   <Navigation className="w-3.5 h-3.5 text-[#D4A359]" />
                   <span>Get Directions</span>
@@ -357,9 +357,9 @@ export const HomePage: React.FC = () => {
 
                 <button
                   onClick={openDrawer}
-                  className="w-full sm:w-auto px-7 py-3 bg-white hover:bg-[#FAF6F0] text-[#0F382A] border border-[#0F382A] text-xs font-semibold uppercase tracking-[0.16em] rounded-full transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-7 py-3 bg-white hover:bg-[#FAF6F0] text-[#0F3A23] border border-[#0F3A23] text-xs font-semibold uppercase tracking-[0.16em] rounded-full transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <MessageCircle className="w-3.5 h-3.5 text-[#0F382A]" />
+                  <MessageCircle className="w-3.5 h-3.5 text-[#0F3A23]" />
                   <span>Order Online</span>
                 </button>
               </div>

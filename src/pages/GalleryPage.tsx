@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useData } from "../context/DataContext";
-import { AwningStrip } from "../components/AwningStrip";
 import { CakesCelebrationBanner } from "../components/CakesCelebrationBanner";
 import { BotanicalSprig } from "../components/BotanicalSprig";
 import { X, ChevronLeft, ChevronRight, Eye, ArrowRight } from "lucide-react";
@@ -49,8 +48,6 @@ export const GalleryPage: React.FC = () => {
 
   return (
     <div className="bg-[#F5EFEB] text-[#162820]">
-      <AwningStrip />
-
       {/* ==================================================
           1. GALLERY HERO (Matching PDF Page 4)
           ================================================== */}
@@ -63,9 +60,9 @@ export const GalleryPage: React.FC = () => {
                 OUR GALLERY
               </span>
 
-              <h1 className="font-serif text-5xl sm:text-6xl lg:text-[72px] font-normal text-[#0F382A] tracking-tight leading-[1.05]">
+              <h1 className="font-serif text-5xl sm:text-6xl lg:text-[72px] font-bold text-[#0F3A23] tracking-tight leading-[1.05]">
                 Moments<br />
-                <span className="italic font-light">That Stay.</span>
+                <span className="italic font-bold">That Stay.</span>
               </h1>
 
               <div className="w-12 h-0.5 bg-[#C99742]" />
@@ -116,8 +113,8 @@ export const GalleryPage: React.FC = () => {
                   }}
                   className={`px-5 py-2 rounded-full text-xs font-semibold tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                     isActive
-                      ? "bg-[#0F382A] text-[#FAF6F0] shadow-sm"
-                      : "bg-[#FAF6F0] text-[#162820] hover:text-[#0F382A] hover:bg-[#E8DFD1] border border-[#E2D9CC]"
+                      ? "bg-[#0F3A23] text-[#FAF6F0] shadow-sm"
+                      : "bg-[#FAF6F0] text-[#162820] hover:text-[#0F3A23] hover:bg-[#E8DFD1] border border-[#E2D9CC]"
                   }`}
                 >
                   {cat}
@@ -173,7 +170,7 @@ export const GalleryPage: React.FC = () => {
         <div className="max-w-2xl mx-auto space-y-4">
           <div className="flex items-center justify-center gap-2">
             <BotanicalSprig side="left" />
-            <h3 className="font-serif italic text-2xl font-bold text-[#0F382A]">
+            <h3 className="font-serif italic text-2xl font-bold text-[#0F3A23]">
               More Stories Coming Soon...
             </h3>
             <BotanicalSprig side="right" />
@@ -186,7 +183,7 @@ export const GalleryPage: React.FC = () => {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#0F382A] text-white text-xs font-semibold uppercase tracking-[0.16em] hover:bg-[#184D3B] transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#0F3A23] text-white text-xs font-semibold uppercase tracking-[0.16em] hover:bg-[#154D30] transition-colors shadow-sm"
             >
               <span>Follow Us on Instagram</span>
               <ArrowRight className="w-3.5 h-3.5" />

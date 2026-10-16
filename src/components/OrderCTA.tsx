@@ -15,7 +15,7 @@ export const OrderCTA: React.FC = () => {
           <span>Direct Quick Order</span>
         </div>
 
-        <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-normal tracking-wide text-white mb-4">
+        <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-wide text-white mb-4">
           CRAVING SOMETHING?
         </h2>
 
