@@ -7,9 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test scripts/test-campus-delivery.js"
   },
   "dependencies": {
+    "@types/leaflet": "^1.9.22",
+    "firebase-admin": "^14.5.0",
+    "leaflet": "^1.9.4",
     "lucide-react": "^1.52.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

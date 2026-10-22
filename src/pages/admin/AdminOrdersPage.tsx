@@ -9,6 +9,8 @@ import {
   Phone,
   X,
   Search,
+  ExternalLink,
+  ShieldCheck,
 } from "lucide-react";
 
 export const AdminOrdersPage: React.FC = () => {
@@ -268,6 +270,46 @@ export const AdminOrdersPage: React.FC = () => {
                     {selectedOrder.orderType}
                   </span>
                 </div>
+
+                {/* CSJMU Campus Delivery Details */}
+                {selectedOrder.deliveryLocation && (
+                  <div className="mt-2 p-3 bg-[#E6F0EB] rounded-xl border border-[#0F3A23]/20 space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#0F3A23]">
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#0F3A23]" />
+                        <span>CSJMU Campus Delivery</span>
+                      </div>
+                      <a
+                        href={`https://www.openstreetmap.org/?mlat=${selectedOrder.deliveryLocation.lat}&mlon=${selectedOrder.deliveryLocation.lng}#map=18/${selectedOrder.deliveryLocation.lat}/${selectedOrder.deliveryLocation.lng}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] text-[#0F3A23] font-semibold underline hover:text-[#154D30] inline-flex items-center gap-0.5"
+                      >
+                        <span>View Map</span>
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                    </div>
+                    <div className="text-xs text-[#162820] space-y-0.5">
+                      <p className="font-semibold">
+                        Building: {selectedOrder.deliveryLocation.building}
+                      </p>
+                      {selectedOrder.deliveryLocation.room && (
+                        <p className="text-[11px] text-[#2F3E37]">
+                          Room / Details: {selectedOrder.deliveryLocation.room}
+                        </p>
+                      )}
+                      {selectedOrder.deliveryLocation.instructions && (
+                        <p className="text-[11px] text-[#6E776F] italic">
+                          Gate/Delivery Note: &ldquo;{selectedOrder.deliveryLocation.instructions}&rdquo;
+                        </p>
+                      )}
+                      <p className="text-[10px] text-[#6E776F] font-mono pt-0.5">
+                        Coords: {selectedOrder.deliveryLocation.lat.toFixed(5)}, {selectedOrder.deliveryLocation.lng.toFixed(5)}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 {selectedOrder.note && (
                   <div className="pt-1.5 text-[11px] text-[#575E5B] italic border-t border-[#E8DFD3]">
                     Customer Note: &ldquo;{selectedOrder.note}&rdquo;

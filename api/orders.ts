@@ -1,4 +1,5 @@
 import { verifyToken, extractAuthToken } from "./_lib/authHelper.ts";
+import { isPointInCampusBoundary } from "./_lib/campusBoundary.ts";
 
 let memoryOrders: any[] = [];
 
@@ -15,13 +16,49 @@ export default async function handler(req: any, res: any) {
   if (req.method === "POST") {
     try {
       const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
-      const { customerName, customerPhone, items, totalAmount, orderType, note } = body;
+      const { customerName, customerPhone, items, totalAmount, orderType, note, deliveryLocation } = body;
 
       if (!customerName || !customerPhone || !items) {
         return res.status(400).json({
           success: false,
           error: "Missing required order fields (customerName, customerPhone, items).",
         });
+      }
+
+      // If delivery order, enforce strict CSJMU campus location validation
+      if (orderType === "Delivery") {
+        if (!deliveryLocation || typeof deliveryLocation !== "object") {
+          return res.status(400).json({
+            success: false,
+            error: "Delivery orders require a confirmed campus delivery location.",
+          });
+        }
+
+        const { lat, lng, building } = deliveryLocation;
+        const numLat = Number(lat);
+        const numLng = Number(lng);
+
+        if (isNaN(numLat) || isNaN(numLng) || !isFinite(numLat) || !isFinite(numLng)) {
+          return res.status(400).json({
+            success: false,
+            error: "Invalid or malformed campus delivery coordinates provided.",
+          });
+        }
+
+        if (!building || !String(building).trim()) {
+          return res.status(400).json({
+            success: false,
+            error: "Please specify the delivery campus building or hostel.",
+          });
+        }
+
+        const isInside = isPointInCampusBoundary(numLat, numLng);
+        if (!isInside) {
+          return res.status(400).json({
+            success: false,
+            error: "Sorry! TCC currently delivers only within the CSJMU university campus.",
+          });
+        }
       }
 
       const newOrder = {
@@ -33,6 +70,16 @@ export default async function handler(req: any, res: any) {
         status: body.status || "Pending",
         orderType: orderType || "Takeaway",
         note: note || undefined,
+        deliveryLocation: orderType === "Delivery" && deliveryLocation ? {
+          lat: Number(deliveryLocation.lat),
+          lng: Number(deliveryLocation.lng),
+          building: String(deliveryLocation.building).trim(),
+          room: deliveryLocation.room ? String(deliveryLocation.room).trim() : undefined,
+          instructions: deliveryLocation.instructions ? String(deliveryLocation.instructions).trim() : undefined,
+          formattedAddress: deliveryLocation.formattedAddress || `${String(deliveryLocation.building).trim()}, CSJMU Campus, Kalyanpur, Kanpur`,
+          nearestLandmark: deliveryLocation.nearestLandmark || undefined,
+          isVerifiedCampus: true,
+        } : undefined,
         createdAt: body.createdAt || new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         timestamp: Date.now(),
       };

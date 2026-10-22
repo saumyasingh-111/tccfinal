@@ -16,6 +16,8 @@ import {
   type GiftingOrderStatus,
 } from "../data/giftingData";
 
+import { type CampusDeliveryLocation } from "../data/campusBoundary";
+
 export type {
   GiftProduct,
   GiftCategory,
@@ -23,6 +25,7 @@ export type {
   GiftingSettings,
   GiftingOrderRecord,
   GiftingOrderStatus,
+  CampusDeliveryLocation,
 };
 
 export type OrderStatus = "Pending" | "Confirmed" | "Preparing" | "Ready" | "Completed" | "Cancelled";
@@ -38,6 +41,7 @@ export interface OrderRecord {
   createdAt: string;
   orderType: "Dine-in" | "Takeaway" | "Delivery";
   note?: string;
+  deliveryLocation?: CampusDeliveryLocation;
 }
 
 export interface ReservationRecord {

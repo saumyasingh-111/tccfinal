@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useOrder } from "../context/OrderContext";
 import { useData } from "../context/DataContext";
 import { VegBadge } from "./VegBadge";
+import { CampusLocationPicker } from "./CampusLocationPicker";
+import { type CampusDeliveryLocation } from "../data/campusBoundary";
 import {
   X,
   Plus,
@@ -14,6 +16,7 @@ import {
   Gift,
   CheckCircle2,
   Info,
+  ShieldCheck,
 } from "lucide-react";
 
 export const QuickOrderDrawer: React.FC = () => {
@@ -38,7 +41,7 @@ export const QuickOrderDrawer: React.FC = () => {
   const [customerPhone, setCustomerPhone] = useState("");
   const [orderType, setOrderType] = useState<"Dine-in" | "Takeaway" | "Delivery">("Takeaway");
   const [tableNumber, setTableNumber] = useState("");
-  const [deliveryAddress, setDeliveryAddress] = useState("");
+  const [campusLocation, setCampusLocation] = useState<CampusDeliveryLocation | null>(null);
   const [orderNotes, setOrderNotes] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,6 +51,7 @@ export const QuickOrderDrawer: React.FC = () => {
     itemsCount: number;
     orderType: string;
     createdAt: string;
+    deliveryLocation?: CampusDeliveryLocation;
   } | null>(null);
 
   if (!isDrawerOpen) return null;
@@ -75,9 +79,13 @@ export const QuickOrderDrawer: React.FC = () => {
       setFormError("Please enter a valid 10-digit mobile number.");
       return;
     }
-    if (orderType === "Delivery" && !deliveryAddress.trim()) {
-      setFormError("Please provide your delivery address.");
-      return;
+    if (orderType === "Delivery") {
+      if (!campusLocation || !campusLocation.isVerifiedCampus) {
+        setFormError(
+          "Please select and confirm a valid delivery location inside the CSJMU university campus."
+        );
+        return;
+      }
     }
 
     setIsSubmitting(true);
@@ -100,9 +108,9 @@ export const QuickOrderDrawer: React.FC = () => {
             orderNotes.trim() ||
             (orderType === "Dine-in" && tableNumber
               ? `Table #${tableNumber}`
-              : orderType === "Delivery"
-              ? `Address: ${deliveryAddress}`
               : undefined),
+          deliveryLocation:
+            orderType === "Delivery" && campusLocation ? campusLocation : undefined,
         });
 
         setPlacedOrderInfo({
@@ -111,6 +119,7 @@ export const QuickOrderDrawer: React.FC = () => {
           itemsCount: totalCount,
           orderType,
           createdAt: orderRecord.createdAt,
+          deliveryLocation: orderRecord.deliveryLocation,
         });
 
         // Clear active cart bag
@@ -133,10 +142,18 @@ export const QuickOrderDrawer: React.FC = () => {
   // Format WhatsApp message with placed order details
   const getWhatsAppConfirmationUrl = () => {
     if (!placedOrderInfo) return "#";
+    const campusDetails = placedOrderInfo.deliveryLocation
+      ? `CSJMU Delivery: ${placedOrderInfo.deliveryLocation.building}${
+          placedOrderInfo.deliveryLocation.room
+            ? ` (Room: ${placedOrderInfo.deliveryLocation.room})`
+            : ""
+        } [GPS: ${placedOrderInfo.deliveryLocation.lat}, ${placedOrderInfo.deliveryLocation.lng}]`
+      : "";
+
     const msg = `*NEW ORDER #${placedOrderInfo.id} — THE CLASSIC CRUSH*
 Customer: ${customerName} (${customerPhone})
 Fulfillment: ${placedOrderInfo.orderType}
-Total: ₹${placedOrderInfo.totalAmount}
+${campusDetails ? `${campusDetails}\n` : ""}Total: ₹${placedOrderInfo.totalAmount}
 Time: ${placedOrderInfo.createdAt}
 ${orderNotes ? `Notes: ${orderNotes}` : ""}
 
@@ -393,19 +410,17 @@ Please confirm my order. Thank you!`;
                   </div>
                 )}
 
-                {/* Contextual field: Address for Delivery */}
+                {/* CSJMU Campus Location Picker */}
                 {orderType === "Delivery" && (
-                  <div>
-                    <label className="text-xs font-semibold text-[#0F3A23] block mb-1">
-                      Delivery Address &amp; Landmark *
-                    </label>
-                    <textarea
-                      required
-                      rows={2}
-                      placeholder="House / Flat #, Building, Street, Landmark"
-                      value={deliveryAddress}
-                      onChange={(e) => setDeliveryAddress(e.target.value)}
-                      className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
+                  <div className="pt-1">
+                    <CampusLocationPicker
+                      initialLocation={campusLocation}
+                      customerName={customerName}
+                      customerPhone={customerPhone}
+                      onLocationConfirmed={(loc) => {
+                        setCampusLocation(loc);
+                        setFormError(null);
+                      }}
                     />
                   </div>
                 )}
@@ -452,11 +467,26 @@ Please confirm my order. Thank you!`;
                 </div>
 
                 {/* Order Summary Receipt Box */}
-                <div className="bg-white rounded-2xl p-4 border border-[#E2D9CC] text-left text-xs space-y-2 shadow-2xs">
+                <div className="bg-white rounded-2xl p-4 border border-[#E2D9CC] text-left text-xs space-y-2.5 shadow-2xs">
                   <div className="flex justify-between py-1 border-b border-[#FAF6F0]">
                     <span className="text-[#6E776F]">Fulfillment Type:</span>
                     <span className="font-semibold text-[#0F3A23]">{placedOrderInfo.orderType}</span>
                   </div>
+                  {placedOrderInfo.deliveryLocation && (
+                    <div className="p-2.5 bg-[#E6F0EB] rounded-xl border border-[#0F3A23]/15 space-y-1">
+                      <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#0F3A23]">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                        <span>CSJMU Campus Delivery</span>
+                      </div>
+                      <p className="font-semibold text-[#162820]">
+                        {placedOrderInfo.deliveryLocation.building}
+                        {placedOrderInfo.deliveryLocation.room ? `, ${placedOrderInfo.deliveryLocation.room}` : ""}
+                      </p>
+                      <p className="text-[10px] text-[#6E776F] font-mono">
+                        GPS: {placedOrderInfo.deliveryLocation.lat.toFixed(5)}, {placedOrderInfo.deliveryLocation.lng.toFixed(5)}
+                      </p>
+                    </div>
+                  )}
                   <div className="flex justify-between py-1 border-b border-[#FAF6F0]">
                     <span className="text-[#6E776F]">Total Items:</span>
                     <span className="font-semibold text-[#0F3A23]">{placedOrderInfo.itemsCount} items</span>

@@ -4,6 +4,8 @@ import { useOrder } from "../context/OrderContext";
 import { useData } from "../context/DataContext";
 import { BotanicalSprig } from "../components/BotanicalSprig";
 import { CakesCelebrationBanner } from "../components/CakesCelebrationBanner";
+import { CampusLocationPicker } from "../components/CampusLocationPicker";
+import { type CampusDeliveryLocation } from "../data/campusBoundary";
 import {
   Plus,
   Minus,
@@ -15,6 +17,7 @@ import {
   ShoppingBag,
   Coffee,
   MessageCircle,
+  ShieldCheck,
 } from "lucide-react";
 
 export const OrderPage: React.FC = () => {
@@ -36,7 +39,7 @@ export const OrderPage: React.FC = () => {
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [orderType, setOrderType] = useState<"Dine-in" | "Takeaway" | "Delivery">("Takeaway");
-  const [deliveryAddress, setDeliveryAddress] = useState("");
+  const [campusLocation, setCampusLocation] = useState<CampusDeliveryLocation | null>(null);
   const [tableNumber, setTableNumber] = useState("");
   const [specialRequest, setSpecialRequest] = useState("");
   const [isNoteExpanded, setIsNoteExpanded] = useState(false);
@@ -65,9 +68,14 @@ export const OrderPage: React.FC = () => {
       setFormError("Please enter a valid 10-digit mobile number.");
       return;
     }
-    if (orderType === "Delivery" && !deliveryAddress.trim()) {
-      setFormError("Please provide your delivery address.");
-      return;
+
+    if (orderType === "Delivery") {
+      if (!campusLocation || !campusLocation.isVerifiedCampus) {
+        setFormError(
+          "Please select and confirm a valid delivery location inside the CSJMU university campus."
+        );
+        return;
+      }
     }
 
     setCurrentStep(3);
@@ -87,6 +95,8 @@ export const OrderPage: React.FC = () => {
       status: "Pending",
       orderType,
       note: specialRequest.trim() || undefined,
+      deliveryLocation:
+        orderType === "Delivery" && campusLocation ? campusLocation : undefined,
     });
 
     setPlacedOrder(orderRecord);
@@ -278,11 +288,31 @@ export const OrderPage: React.FC = () => {
                 has been received and is being prepared fresh in the cafe.
               </p>
 
-              <div className="bg-[#FAF6F0] rounded-2xl p-4 text-left text-xs space-y-2 border border-[#E2D9CC]">
+              <div className="bg-[#FAF6F0] rounded-2xl p-4 text-left text-xs space-y-2.5 border border-[#E2D9CC]">
                 <div className="flex justify-between">
                   <span className="text-[#6E776F]">Order Type</span>
                   <span className="font-semibold text-[#0F3A23]">{orderType}</span>
                 </div>
+                {orderType === "Delivery" && placedOrder?.deliveryLocation && (
+                  <div className="p-3 bg-[#E6F0EB] rounded-xl border border-[#0F3A23]/15 space-y-1">
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#0F3A23]">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#0F3A23]" />
+                      <span>CSJMU Campus Delivery</span>
+                    </div>
+                    <p className="font-semibold text-[#162820]">
+                      {placedOrder.deliveryLocation.building}
+                      {placedOrder.deliveryLocation.room ? `, ${placedOrder.deliveryLocation.room}` : ""}
+                    </p>
+                    {placedOrder.deliveryLocation.instructions && (
+                      <p className="text-[11px] text-[#6E776F] italic">
+                        Note: &ldquo;{placedOrder.deliveryLocation.instructions}&rdquo;
+                      </p>
+                    )}
+                    <p className="text-[10px] text-[#6E776F] font-mono">
+                      GPS: {placedOrder.deliveryLocation.lat.toFixed(5)}, {placedOrder.deliveryLocation.lng.toFixed(5)}
+                    </p>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className="text-[#6E776F]">Total Amount</span>
                   <span className="font-bold text-[#0F3A23]">₹{grandTotal}</span>
@@ -516,19 +546,17 @@ export const OrderPage: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Conditional Delivery Address or Table Number */}
+                    {/* CSJMU Campus Location Picker */}
                     {orderType === "Delivery" && (
-                      <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#162820] mb-1">
-                          Delivery Address (Kanpur) *
-                        </label>
-                        <textarea
-                          rows={2}
-                          required
-                          value={deliveryAddress}
-                          onChange={(e) => setDeliveryAddress(e.target.value)}
-                          placeholder="Flat / House no, street, landmark..."
-                          className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F3A23]"
+                      <div className="pt-1">
+                        <CampusLocationPicker
+                          initialLocation={campusLocation}
+                          customerName={customerName}
+                          customerPhone={customerPhone}
+                          onLocationConfirmed={(loc) => {
+                            setCampusLocation(loc);
+                            setFormError(null);
+                          }}
                         />
                       </div>
                     )}
