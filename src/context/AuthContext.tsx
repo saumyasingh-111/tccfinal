@@ -5,6 +5,7 @@ import { useData } from "./DataContext";
 interface AuthContextType {
   isAuthenticated: boolean;
   adminEmail: string | null;
+  role: "admin" | "staff" | null;
   authToken: string | null;
   login: (email: string, password: string, remember?: boolean) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
@@ -30,6 +31,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [authToken, setAuthToken] = useState<string | null>(() => getStoredValue(`${AUTH_KEY}_token`));
   const [adminEmail, setAdminEmail] = useState<string | null>(() => getStoredValue(`${AUTH_KEY}_email`));
+  const [role, setRole] = useState<"admin" | "staff" | null>(() => {
+    const val = getStoredValue(`${AUTH_KEY}_role`);
+    return val === "staff" ? "staff" : val === "admin" ? "admin" : null;
+  });
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     const isAuth = getStoredValue(AUTH_KEY) === "true";
     return isAuth && !!getStoredValue(`${AUTH_KEY}_token`);
@@ -38,14 +43,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     setIsAuthenticated(false);
     setAdminEmail(null);
+    setRole(null);
     setAuthToken(null);
     try {
       sessionStorage.removeItem(AUTH_KEY);
       sessionStorage.removeItem(`${AUTH_KEY}_email`);
       sessionStorage.removeItem(`${AUTH_KEY}_token`);
+      sessionStorage.removeItem(`${AUTH_KEY}_role`);
       localStorage.removeItem(AUTH_KEY);
       localStorage.removeItem(`${AUTH_KEY}_email`);
       localStorage.removeItem(`${AUTH_KEY}_token`);
+      localStorage.removeItem(`${AUTH_KEY}_role`);
     } catch {}
   };
 
@@ -75,6 +83,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (isMounted && data.authenticated) {
               setIsAuthenticated(true);
               if (data.email) setAdminEmail(data.email);
+              if (data.role) setRole(data.role);
             }
           } else if (res.status === 401) {
             // Token explicitly expired or invalidated on server
@@ -112,7 +121,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const envAdminEmail = (import.meta.env.VITE_ADMIN_EMAIL || "").trim().toLowerCase();
     const envAdminPassword = import.meta.env.VITE_ADMIN_PASSWORD || "";
 
-    const targetEmail = envAdminEmail || (settings.email || "admin@classiccrush.cafe").trim().toLowerCase();
+    const targetEmail = envAdminEmail || (settings.email || "admin@theclassiccrush.com").trim().toLowerCase();
     const targetPassword = envAdminPassword || settings.passwordHash || "admin123";
 
     const isCredentialsMatch = cleanEmail === targetEmail && password === targetPassword;
@@ -132,15 +141,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (contentType.includes("application/json")) {
         const data = await res.json().catch(() => ({}));
 
+        if (res.status === 403) {
+          return {
+            success: false,
+            error: data.error || "Access denied. This portal is strictly for authorized staff and management.",
+          };
+        }
+
         if (res.ok && data.success && data.token) {
+          const userRole: "admin" | "staff" = data.user?.role === "staff" ? "staff" : "admin";
           setIsAuthenticated(true);
           setAdminEmail(data.user?.email || cleanEmail);
+          setRole(userRole);
           setAuthToken(data.token);
 
           try {
             storage.setItem(AUTH_KEY, "true");
             storage.setItem(`${AUTH_KEY}_email`, cleanEmail);
             storage.setItem(`${AUTH_KEY}_token`, data.token);
+            storage.setItem(`${AUTH_KEY}_role`, userRole);
           } catch {}
 
           return { success: true };
@@ -165,12 +184,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const fallbackToken = `tcc_adm_${Date.now()}_${btoa(cleanEmail).slice(0, 16)}`;
       setIsAuthenticated(true);
       setAdminEmail(cleanEmail);
+      setRole("admin");
       setAuthToken(fallbackToken);
 
       try {
         storage.setItem(AUTH_KEY, "true");
         storage.setItem(`${AUTH_KEY}_email`, cleanEmail);
         storage.setItem(`${AUTH_KEY}_token`, fallbackToken);
+        storage.setItem(`${AUTH_KEY}_role`, "admin");
       } catch {}
 
       return { success: true };
@@ -188,6 +209,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       value={{
         isAuthenticated,
         adminEmail,
+        role,
         authToken,
         login,
         logout,

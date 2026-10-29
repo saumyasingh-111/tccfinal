@@ -6,8 +6,8 @@ import { BrandLogo } from "../../components/BrandLogo";
 import { Lock, Mail, ArrowLeft, AlertCircle } from "lucide-react";
 
 export const AdminLoginPage: React.FC = () => {
-  const [email, setEmail] = useState("admin@classiccrush.cafe");
-  const [password, setPassword] = useState("admin123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,12 +43,6 @@ export const AdminLoginPage: React.FC = () => {
     }
   };
 
-  const fillDemo = () => {
-    setEmail("admin@classiccrush.cafe");
-    setPassword("admin123");
-    setError(null);
-  };
-
   return (
     <div className="min-h-screen bg-[#F5EFEB] flex flex-col justify-center items-center p-4 antialiased selection:bg-[#E8DFD1] selection:text-[#0F3A23]">
       {/* Back to customer website link */}
@@ -74,11 +68,11 @@ export const AdminLoginPage: React.FC = () => {
             <VegBadge size="sm" />
           </div>
           <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C99742]">
-            ADMIN PORTAL
+            STAFF &amp; MANAGEMENT PORTAL
           </span>
           <div className="w-8 h-0.5 bg-[#C99742] mx-auto mt-2.5 mb-2" />
           <p className="text-xs text-[#6E776F] font-light">
-            Sign in to manage menu, orders, and cafe details
+            Sign in with your authorized staff or administrator credentials
           </p>
         </div>
 
@@ -94,7 +88,7 @@ export const AdminLoginPage: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-[#0F3A23] mb-1.5">
-              Email
+              Email Address
             </label>
             <div className="relative">
               <input
@@ -102,7 +96,7 @@ export const AdminLoginPage: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@classiccrush.cafe"
+                placeholder="staff@theclassiccrush.com"
                 className="w-full pl-9 pr-3.5 py-2.5 bg-[#FAF6F0] border border-[#E2D9CC] rounded-xl text-sm text-[#162820] placeholder-[#6E776F] focus:outline-none focus:ring-1 focus:ring-[#0F3A23] focus:border-[#0F3A23] transition-all"
               />
               <Mail className="w-4 h-4 text-[#6E776F] absolute left-3 top-1/2 -translate-y-1/2" />
@@ -119,7 +113,7 @@ export const AdminLoginPage: React.FC = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="Enter password"
                 className="w-full pl-9 pr-3.5 py-2.5 bg-[#FAF6F0] border border-[#E2D9CC] rounded-xl text-sm text-[#162820] placeholder-[#6E776F] focus:outline-none focus:ring-1 focus:ring-[#0F3A23] focus:border-[#0F3A23] transition-all"
               />
               <Lock className="w-4 h-4 text-[#6E776F] absolute left-3 top-1/2 -translate-y-1/2" />
@@ -136,14 +130,6 @@ export const AdminLoginPage: React.FC = () => {
               />
               <span>Remember me</span>
             </label>
-
-            <button
-              type="button"
-              onClick={fillDemo}
-              className="text-[#0F3A23] hover:underline cursor-pointer text-[11px] font-medium"
-            >
-              Fill Credentials
-            </button>
           </div>
 
           <button
@@ -158,13 +144,6 @@ export const AdminLoginPage: React.FC = () => {
             )}
           </button>
         </form>
-
-        {/* Demo Helper Hint */}
-        <div className="mt-6 pt-5 border-t border-[#FAF6F0] text-center">
-          <p className="text-[11px] text-[#6E776F] font-light">
-            Demo Credentials: <span className="font-mono font-medium text-[#0F3A23]">admin@classiccrush.cafe</span> / <span className="font-mono font-medium text-[#0F3A23]">admin123</span>
-          </p>
-        </div>
       </div>
     </div>
   );

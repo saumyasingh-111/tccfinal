@@ -4,6 +4,7 @@ import { useData } from "../context/DataContext";
 import { VegBadge } from "./VegBadge";
 import { CampusLocationPicker } from "./CampusLocationPicker";
 import { type CampusDeliveryLocation } from "../data/campusBoundary";
+import { useCustomerAuth } from "../context/CustomerAuthContext";
 import {
   X,
   Plus,
@@ -20,6 +21,7 @@ import {
 } from "lucide-react";
 
 export const QuickOrderDrawer: React.FC = () => {
+  const { user, customerProfile } = useCustomerAuth();
   const {
     items,
     isDrawerOpen,
@@ -37,14 +39,33 @@ export const QuickOrderDrawer: React.FC = () => {
   const [step, setStep] = useState<"cart" | "checkout" | "success">("cart");
 
   // Checkout form fields
-  const [customerName, setCustomerName] = useState("");
-  const [customerPhone, setCustomerPhone] = useState("");
+  const [customerName, setCustomerName] = useState(
+    customerProfile?.name || user?.displayName || ""
+  );
+  const [customerPhone, setCustomerPhone] = useState(customerProfile?.phone || "");
+  const [customerEmail, setCustomerEmail] = useState(
+    customerProfile?.email || user?.email || ""
+  );
   const [orderType, setOrderType] = useState<"Dine-in" | "Takeaway" | "Delivery">("Takeaway");
   const [tableNumber, setTableNumber] = useState("");
-  const [campusLocation, setCampusLocation] = useState<CampusDeliveryLocation | null>(null);
+  const [campusLocation, setCampusLocation] = useState<CampusDeliveryLocation | null>(
+    customerProfile?.defaultDeliveryLocation || null
+  );
   const [orderNotes, setOrderNotes] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Auto-fill from profile when loaded
+  React.useEffect(() => {
+    if (customerProfile || user) {
+      if (!customerName) setCustomerName(customerProfile?.name || user?.displayName || "");
+      if (!customerPhone && customerProfile?.phone) setCustomerPhone(customerProfile.phone);
+      if (!customerEmail) setCustomerEmail(customerProfile?.email || user?.email || "");
+      if (!campusLocation && customerProfile?.defaultDeliveryLocation) {
+        setCampusLocation(customerProfile.defaultDeliveryLocation);
+      }
+    }
+  }, [customerProfile, user]);
   const [placedOrderInfo, setPlacedOrderInfo] = useState<{
     id: string;
     totalAmount: number;
@@ -90,9 +111,18 @@ export const QuickOrderDrawer: React.FC = () => {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
+        let idToken: string | undefined = undefined;
+        if (user) {
+          try {
+            idToken = await user.getIdToken();
+          } catch {}
+        }
+
         const orderRecord = addOrder({
+          customerId: user?.uid || undefined,
+          customerEmail: customerEmail.trim() || user?.email || undefined,
           customerName: customerName.trim(),
           customerPhone: customerPhone.trim(),
           items: items.map(({ item, quantity }) => ({
@@ -100,10 +130,15 @@ export const QuickOrderDrawer: React.FC = () => {
             name: item.name,
             quantity,
             price: item.price,
+            recipientName: item.recipientName || undefined,
           })),
+          subtotal: totalAmount,
+          deliveryFee,
           totalAmount: grandTotal,
           status: "Pending",
           orderType,
+          paymentMethod: "UPI / QR / Cash",
+          paymentStatus: "Pending",
           note:
             orderNotes.trim() ||
             (orderType === "Dine-in" && tableNumber
@@ -111,7 +146,7 @@ export const QuickOrderDrawer: React.FC = () => {
               : undefined),
           deliveryLocation:
             orderType === "Delivery" && campusLocation ? campusLocation : undefined,
-        });
+        }, idToken);
 
         setPlacedOrderInfo({
           id: orderRecord.id,
@@ -390,6 +425,20 @@ Please confirm my order. Thank you!`;
                     placeholder="10-digit mobile number"
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
+                    className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="text-xs font-semibold text-[#0F3A23] block mb-1">
+                    Email Address (Optional, for notifications)
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="e.g. rahul@example.com"
+                    value={customerEmail}
+                    onChange={(e) => setCustomerEmail(e.target.value)}
                     className="w-full px-3.5 py-2 bg-white border border-[#E2D9CC] rounded-xl text-xs text-[#162820] focus:outline-none focus:ring-1 focus:ring-[#0F3A23]"
                   />
                 </div>

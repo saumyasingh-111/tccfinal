@@ -3,11 +3,13 @@ import { NavLink, Link } from "react-router-dom";
 import { BrandLogo } from "./BrandLogo";
 import { AwningStrip } from "./AwningStrip";
 import { useOrder } from "../context/OrderContext";
-import { Menu, X, ShoppingBag, ArrowRight } from "lucide-react";
+import { useCustomerAuth } from "../context/CustomerAuthContext";
+import { Menu, X, ShoppingBag, ArrowRight, User } from "lucide-react";
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { totalCount, openDrawer } = useOrder();
+  const { user, customerProfile, isAuthenticated } = useCustomerAuth();
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -38,7 +40,7 @@ export const Navbar: React.FC = () => {
           </NavLink>
 
           {/* Right: Horizontal Navigation Links & Action Buttons */}
-          <div className="flex items-center gap-5 sm:gap-7 lg:gap-8">
+          <div className="flex items-center gap-3 sm:gap-5 lg:gap-6">
             {/* Horizontal Nav Links in Classic Serif Typography (matching Reference) */}
             <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 font-serif">
               {navLinks.map((link) => (
@@ -58,6 +60,31 @@ export const Navbar: React.FC = () => {
                 </NavLink>
               ))}
             </nav>
+
+            {/* Customer Authentication & Profile Icon */}
+            {isAuthenticated ? (
+              <Link
+                to="/profile"
+                className="flex items-center gap-2 p-1.5 sm:px-3 sm:py-1.5 rounded-full bg-[#FAF6F0] hover:bg-[#E8DFD1] text-[#0F3A23] border border-[#E2D9CC] transition-colors text-xs font-semibold shadow-2xs"
+                title="My Profile & Orders"
+              >
+                <div className="w-6 h-6 rounded-full bg-[#0F3A23] text-white flex items-center justify-center text-[11px] font-serif font-bold">
+                  {(customerProfile?.name || user?.displayName || "U").charAt(0).toUpperCase()}
+                </div>
+                <span className="hidden lg:inline-block max-w-[90px] truncate">
+                  {customerProfile?.name ? customerProfile.name.split(" ")[0] : "Profile"}
+                </span>
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-[#0F3A23] hover:bg-[#E8DFD1]/60 transition-colors border border-transparent hover:border-[#E2D9CC]"
+                title="Customer Sign In"
+              >
+                <User className="w-4 h-4" />
+                <span className="hidden sm:inline">Sign In</span>
+              </Link>
+            )}
 
             {/* Shopping Bag Button with Live Counter Badge */}
             <button
@@ -116,6 +143,41 @@ export const Navbar: React.FC = () => {
                 {link.name}
               </NavLink>
             ))}
+
+            {/* Customer Account Mobile Link */}
+            {isAuthenticated ? (
+              <NavLink
+                to="/profile"
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  `text-base tracking-[0.02em] py-2.5 px-3.5 rounded-lg transition-colors font-medium flex items-center justify-between ${
+                    isActive
+                      ? "bg-[#0F3A23] text-white font-semibold"
+                      : "text-[#0F3A23] bg-[#E8DFD1]/50 hover:bg-[#E8DFD1] font-semibold"
+                  }`
+                }
+              >
+                <span>My Profile & Orders</span>
+                <span className="text-xs bg-[#0F3A23] text-white px-2 py-0.5 rounded-full font-serif">
+                  {(customerProfile?.name || user?.displayName || "U").charAt(0).toUpperCase()}
+                </span>
+              </NavLink>
+            ) : (
+              <NavLink
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  `text-base tracking-[0.02em] py-2.5 px-3.5 rounded-lg transition-colors font-medium flex items-center justify-between ${
+                    isActive
+                      ? "bg-[#0F3A23] text-white font-semibold"
+                      : "text-[#0F3A23] bg-[#E8DFD1]/50 hover:bg-[#E8DFD1] font-semibold"
+                  }`
+                }
+              >
+                <span>Customer Sign In</span>
+                <User className="w-4 h-4 text-[#0F3A23]" />
+              </NavLink>
+            )}
           </div>
 
           <div className="pt-3 border-t border-[#E2D9CC] flex flex-col gap-2.5">

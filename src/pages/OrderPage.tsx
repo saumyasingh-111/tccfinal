@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useOrder } from "../context/OrderContext";
 import { useData } from "../context/DataContext";
+import { useCustomerAuth } from "../context/CustomerAuthContext";
 import { BotanicalSprig } from "../components/BotanicalSprig";
 import { CakesCelebrationBanner } from "../components/CakesCelebrationBanner";
 import { CampusLocationPicker } from "../components/CampusLocationPicker";
@@ -18,9 +19,12 @@ import {
   Coffee,
   MessageCircle,
   ShieldCheck,
+  Tag,
 } from "lucide-react";
+import { validateCoupon } from "../services/adminService";
 
 export const OrderPage: React.FC = () => {
+  const { user, customerProfile } = useCustomerAuth();
   const {
     items,
     updateQuantity,
@@ -36,18 +40,67 @@ export const OrderPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
 
   // Form states
-  const [customerName, setCustomerName] = useState("");
-  const [customerPhone, setCustomerPhone] = useState("");
+  const [customerName, setCustomerName] = useState(
+    customerProfile?.name || user?.displayName || ""
+  );
+  const [customerPhone, setCustomerPhone] = useState(customerProfile?.phone || "");
+  const [customerEmail, setCustomerEmail] = useState(
+    customerProfile?.email || user?.email || ""
+  );
   const [orderType, setOrderType] = useState<"Dine-in" | "Takeaway" | "Delivery">("Takeaway");
-  const [campusLocation, setCampusLocation] = useState<CampusDeliveryLocation | null>(null);
+  const [campusLocation, setCampusLocation] = useState<CampusDeliveryLocation | null>(
+    customerProfile?.defaultDeliveryLocation || null
+  );
   const [tableNumber, setTableNumber] = useState("");
   const [specialRequest, setSpecialRequest] = useState("");
   const [isNoteExpanded, setIsNoteExpanded] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [placedOrder, setPlacedOrder] = useState<any>(null);
 
+  // Auto-fill from profile/user when loaded
+  React.useEffect(() => {
+    if (customerProfile || user) {
+      if (!customerName) setCustomerName(customerProfile?.name || user?.displayName || "");
+      if (!customerPhone && customerProfile?.phone) setCustomerPhone(customerProfile.phone);
+      if (!customerEmail) setCustomerEmail(customerProfile?.email || user?.email || "");
+      if (!campusLocation && customerProfile?.defaultDeliveryLocation) {
+        setCampusLocation(customerProfile.defaultDeliveryLocation);
+      }
+    }
+  }, [customerProfile, user]);
+
+  // Promo Coupon states
+  const [couponInput, setCouponInput] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discountAmount: number } | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
+  const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
+
   const deliveryFee = orderType === "Delivery" && totalAmount > 0 ? 40 : 0;
-  const grandTotal = totalAmount + deliveryFee;
+  const discountAmount = appliedCoupon ? appliedCoupon.discountAmount : 0;
+  const grandTotal = Math.max(0, totalAmount + deliveryFee - discountAmount);
+
+  const handleApplyCoupon = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!couponInput.trim()) return;
+    setCouponError(null);
+    setIsValidatingCoupon(true);
+    const res = await validateCoupon(couponInput.trim(), totalAmount);
+    setIsValidatingCoupon(false);
+    if (res.success && res.coupon) {
+      setAppliedCoupon({
+        code: res.coupon.code,
+        discountAmount: res.coupon.discountAmount,
+      });
+      setCouponInput("");
+    } else {
+      setCouponError(res.error || "Invalid coupon code");
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponError(null);
+  };
 
   const handleProceedToDetails = () => {
     if (items.length === 0) return;
@@ -81,8 +134,17 @@ export const OrderPage: React.FC = () => {
     setCurrentStep(3);
   };
 
-  const handleConfirmOrder = () => {
+  const handleConfirmOrder = async () => {
+    let idToken: string | undefined = undefined;
+    if (user) {
+      try {
+        idToken = await user.getIdToken();
+      } catch {}
+    }
+
     const orderRecord = addOrder({
+      customerId: user?.uid || undefined,
+      customerEmail: customerEmail.trim() || user?.email || undefined,
       customerName: customerName.trim(),
       customerPhone: customerPhone.trim(),
       items: items.map(({ item, quantity }) => ({
@@ -90,14 +152,22 @@ export const OrderPage: React.FC = () => {
         name: item.name,
         quantity,
         price: item.price,
+        recipientName: item.recipientName || undefined,
       })),
+      subtotal: totalAmount,
+      deliveryFee,
+      discountAmount,
+      couponCode: appliedCoupon?.code,
       totalAmount: grandTotal,
       status: "Pending",
       orderType,
+      tableNumber: orderType === "Dine-in" && tableNumber ? tableNumber.trim() : undefined,
+      paymentMethod: "UPI / QR / Cash",
+      paymentStatus: "Pending",
       note: specialRequest.trim() || undefined,
       deliveryLocation:
         orderType === "Delivery" && campusLocation ? campusLocation : undefined,
-    });
+    }, idToken);
 
     setPlacedOrder(orderRecord);
     clearOrder();
@@ -516,7 +586,7 @@ export const OrderPage: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Name & Phone */}
+                    {/* Name, Phone & Email */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider text-[#162820] mb-1">
@@ -541,6 +611,18 @@ export const OrderPage: React.FC = () => {
                           value={customerPhone}
                           onChange={(e) => setCustomerPhone(e.target.value)}
                           placeholder="+91 98765 43210"
+                          className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F3A23]"
+                        />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#162820] mb-1">
+                          Email Address (for order updates)
+                        </label>
+                        <input
+                          type="email"
+                          value={customerEmail}
+                          onChange={(e) => setCustomerEmail(e.target.value)}
+                          placeholder="e.g. rahul@example.com"
                           className="w-full p-2.5 rounded-xl border border-[#E2D9CC] text-xs text-[#162820] focus:outline-hidden focus:border-[#0F3A23]"
                         />
                       </div>
@@ -647,6 +729,50 @@ export const OrderPage: React.FC = () => {
                         {deliveryFee > 0 ? `₹${deliveryFee}` : "Free"}
                       </span>
                     </div>
+
+                    {appliedCoupon ? (
+                      <div className="flex justify-between text-emerald-700 font-semibold items-center bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-200">
+                        <span className="flex items-center gap-1.5">
+                          <Tag className="w-3.5 h-3.5" />
+                          <span>Promo ({appliedCoupon.code})</span>
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span>-₹{appliedCoupon.discountAmount}</span>
+                          <button
+                            type="button"
+                            onClick={handleRemoveCoupon}
+                            className="text-stone-400 hover:text-stone-700 font-bold ml-1 cursor-pointer"
+                            title="Remove promo code"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleApplyCoupon} className="pt-1">
+                        <div className="flex items-center gap-1.5">
+                          <input
+                            type="text"
+                            value={couponInput}
+                            onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                            placeholder="Promo Code (e.g. WELCOME10)"
+                            className="flex-1 p-2 bg-[#FAF6F0] border border-[#E2D9CC] rounded-xl text-[11px] font-mono uppercase text-[#162820] focus:outline-hidden focus:border-[#0F3A23]"
+                          />
+                          <button
+                            type="submit"
+                            disabled={isValidatingCoupon || !couponInput.trim()}
+                            className="px-3 py-2 bg-[#0F3A23] hover:bg-[#154D30] text-white text-[11px] font-semibold uppercase tracking-wider rounded-xl disabled:opacity-50 transition-colors cursor-pointer"
+                          >
+                            {isValidatingCoupon ? "..." : "Apply"}
+                          </button>
+                        </div>
+                        {couponError && (
+                          <span className="text-[10px] text-rose-600 block mt-1">
+                            {couponError}
+                          </span>
+                        )}
+                      </form>
+                    )}
 
                     <div className="flex justify-between text-base font-serif font-bold text-[#0F3A23] pt-3 border-t border-[#FAF6F0]">
                       <span>Total</span>

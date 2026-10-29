@@ -17,6 +17,10 @@ import {
   X,
   Calendar,
   Gift,
+  Package,
+  Users,
+  MessageSquare,
+  Tag,
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -32,11 +36,21 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   pageSubtitle,
   actions,
 }) => {
-  const { adminEmail, logout } = useAuth();
+  const { adminEmail, role, logout } = useAuth();
   const { orders } = useData();
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  const isStaff = role === "staff";
+  const staffAllowedPaths = new Set([
+    "/admin/dashboard",
+    "/admin/menu",
+    "/admin/orders",
+    "/admin/inventory",
+    "/admin/reservations",
+    "/admin/cafe-info",
+  ]);
 
   const pendingOrdersCount = orders.filter(
     (o) => o.status === "Pending" || o.status === "Confirmed" || o.status === "Preparing"
@@ -47,11 +61,15 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
     navigate("/admin/login");
   };
 
-  const navItems = [
+  const allNavItems = [
     { name: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
     { name: "Menu Items", path: "/admin/menu", icon: UtensilsCrossed },
-    { name: "Gifting", path: "/admin/gifting", icon: Gift },
     { name: "Orders", path: "/admin/orders", icon: ShoppingBag, badge: pendingOrdersCount },
+    { name: "Inventory", path: "/admin/inventory", icon: Package },
+    { name: "Customers", path: "/admin/customers", icon: Users },
+    { name: "Reviews", path: "/admin/reviews", icon: MessageSquare },
+    { name: "Offers", path: "/admin/offers", icon: Tag },
+    { name: "Gifting", path: "/admin/gifting", icon: Gift },
     { name: "Featured", path: "/admin/featured", icon: Star },
     { name: "Gallery", path: "/admin/gallery", icon: Images },
     { name: "Homepage", path: "/admin/homepage", icon: Home },
@@ -59,6 +77,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
     { name: "Reservations", path: "/admin/reservations", icon: Calendar },
     { name: "Settings", path: "/admin/settings", icon: Settings },
   ];
+
+  const navItems = isStaff
+    ? allNavItems.filter((item) => staffAllowedPaths.has(item.path))
+    : allNavItems;
+
+  const isAccessDeniedForStaff = isStaff && !staffAllowedPaths.has(location.pathname);
 
   return (
     <div className="min-h-screen bg-[#F5EFEB] text-[#162820] flex flex-col md:flex-row antialiased font-sans">
@@ -77,7 +101,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               THE CLASSIC CRUSH
             </h1>
             <p className="text-[10px] tracking-widest uppercase font-semibold text-[#6E776F]">
-              ADMIN PORTAL
+              {isStaff ? "STAFF PORTAL" : "ADMIN PORTAL"}
             </p>
           </div>
         </div>
@@ -116,7 +140,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               </span>
               <div className="flex items-center gap-2 mt-0.5">
                 <span className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#0F3A23]">
-                  ADMIN PORTAL
+                  {isStaff ? "STAFF PORTAL" : "ADMIN PORTAL"}
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
               </div>
@@ -185,16 +209,27 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
           <div className="pt-2 border-t border-[#E2D9CC] flex items-center justify-between">
             <div className="min-w-0 pr-2">
-              <p className="text-[11px] font-medium text-[#0F3A23] truncate">
-                {adminEmail || "Admin User"}
+              <div className="flex items-center gap-1.5">
+                <p className="text-[11px] font-medium text-[#0F3A23] truncate">
+                  {adminEmail || (isStaff ? "Staff Member" : "Admin User")}
+                </p>
+                <span
+                  className={`px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider ${
+                    isStaff ? "bg-amber-100 text-amber-900 border border-amber-200" : "bg-[#E6F0EB] text-[#0F3A23] border border-[#0F3A23]/20"
+                  }`}
+                >
+                  {isStaff ? "Staff" : "Admin"}
+                </span>
+              </div>
+              <p className="text-[10px] text-[#6E776F] font-light">
+                {isStaff ? "Operations Staff" : "Cafe Owner / Admin"}
               </p>
-              <p className="text-[10px] text-[#6E776F] font-light">Cafe Owner</p>
             </div>
 
             <button
               onClick={handleLogout}
               className="p-1.5 text-[#6E776F] hover:text-red-700 hover:bg-red-50 rounded-md transition-colors cursor-pointer"
-              title="Sign out of admin"
+              title="Sign out of portal"
               aria-label="Logout"
             >
               <LogOut className="w-4 h-4" />
@@ -252,7 +287,29 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             </div>
           )}
 
-          {children}
+          {isAccessDeniedForStaff ? (
+            <div className="bg-white rounded-2xl border border-[#E2D9CC] p-10 text-center max-w-lg mx-auto my-12 space-y-4">
+              <div className="w-12 h-12 rounded-full bg-amber-50 border border-amber-200 text-amber-700 flex items-center justify-center mx-auto">
+                <X className="w-6 h-6" />
+              </div>
+              <h2 className="font-serif text-xl font-bold text-[#0F3A23]">
+                Access Restricted
+              </h2>
+              <p className="text-xs text-[#6E776F] font-light leading-relaxed">
+                This administrative section (customers directory, offers, and settings) is strictly reserved for café management and owners. As a staff member, your access is focused on operational workflows.
+              </p>
+              <div className="pt-2">
+                <NavLink
+                  to="/admin/dashboard"
+                  className="inline-block px-5 py-2.5 rounded-full bg-[#0F3A23] text-white text-xs font-semibold uppercase tracking-wider hover:bg-[#154D30] transition-colors"
+                >
+                  Return to Dashboard
+                </NavLink>
+              </div>
+            </div>
+          ) : (
+            children
+          )}
         </main>
       </div>
     </div>

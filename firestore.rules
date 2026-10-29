@@ -1,0 +1,194 @@
+rules_version = '2';
+
+// ===============================================================
+// The Classic Crush (TCC) — Security Rules
+// ===============================================================
+//
+// Enforces strict document ownership, public catalog reading,
+// review moderation, and delegates privileged mutations to the
+// server-side Admin SDK.
+//
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    function isValidRole(role) {
+      return role == "customer";
+    }
+
+    // -----------------------------------------------------------
+    // 1. Users Collection (Customer Profiles)
+    // -----------------------------------------------------------
+    match /users/{uid} {
+      // Customers can only read their own profile
+      allow read: if isOwner(uid);
+
+      // Customers can create their own profile with role == 'customer' (staff role cannot be self-assigned)
+      allow create: if isOwner(uid)
+                    && request.resource.data.uid == uid
+                    && isValidRole(request.resource.data.role);
+
+      // Customers can update their own profile; cannot change UID or self-assign/elevate to staff role
+      allow update: if isOwner(uid)
+                    && request.resource.data.uid == uid
+                    && request.resource.data.role == resource.data.role
+                    && isValidRole(request.resource.data.role);
+
+      // Deletion is reserved for administrative operations via Admin SDK
+      allow delete: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 2. Orders Collection
+    // -----------------------------------------------------------
+    match /orders/{orderId} {
+      // Authenticated customers can read only their own orders
+      allow read: if isAuthenticated() && (
+        resource.data.customerId == request.auth.uid ||
+        (resource.data.customerEmail != null && resource.data.customerEmail == request.auth.token.email)
+      );
+
+      // Order creation:
+      // - Authenticated users must bind customerId to their own UID
+      // - Guest orders are permitted if basic customer fields are present
+      allow create: if (
+        (isAuthenticated() && request.resource.data.customerId == request.auth.uid) ||
+        (!isAuthenticated() && !('customerId' in request.resource.data))
+      )
+      && request.resource.data.customerName is string
+      && request.resource.data.customerPhone is string
+      && request.resource.data.items is list
+      && request.resource.data.items.size() > 0
+      && request.resource.data.totalAmount is number
+      && request.resource.data.totalAmount >= 0;
+
+      // Status updates and deletions are restricted to server-side admin API (via Admin SDK)
+      allow update, delete: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 3. Menu Items (Public Read, Server-Only Write)
+    // -----------------------------------------------------------
+    match /menu_items/{itemId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 4. Menu Categories (Public Read, Server-Only Write)
+    // -----------------------------------------------------------
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 5. Inventory (Protected Server-Only)
+    // -----------------------------------------------------------
+    match /inventory/{itemId} {
+      allow read, write: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 6. Customer Reviews & Ratings
+    // -----------------------------------------------------------
+    match /reviews/{reviewId} {
+      // Only approved reviews are public
+      allow read: if resource.data.status == "approved";
+
+      // Anyone can submit a review with pending status
+      allow create: if request.resource.data.customerName is string
+                    && request.resource.data.comment is string
+                    && request.resource.data.rating is number
+                    && request.resource.data.rating >= 1
+                    && request.resource.data.rating <= 5
+                    && request.resource.data.status == "pending";
+
+      // Moderation and deletion restricted to Admin API
+      allow update, delete: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 7. Offers & Promotions
+    // -----------------------------------------------------------
+    match /offers/{offerId} {
+      // Active offers can be read for checkout validation
+      allow read: if resource.data.isActive == true;
+      allow write: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 8. Website & Store Settings
+    // -----------------------------------------------------------
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 9. Table Reservations
+    // -----------------------------------------------------------
+    match /reservations/{reservationId} {
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.phone is string;
+      allow read, update, delete: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 10. Gallery Images
+    // -----------------------------------------------------------
+    match /gallery/{imageId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 11. Gifting Catalogue & Orders
+    // -----------------------------------------------------------
+    match /gifting_products/{giftId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /gifting_categories/{catId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /gifting_addons/{addonId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /gifting_orders/{orderId} {
+      allow read: if isAuthenticated() && resource.data.customerId == request.auth.uid;
+      allow create: if request.resource.data.customerName is string;
+      allow update, delete: if false;
+    }
+
+    // -----------------------------------------------------------
+    // 12. Staff Collection (Protected Server-Only)
+    // -----------------------------------------------------------
+    match /staff/{staffId} {
+      // Staff accounts and authentication credentials are strictly server-only
+      allow read, write: if false;
+    }
+
+    // -----------------------------------------------------------
+    // Default Deny All Other Collections
+    // -----------------------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

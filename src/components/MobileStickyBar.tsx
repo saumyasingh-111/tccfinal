@@ -1,14 +1,17 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useOrder } from "../context/OrderContext";
-import { ShoppingBag, UtensilsCrossed, Gift } from "lucide-react";
+import { useCustomerAuth } from "../context/CustomerAuthContext";
+import { ShoppingBag, UtensilsCrossed, Gift, User } from "lucide-react";
 
 export const MobileStickyBar: React.FC = () => {
   const { totalCount, totalAmount, openDrawer } = useOrder();
+  const { isAuthenticated } = useCustomerAuth();
   const location = useLocation();
 
   const isMenuPage = location.pathname === "/menu";
   const isGiftingPage = location.pathname.startsWith("/gifting");
+  const isAccountPage = location.pathname === "/profile" || location.pathname === "/login" || location.pathname === "/signup";
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-30 sm:hidden bg-[#F5EFEB]/95 backdrop-blur-md border-t border-[#E2D9CC] px-3 py-2 shadow-lg shadow-black/10">
@@ -42,6 +45,22 @@ export const MobileStickyBar: React.FC = () => {
           <Gift className="w-4 h-4" />
           <span className="text-[10px] uppercase font-semibold tracking-wider mt-0.5">
             Gifts
+          </span>
+        </Link>
+
+        {/* Account / Profile Link */}
+        <Link
+          to={isAuthenticated ? "/profile" : "/login"}
+          className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-lg transition-colors cursor-pointer ${
+            isAccountPage
+              ? "text-[#0F3A23] font-bold"
+              : "text-[#6E776F] hover:text-[#0F3A23]"
+          }`}
+          aria-label={isAuthenticated ? "View profile" : "Sign in"}
+        >
+          <User className="w-4 h-4" />
+          <span className="text-[10px] uppercase font-semibold tracking-wider mt-0.5">
+            {isAuthenticated ? "Profile" : "Sign In"}
           </span>
         </Link>
 

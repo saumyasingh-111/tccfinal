@@ -1,4 +1,5 @@
 import { verifyToken, extractAuthToken } from "./_lib/authHelper.ts";
+import { getAdminDb } from "./_lib/firebaseAdmin.ts";
 
 let memoryGifts: any[] = [];
 let memoryGiftOrders: any[] = [];
@@ -12,7 +13,9 @@ export default async function handler(req: any, res: any) {
     return res.status(200).end();
   }
 
-  // GET: Public gift catalogue
+  const db = getAdminDb();
+
+  // GET: Public gift catalogue or protected gift orders
   if (req.method === "GET") {
     const type = req.query?.type;
     if (type === "orders") {
@@ -22,7 +25,31 @@ export default async function handler(req: any, res: any) {
       if (!auth.valid) {
         return res.status(401).json({ success: false, error: "Unauthorized" });
       }
+
+      if (db) {
+        try {
+          const snap = await db.collection("gifting_orders").orderBy("timestamp", "desc").get();
+          const orders: any[] = [];
+          snap.forEach((doc: any) => orders.push(doc.data()));
+          if (orders.length > 0) {
+            return res.status(200).json({ success: true, orders });
+          }
+        } catch {}
+      }
+
       return res.status(200).json({ success: true, orders: memoryGiftOrders });
+    }
+
+    // Gift catalogue
+    if (db) {
+      try {
+        const snap = await db.collection("gifting_products").get();
+        if (!snap.empty) {
+          const items: any[] = [];
+          snap.forEach((doc: any) => items.push(doc.data()));
+          return res.status(200).json({ success: true, items });
+        }
+      } catch {}
     }
 
     return res.status(200).json({
@@ -40,8 +67,16 @@ export default async function handler(req: any, res: any) {
         id: `GIFT-${Math.floor(700 + Math.random() * 200)}`,
         ...body.order,
         createdAt: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        timestamp: Date.now(),
       };
       memoryGiftOrders.unshift(order);
+
+      if (db) {
+        try {
+          await db.collection("gifting_orders").doc(order.id).set(order);
+        } catch {}
+      }
+
       return res.status(201).json({ success: true, order });
     }
 
@@ -59,11 +94,26 @@ export default async function handler(req: any, res: any) {
     if (req.method === "POST") {
       if (Array.isArray(body.items)) {
         memoryGifts = body.items;
+        if (db) {
+          try {
+            const batch = db.batch();
+            for (const it of body.items) {
+              const id = it.id || `gift-${Date.now()}`;
+              batch.set(db.collection("gifting_products").doc(id), { ...it, id }, { merge: true });
+            }
+            await batch.commit();
+          } catch {}
+        }
         return res.status(200).json({ success: true, count: memoryGifts.length });
       }
       if (body.item) {
         const item = { ...body.item, id: body.item.id || `gift-${Date.now()}` };
         memoryGifts.push(item);
+        if (db) {
+          try {
+            await db.collection("gifting_products").doc(item.id).set(item);
+          } catch {}
+        }
         return res.status(201).json({ success: true, item });
       }
     }
@@ -73,15 +123,29 @@ export default async function handler(req: any, res: any) {
       const idx = memoryGifts.findIndex((i) => i.id === updatedItem.id);
       if (idx >= 0) {
         memoryGifts[idx] = { ...memoryGifts[idx], ...updatedItem };
-        return res.status(200).json({ success: true, item: memoryGifts[idx] });
+      } else {
+        memoryGifts.push(updatedItem);
       }
-      memoryGifts.push(updatedItem);
+
+      if (db && updatedItem.id) {
+        try {
+          await db.collection("gifting_products").doc(updatedItem.id).set(updatedItem, { merge: true });
+        } catch {}
+      }
+
       return res.status(200).json({ success: true, item: updatedItem });
     }
 
     if (req.method === "DELETE") {
       const id = req.query?.id || body?.id;
       memoryGifts = memoryGifts.filter((i) => i.id !== id);
+
+      if (db && id) {
+        try {
+          await db.collection("gifting_products").doc(id).delete();
+        } catch {}
+      }
+
       return res.status(200).json({ success: true, deletedId: id });
     }
 

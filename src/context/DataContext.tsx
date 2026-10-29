@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { MENU_ITEMS, MENU_CATEGORIES, type MenuItem, type MenuCategory } from "../data/menuData";
 import { CAFE_CONFIG, type CafeConfig } from "../data/cafeConfig";
 import { IMAGES } from "../data/images";
@@ -7,7 +7,6 @@ import {
   GIFT_CATEGORIES,
   GIFT_ADDONS,
   DEFAULT_GIFTING_SETTINGS,
-  INITIAL_GIFT_ORDERS,
   type GiftProduct,
   type GiftCategory,
   type GiftAddon,
@@ -33,15 +32,32 @@ export type ReservationStatus = "Pending" | "Confirmed" | "Completed" | "Cancell
 
 export interface OrderRecord {
   id: string; // e.g. "1042"
+  customerId?: string;
+  customerEmail?: string;
   customerName: string;
   customerPhone: string;
-  items: { id: string; name: string; quantity: number; price: number }[];
+  items: { id: string; name: string; quantity: number; price: number; recipientName?: string }[];
+  subtotal?: number;
+  deliveryFee?: number;
+  discountAmount?: number;
+  couponCode?: string;
   totalAmount: number;
   status: OrderStatus;
   createdAt: string;
   orderType: "Dine-in" | "Takeaway" | "Delivery";
+  tableNumber?: string;
   note?: string;
   deliveryLocation?: CampusDeliveryLocation;
+  paymentMethod?: "UPI / QR / Cash" | "Online" | string;
+  paymentStatus?: "Pending" | "Paid" | "Failed" | "Refunded";
+  timestamp?: number;
+  customerSnapshot?: {
+    uid?: string;
+    name?: string;
+    phone?: string;
+    email?: string;
+    isVerified?: boolean;
+  };
 }
 
 export interface ReservationRecord {
@@ -53,6 +69,7 @@ export interface ReservationRecord {
   time: string;
   status: ReservationStatus;
   note?: string;
+  createdAt?: number;
 }
 
 export interface GalleryRecord {
@@ -62,6 +79,7 @@ export interface GalleryRecord {
   category: string;
   aspect: "landscape" | "portrait";
   isVisible: boolean;
+  sortOrder?: number;
 }
 
 export interface HomepageContent {
@@ -118,8 +136,8 @@ interface DataContextType {
 
   // Orders
   orders: OrderRecord[];
-  addOrder: (order: Omit<OrderRecord, "id" | "createdAt">) => OrderRecord;
-  updateOrderStatus: (orderId: string, status: OrderStatus) => void;
+  addOrder: (order: Omit<OrderRecord, "id" | "createdAt">, idToken?: string) => OrderRecord;
+  updateOrderStatus: (orderId: string, status: OrderStatus, paymentStatus?: OrderRecord["paymentStatus"]) => void;
   deleteOrder: (orderId: string) => void;
 
   // Reservations
@@ -162,9 +180,12 @@ interface DataContextType {
   settings: AdminSettings;
   updateSettings: (settings: Partial<AdminSettings>) => void;
   resetToDefaults: () => void;
+
+  // Refresh
+  refreshData: () => Promise<void>;
 }
 
-const STORAGE_KEY = "classic_crush_store_v3";
+const STORAGE_KEY = "classic_crush_store_v4";
 
 const initialGallery: GalleryRecord[] = IMAGES.gallery.map((g, idx) => ({
   id: `gal-${idx + 1}`,
@@ -175,124 +196,11 @@ const initialGallery: GalleryRecord[] = IMAGES.gallery.map((g, idx) => ({
   isVisible: true,
 }));
 
-const initialOrders: OrderRecord[] = [
-  {
-    id: "1042",
-    customerName: "Rahul Sharma",
-    customerPhone: "+91 98765 43210",
-    items: [
-      { id: "cheese-sandwich", name: "Cheese Sandwich", quantity: 2, price: 59 },
-      { id: "cold-coffee", name: "Cold Coffee", quantity: 1, price: 49 },
-    ],
-    totalAmount: 167,
-    status: "Preparing",
-    createdAt: "2:14 PM",
-    orderType: "Dine-in",
-    note: "Extra chili flakes on sandwich please",
-  },
-  {
-    id: "1041",
-    customerName: "Ananya Roy",
-    customerPhone: "+91 98111 22334",
-    items: [{ id: "paneer-pizza", name: "Paneer Pizza", quantity: 1, price: 69 }],
-    totalAmount: 69,
-    status: "Completed",
-    createdAt: "1:42 PM",
-    orderType: "Takeaway",
-  },
-  {
-    id: "1040",
-    customerName: "Vikram Malhotra",
-    customerPhone: "+91 99222 33445",
-    items: [
-      { id: "dark-and-white-delight", name: "Dark & White Delight", quantity: 1, price: 59 },
-      { id: "oreo-dark-crunch", name: "Oreo Dark Crunch", quantity: 1, price: 69 },
-    ],
-    totalAmount: 128,
-    status: "Completed",
-    createdAt: "1:15 PM",
-    orderType: "Dine-in",
-  },
-  {
-    id: "1039",
-    customerName: "Priya Singh",
-    customerPhone: "+91 97333 44556",
-    items: [
-      { id: "cheese-momos", name: "Cheese Momos", quantity: 1, price: 69 },
-      { id: "masala-patties", name: "Masala Patties", quantity: 2, price: 25 },
-    ],
-    totalAmount: 119,
-    status: "Ready",
-    createdAt: "12:50 PM",
-    orderType: "Takeaway",
-  },
-  {
-    id: "1038",
-    customerName: "Sameer Joshi",
-    customerPhone: "+91 98444 55667",
-    items: [
-      { id: "veg-burger", name: "Veg Burger", quantity: 2, price: 49 },
-      { id: "peri-peri-fries", name: "Peri Peri Fries", quantity: 1, price: 49 },
-      { id: "mojito", name: "Virgin Mojito", quantity: 1, price: 49 },
-    ],
-    totalAmount: 196,
-    status: "Confirmed",
-    createdAt: "12:30 PM",
-    orderType: "Dine-in",
-  },
-  {
-    id: "1037",
-    customerName: "Neha Kapoor",
-    customerPhone: "+91 99555 66778",
-    items: [
-      { id: "chocolate-pastry", name: "Chocolate Pastry", quantity: 2, price: 49 },
-      { id: "hot-coffee", name: "Hot Coffee", quantity: 1, price: 30 },
-    ],
-    totalAmount: 128,
-    status: "Pending",
-    createdAt: "12:10 PM",
-    orderType: "Delivery",
-    note: "Room 304, Girls Hostel",
-  },
-];
-
-const initialReservations: ReservationRecord[] = [
-  {
-    id: "R-101",
-    name: "Rohit & Friends",
-    phone: "+91 98765 11223",
-    guests: 4,
-    date: "Today",
-    time: "7:30 PM",
-    status: "Confirmed",
-    note: "Window table requested",
-  },
-  {
-    id: "R-102",
-    name: "Sneha Patel",
-    phone: "+91 98222 44556",
-    guests: 6,
-    date: "Today",
-    time: "8:15 PM",
-    status: "Pending",
-    note: "Birthday treat celebration",
-  },
-  {
-    id: "R-103",
-    name: "Aman Gupta",
-    phone: "+91 97111 88990",
-    guests: 2,
-    date: "Yesterday",
-    time: "6:00 PM",
-    status: "Completed",
-  },
-];
-
 const initialHomepage: HomepageContent = {
   heroTitle: "THE CLASSIC CRUSH",
   heroSubtitle: "BAKERY & CAFE",
   heroDescription: "Freshly made. Comfortingly familiar.",
-  heroImage: "/dark-white-delight.jpg",
+  heroImage: "/hero-indian-cafe.jpg",
   storyHeading: "Made for good food & good company.",
   storyDescription:
     "We created The Classic Crush for anyone looking for genuinely delicious bakery treats and hearty savory bites without pretentious dining prices. From steaming morning chai and flaky patties to midnight chocolate cravings with college friends.",
@@ -300,7 +208,7 @@ const initialHomepage: HomepageContent = {
 };
 
 const initialSettings: AdminSettings = {
-  email: "admin@classiccrush.cafe",
+  email: "admin@theclassiccrush.com",
   passwordHash: "admin123",
   isMaintenanceMode: false,
 };
@@ -357,20 +265,22 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return CAFE_CONFIG;
   });
 
+  // Zero fake demo orders: initialize empty until fetched from Firestore!
   const [orders, setOrders] = useState<OrderRecord[]>(() => {
     try {
       const saved = localStorage.getItem(`${STORAGE_KEY}_orders`);
       if (saved) return JSON.parse(saved);
     } catch {}
-    return initialOrders;
+    return [];
   });
 
+  // Zero fake demo reservations: initialize empty until fetched from Firestore!
   const [reservations, setReservations] = useState<ReservationRecord[]>(() => {
     try {
       const saved = localStorage.getItem(`${STORAGE_KEY}_reservations`);
       if (saved) return JSON.parse(saved);
     } catch {}
-    return initialReservations;
+    return [];
   });
 
   const [settings, setSettings] = useState<AdminSettings>(() => {
@@ -414,15 +324,16 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return DEFAULT_GIFTING_SETTINGS;
   });
 
+  // Zero fake demo gift orders: initialize empty until fetched from Firestore!
   const [giftingOrders, setGiftingOrders] = useState<GiftingOrderRecord[]>(() => {
     try {
       const saved = localStorage.getItem(`${STORAGE_KEY}_gifting_orders`);
       if (saved) return JSON.parse(saved);
     } catch {}
-    return INITIAL_GIFT_ORDERS;
+    return [];
   });
 
-  // Sync to LocalStorage on updates
+  // Sync to LocalStorage on updates for offline resilience
   useEffect(() => {
     try {
       localStorage.setItem(`${STORAGE_KEY}_menu`, JSON.stringify(menuItems));
@@ -519,40 +430,118 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Sync initial data from backend if available
-  useEffect(() => {
-    fetch("/api/menu")
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
+  // Centralized Refresh Function to load live Firestore data
+  const refreshData = useCallback(async () => {
+    // 1. Menu items
+    try {
+      const res = await fetch("/api/menu");
+      if (res.ok) {
+        const data = await res.json();
         if (data?.items && Array.isArray(data.items) && data.items.length > 0) {
           setMenuItems(data.items);
         }
-      })
-      .catch(() => {});
+      }
+    } catch {}
 
+    // 2. Categories
+    try {
+      const res = await fetch("/api/menu?type=categories");
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.categories && Array.isArray(data.categories) && data.categories.length > 0) {
+          setCategories(data.categories);
+        }
+      }
+    } catch {}
+
+    // 3. Featured items & settings
+    try {
+      const res = await fetch("/api/admin?action=settings&type=featured");
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.data?.itemIds && Array.isArray(data.data.itemIds)) {
+          setFeaturedItemIds(data.data.itemIds);
+        }
+      }
+    } catch {}
+
+    try {
+      const res = await fetch("/api/admin?action=settings&type=homepage");
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.data) setHomepageContent(data.data);
+      }
+    } catch {}
+
+    try {
+      const res = await fetch("/api/admin?action=settings&type=store");
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.data) {
+          setCafeInfo(data.data);
+          if (data.data.isMaintenanceMode !== undefined) {
+            setSettings((prev) => ({ ...prev, isMaintenanceMode: !!data.data.isMaintenanceMode }));
+          }
+        }
+      }
+    } catch {}
+
+    // 4. Authenticated data streams (Orders, Reservations, Gift orders)
     const token = getAuthToken();
     if (token) {
-      fetch("/api/orders", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => (res.ok ? res.json() : null))
-        .then((data) => {
-          if (data?.orders && Array.isArray(data.orders) && data.orders.length > 0) {
-            setOrders(data.orders);
+      try {
+        const ordRes = await fetch("/api/orders", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (ordRes.ok) {
+          const ordData = await ordRes.json();
+          if (Array.isArray(ordData?.orders)) {
+            setOrders(ordData.orders);
           }
-        })
-        .catch(() => {});
+        }
+      } catch {}
+
+      try {
+        const resRes = await fetch("/api/admin?action=reservations", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (resRes.ok) {
+          const resData = await resRes.json();
+          if (Array.isArray(resData?.reservations)) {
+            setReservations(resData.reservations);
+          }
+        }
+      } catch {}
+
+      try {
+        const giftRes = await fetch("/api/gifting?type=orders", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (giftRes.ok) {
+          const giftData = await giftRes.json();
+          if (Array.isArray(giftData?.orders)) {
+            setGiftingOrders(giftData.orders);
+          }
+        }
+      } catch {}
     }
   }, []);
 
+  // Sync initial data from backend on mount
+  useEffect(() => {
+    refreshData();
+  }, [refreshData]);
+
   // MENU OPERATIONS
   const addMenuItem = (item: Omit<MenuItem, "id"> & { id?: string }) => {
-    const newId = item.id || item.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now().toString().slice(-4);
+    const newId =
+      item.id ||
+      item.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now().toString().slice(-4);
     const fullItem: MenuItem = {
       ...item,
       id: newId,
       isAvailable: item.isAvailable !== false,
-      isVegetarian: true, // Always vegetarian
+      isVegetarian: true,
     };
     setMenuItems((prev) => [fullItem, ...prev]);
 
@@ -581,7 +570,6 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const deleteMenuItem = (id: string) => {
     setMenuItems((prev) => prev.filter((i) => i.id !== id));
-    // also remove from featured if it was featured
     setFeaturedItemIds((prev) => prev.filter((fid) => fid !== id));
 
     const token = getAuthToken();
@@ -603,22 +591,52 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isBestseller: false,
       isFeatured: false,
     };
-    setMenuItems((prev) => [copy, ...prev]);
+    addMenuItem(copy);
   };
 
   const toggleItemAvailability = (id: string) => {
     setMenuItems((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, isAvailable: !(i.isAvailable !== false) } : i))
+      prev.map((i) => {
+        if (i.id === id) {
+          const updated = { ...i, isAvailable: !(i.isAvailable !== false) };
+          const token = getAuthToken();
+          if (token) {
+            fetch("/api/menu", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ item: updated }),
+            }).catch(() => {});
+          }
+          return updated;
+        }
+        return i;
+      })
     );
   };
 
   // CATEGORY OPERATIONS
   const addCategory = (category: MenuCategory) => {
     setCategories((prev) => [...prev, category]);
+    const token = getAuthToken();
+    if (token) {
+      fetch("/api/menu?type=categories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ category }),
+      }).catch(() => {});
+    }
   };
 
   const updateCategory = (category: MenuCategory) => {
     setCategories((prev) => prev.map((c) => (c.id === category.id ? category : c)));
+    const token = getAuthToken();
+    if (token) {
+      fetch("/api/menu?type=categories", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ category }),
+      }).catch(() => {});
+    }
   };
 
   const deleteCategory = (id: string): { success: boolean; message?: string } => {
@@ -633,27 +651,52 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       };
     }
     setCategories((prev) => prev.filter((c) => c.id !== id));
+    const token = getAuthToken();
+    if (token) {
+      fetch(`/api/menu?type=categories&id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      }).catch(() => {});
+    }
     return { success: true };
   };
 
   const reorderCategories = (newOrder: MenuCategory[]) => {
     setCategories(newOrder);
+    const token = getAuthToken();
+    if (token) {
+      fetch("/api/menu?type=categories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ categories: newOrder }),
+      }).catch(() => {});
+    }
   };
 
   // FEATURED ITEMS
   const updateFeaturedItemIds = (ids: string[]) => {
     setFeaturedItemIds(ids);
+    const token = getAuthToken();
+    if (token) {
+      fetch("/api/admin?action=settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ type: "featured", data: { itemIds: ids } }),
+      }).catch(() => {});
+    }
   };
 
   const toggleFeaturedItem = (id: string) => {
     setFeaturedItemIds((prev) => {
+      let next: string[];
       if (prev.includes(id)) {
-        return prev.filter((i) => i !== id);
+        next = prev.filter((i) => i !== id);
+      } else {
+        if (prev.length >= 6) return prev;
+        next = [...prev, id];
       }
-      if (prev.length >= 6) {
-        return prev; // capped at 6
-      }
-      return [...prev, id];
+      updateFeaturedItemIds(next);
+      return next;
     });
   };
 
@@ -682,16 +725,41 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // HOMEPAGE
   const updateHomepageContent = (content: Partial<HomepageContent>) => {
-    setHomepageContent((prev) => ({ ...prev, ...content }));
+    setHomepageContent((prev) => {
+      const updated = { ...prev, ...content };
+      const token = getAuthToken();
+      if (token) {
+        fetch("/api/admin?action=settings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ type: "homepage", data: updated }),
+        }).catch(() => {});
+      }
+      return updated;
+    });
   };
 
   // CAFE INFO
   const updateCafeInfo = (info: Partial<CafeConfig>) => {
-    setCafeInfo((prev) => ({ ...prev, ...info }));
+    setCafeInfo((prev) => {
+      const updated = { ...prev, ...info };
+      const token = getAuthToken();
+      if (token) {
+        fetch("/api/admin?action=settings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ type: "store", data: updated }),
+        }).catch(() => {});
+      }
+      return updated;
+    });
   };
 
   // ORDERS
-  const addOrder = (order: Omit<OrderRecord, "id" | "createdAt">): OrderRecord => {
+  const addOrder = (
+    order: Omit<OrderRecord, "id" | "createdAt">,
+    idToken?: string
+  ): OrderRecord => {
     const newId = (1000 + orders.length + 1).toString();
     const now = new Date();
     const timeStr = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -699,28 +767,39 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       ...order,
       id: newId,
       createdAt: timeStr,
+      timestamp: Date.now(),
     };
     setOrders((prev) => [fullOrder, ...prev]);
 
-    // Sync to backend
+    // Persist to backend and Firestore
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (idToken) {
+      headers["Authorization"] = `Bearer ${idToken}`;
+    }
     fetch("/api/orders", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       body: JSON.stringify(fullOrder),
     }).catch(() => {});
 
     return fullOrder;
   };
 
-  const updateOrderStatus = (orderId: string, status: OrderStatus) => {
-    setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status } : o)));
+  const updateOrderStatus = (
+    orderId: string,
+    status: OrderStatus,
+    paymentStatus?: OrderRecord["paymentStatus"]
+  ) => {
+    setOrders((prev) =>
+      prev.map((o) => (o.id === orderId ? { ...o, status, ...(paymentStatus ? { paymentStatus } : {}) } : o))
+    );
 
     const token = getAuthToken();
     if (token) {
       fetch("/api/orders", {
         method: "PATCH",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ id: orderId, status }),
+        body: JSON.stringify({ id: orderId, status, paymentStatus }),
       }).catch(() => {});
     }
   };
@@ -742,16 +821,43 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const newRecord: ReservationRecord = {
       ...reservation,
       id: `R-${100 + reservations.length + 1}`,
+      createdAt: Date.now(),
     };
     setReservations((prev) => [newRecord, ...prev]);
+
+    const token = getAuthToken();
+    if (token) {
+      fetch("/api/admin?action=reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ reservation: newRecord }),
+      }).catch(() => {});
+    }
   };
 
   const updateReservationStatus = (id: string, status: ReservationStatus) => {
     setReservations((prev) => prev.map((r) => (r.id === id ? { ...r, status } : r)));
+
+    const token = getAuthToken();
+    if (token) {
+      fetch("/api/admin?action=reservations", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ id, status }),
+      }).catch(() => {});
+    }
   };
 
   const deleteReservation = (id: string) => {
     setReservations((prev) => prev.filter((r) => r.id !== id));
+
+    const token = getAuthToken();
+    if (token) {
+      fetch(`/api/admin?action=reservations&id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      }).catch(() => {});
+    }
   };
 
   // GIFTING OPERATIONS
@@ -803,7 +909,21 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const toggleGiftAvailability = (id: string) => {
     setGiftProducts((prev) =>
-      prev.map((g) => (g.id === id ? { ...g, isAvailable: !g.isAvailable } : g))
+      prev.map((g) => {
+        if (g.id === id) {
+          const updated = { ...g, isAvailable: !g.isAvailable };
+          const token = getAuthToken();
+          if (token) {
+            fetch("/api/gifting", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ item: updated }),
+            }).catch(() => {});
+          }
+          return updated;
+        }
+        return g;
+      })
     );
   };
 
@@ -850,6 +970,13 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       createdAt: timeStr,
     };
     setGiftingOrders((prev) => [fullOrder, ...prev]);
+
+    fetch("/api/gifting", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "place_gift_order", order: fullOrder }),
+    }).catch(() => {});
+
     return fullOrder;
   };
 
@@ -864,12 +991,37 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateGiftingSettings = (newSettings: Partial<GiftingSettings>) => {
-    setGiftingSettings((prev) => ({ ...prev, ...newSettings }));
+    setGiftingSettings((prev) => {
+      const updated = { ...prev, ...newSettings };
+      const token = getAuthToken();
+      if (token) {
+        fetch("/api/admin?action=settings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ type: "gifting", data: updated }),
+        }).catch(() => {});
+      }
+      return updated;
+    });
   };
 
   // SETTINGS
   const updateSettings = (newSettings: Partial<AdminSettings>) => {
-    setSettings((prev) => ({ ...prev, ...newSettings }));
+    setSettings((prev) => {
+      const updated = { ...prev, ...newSettings };
+      const token = getAuthToken();
+      if (token && newSettings.isMaintenanceMode !== undefined) {
+        fetch("/api/admin?action=settings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({
+            type: "store",
+            data: { isMaintenanceMode: newSettings.isMaintenanceMode },
+          }),
+        }).catch(() => {});
+      }
+      return updated;
+    });
   };
 
   const resetToDefaults = () => {
@@ -879,13 +1031,13 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setGalleryItems(initialGallery);
     setHomepageContent(initialHomepage);
     setCafeInfo(CAFE_CONFIG);
-    setOrders(initialOrders);
-    setReservations(initialReservations);
+    setOrders([]);
+    setReservations([]);
     setGiftProducts(GIFT_PRODUCTS);
     setGiftCategories(GIFT_CATEGORIES);
     setGiftAddons(GIFT_ADDONS);
     setGiftingSettings(DEFAULT_GIFTING_SETTINGS);
-    setGiftingOrders(INITIAL_GIFT_ORDERS);
+    setGiftingOrders([]);
     setSettings(initialSettings);
     localStorage.clear();
   };
@@ -960,6 +1112,8 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         settings,
         updateSettings,
         resetToDefaults,
+
+        refreshData,
       }}
     >
       {children}

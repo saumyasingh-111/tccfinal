@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { DataProvider, useData } from "./context/DataContext";
 import { AuthProvider, useAuth, ProtectedAdminRoute } from "./context/AuthContext";
+import { CustomerAuthProvider } from "./context/CustomerAuthContext";
 import { ToastProvider } from "./context/ToastContext";
 import { OrderProvider } from "./context/OrderContext";
 import { ScrollToTop } from "./components/ScrollToTop";
@@ -20,6 +21,11 @@ import { GiftingPage } from "./pages/GiftingPage";
 import { BuildYourGiftPage } from "./pages/BuildYourGiftPage";
 import { GiftDetailPage } from "./pages/GiftDetailPage";
 import { OrderPage } from "./pages/OrderPage";
+import { CustomerLoginPage } from "./pages/CustomerLoginPage";
+import { CustomerSignUpPage } from "./pages/CustomerSignUpPage";
+import { CustomerVerifyEmailPage } from "./pages/CustomerVerifyEmailPage";
+import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
+import { CustomerProfilePage } from "./pages/CustomerProfilePage";
 
 // Admin Portal Pages
 import { AdminLoginPage } from "./pages/admin/AdminLoginPage";
@@ -33,6 +39,10 @@ import { AdminHomepagePage } from "./pages/admin/AdminHomepagePage";
 import { AdminCafeInfoPage } from "./pages/admin/AdminCafeInfoPage";
 import { AdminReservationsPage } from "./pages/admin/AdminReservationsPage";
 import { AdminSettingsPage } from "./pages/admin/AdminSettingsPage";
+import { AdminInventoryPage } from "./pages/admin/AdminInventoryPage";
+import { AdminCustomersPage } from "./pages/admin/AdminCustomersPage";
+import { AdminReviewsPage } from "./pages/admin/AdminReviewsPage";
+import { AdminOffersPage } from "./pages/admin/AdminOffersPage";
 
 /**
  * Customer Layout Wrapper
@@ -72,85 +82,128 @@ export function App() {
     <BrowserRouter>
       <DataProvider>
         <AuthProvider>
-          <ToastProvider>
-            <OrderProvider>
-              {/* Reset scroll on route changes */}
-              <ScrollToTop />
+          <CustomerAuthProvider>
+            <ToastProvider>
+              <OrderProvider>
+                {/* Reset scroll on route changes */}
+                <ScrollToTop />
 
-              <Routes>
-                {/* ----------------- Customer Website Routes ----------------- */}
-                <Route
-                  path="/"
-                  element={
-                    <CustomerLayout>
-                      <HomePage />
-                    </CustomerLayout>
-                  }
-                />
-                <Route
-                  path="/menu"
-                  element={
-                    <CustomerLayout>
-                      <MenuPage />
-                    </CustomerLayout>
-                  }
-                />
-                <Route
-                  path="/order"
-                  element={
-                    <CustomerLayout>
-                      <OrderPage />
-                    </CustomerLayout>
-                  }
-                />
-                <Route
-                  path="/gifting"
-                  element={
-                    <CustomerLayout>
-                      <GiftingPage />
-                    </CustomerLayout>
-                  }
-                />
-                <Route
-                  path="/gifting/build-your-gift"
-                  element={
-                    <CustomerLayout>
-                      <BuildYourGiftPage />
-                    </CustomerLayout>
-                  }
-                />
-                <Route
-                  path="/gifting/:slug"
-                  element={
-                    <CustomerLayout>
-                      <GiftDetailPage />
-                    </CustomerLayout>
-                  }
-                />
-                <Route
-                  path="/our-story"
-                  element={
-                    <CustomerLayout>
-                      <OurStoryPage />
-                    </CustomerLayout>
-                  }
-                />
-                <Route
-                  path="/gallery"
-                  element={
-                    <CustomerLayout>
-                      <GalleryPage />
-                    </CustomerLayout>
-                  }
-                />
-                <Route
-                  path="/visit-us"
-                  element={
-                    <CustomerLayout>
-                      <VisitUsPage />
-                    </CustomerLayout>
-                  }
-                />
+                <Routes>
+                  {/* ----------------- Customer Website Routes ----------------- */}
+                  <Route
+                    path="/"
+                    element={
+                      <CustomerLayout>
+                        <HomePage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/menu"
+                    element={
+                      <CustomerLayout>
+                        <MenuPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/order"
+                    element={
+                      <CustomerLayout>
+                        <OrderPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/gifting"
+                    element={
+                      <CustomerLayout>
+                        <GiftingPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/gifting/build-your-gift"
+                    element={
+                      <CustomerLayout>
+                        <BuildYourGiftPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/gifting/:slug"
+                    element={
+                      <CustomerLayout>
+                        <GiftDetailPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/our-story"
+                    element={
+                      <CustomerLayout>
+                        <OurStoryPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/gallery"
+                    element={
+                      <CustomerLayout>
+                        <GalleryPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/visit-us"
+                    element={
+                      <CustomerLayout>
+                        <VisitUsPage />
+                      </CustomerLayout>
+                    }
+                  />
+
+                  {/* Customer Auth & Profile Routes */}
+                  <Route
+                    path="/login"
+                    element={
+                      <CustomerLayout>
+                        <CustomerLoginPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/signup"
+                    element={
+                      <CustomerLayout>
+                        <CustomerSignUpPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/verify-email"
+                    element={
+                      <CustomerLayout>
+                        <CustomerVerifyEmailPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/forgot-password"
+                    element={
+                      <CustomerLayout>
+                        <ForgotPasswordPage />
+                      </CustomerLayout>
+                    }
+                  />
+                  <Route
+                    path="/profile"
+                    element={
+                      <CustomerLayout>
+                        <CustomerProfilePage />
+                      </CustomerLayout>
+                    }
+                  />
 
                 {/* ----------------- Admin Portal Routes ----------------- */}
                 <Route path="/admin" element={<AdminRootRedirect />} />
@@ -185,6 +238,38 @@ export function App() {
                   element={
                     <ProtectedAdminRoute>
                       <AdminOrdersPage />
+                    </ProtectedAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/inventory"
+                  element={
+                    <ProtectedAdminRoute>
+                      <AdminInventoryPage />
+                    </ProtectedAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/customers"
+                  element={
+                    <ProtectedAdminRoute>
+                      <AdminCustomersPage />
+                    </ProtectedAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/reviews"
+                  element={
+                    <ProtectedAdminRoute>
+                      <AdminReviewsPage />
+                    </ProtectedAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/offers"
+                  element={
+                    <ProtectedAdminRoute>
+                      <AdminOffersPage />
                     </ProtectedAdminRoute>
                   }
                 />
@@ -245,9 +330,10 @@ export function App() {
               </Routes>
             </OrderProvider>
           </ToastProvider>
-        </AuthProvider>
-      </DataProvider>
-    </BrowserRouter>
+        </CustomerAuthProvider>
+      </AuthProvider>
+    </DataProvider>
+  </BrowserRouter>
   );
 }
 

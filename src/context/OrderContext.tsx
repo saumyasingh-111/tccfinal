@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import type { MenuItem } from "../data/menuData";
 import { useData } from "./DataContext";
+import { useCustomerAuth } from "./CustomerAuthContext";
 
 export interface OrderItem {
   item: MenuItem & {
@@ -47,25 +48,62 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { cafeInfo } = useData();
+  const { user } = useCustomerAuth();
+
+  // Scoped storage key per user (or guest)
+  const getStorageKey = (uid?: string | null) => (uid ? `tcc_cart_${uid}` : "tcc_cart_guest");
+
+  // Clean up any legacy, un-scoped global cart from previous versions to prevent stale item leaks
+  useEffect(() => {
+    try {
+      localStorage.removeItem("classic_crush_order");
+    } catch {}
+  }, []);
 
   const [items, setItems] = useState<OrderItem[]>(() => {
     try {
-      const saved = localStorage.getItem("classic_crush_order");
+      const key = getStorageKey(user?.uid);
+      const saved = localStorage.getItem(key);
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
     }
   });
 
+  const prevUidRef = useRef<string | null | undefined>(user?.uid);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
+  // Synchronize cart state on user login, logout, or account switch
+  useEffect(() => {
+    const currentUid = user?.uid ?? null;
+    const prevUid = prevUidRef.current ?? null;
+
+    if (currentUid !== prevUid) {
+      prevUidRef.current = currentUid;
+      try {
+        const key = getStorageKey(currentUid);
+        const saved = localStorage.getItem(key);
+        // Load only this user's legitimate saved cart, or start with clean empty cart
+        setItems(saved ? JSON.parse(saved) : []);
+      } catch {
+        setItems([]);
+      }
+    }
+  }, [user?.uid]);
+
+  // Persist cart changes strictly under the active user's scoped storage key
   useEffect(() => {
     try {
-      localStorage.setItem("classic_crush_order", JSON.stringify(items));
+      const key = getStorageKey(user?.uid);
+      if (items.length > 0) {
+        localStorage.setItem(key, JSON.stringify(items));
+      } else {
+        localStorage.removeItem(key);
+      }
     } catch {
       // storage quota or private mode
     }
-  }, [items]);
+  }, [items, user?.uid]);
 
   const addItem = (item: MenuItem) => {
     setItems((prev) => {
@@ -119,7 +157,13 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     );
   };
 
-  const clearOrder = () => setItems([]);
+  const clearOrder = () => {
+    setItems([]);
+    try {
+      const key = getStorageKey(user?.uid);
+      localStorage.removeItem(key);
+    } catch {}
+  };
 
   const totalCount = items.reduce((sum, i) => sum + i.quantity, 0);
   const totalAmount = items.reduce((sum, i) => sum + i.item.price * i.quantity, 0);
