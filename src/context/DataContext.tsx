@@ -260,7 +260,20 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [cafeInfo, setCafeInfo] = useState<CafeConfig>(() => {
     try {
       const saved = localStorage.getItem(`${STORAGE_KEY}_cafe_info`);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Automatically migrate stale demo details to the new CSJMU cafe location & contact
+        if (
+          parsed.phone === "+919876543210" ||
+          parsed.address?.street?.includes("College Road") ||
+          !parsed.coordinates
+        ) {
+          const updated = { ...parsed, ...CAFE_CONFIG };
+          localStorage.setItem(`${STORAGE_KEY}_cafe_info`, JSON.stringify(updated));
+          return updated;
+        }
+        return parsed;
+      }
     } catch {}
     return CAFE_CONFIG;
   });

@@ -9,6 +9,7 @@ import {
   type CampusDeliveryLocation,
   type CampusLandmark,
 } from "../data/campusBoundary";
+import { CAFE_CONFIG } from "../data/cafeConfig";
 import {
   CheckCircle2,
   AlertTriangle,
@@ -148,6 +149,43 @@ export const CampusLocationPicker: React.FC<CampusLocationPickerProps> = ({
     }).addTo(map);
 
     polygonLayerRef.current = campusPolygon;
+
+    // Permanent Cafe Marker at Natraj Point, CSJM University
+    const cafeCoords: [number, number] = [
+      CAFE_CONFIG.coordinates?.lat || 26.500720,
+      CAFE_CONFIG.coordinates?.lng || 80.268059,
+    ];
+
+    const cafePinIcon = L.divIcon({
+      className: "tcc-cafe-map-marker",
+      html: `
+        <div style="position: relative; width: 34px; height: 34px; transform: translate(-17px, -17px); background: #0F3A23; border: 2.5px solid #C99742; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.35); font-size: 15px; cursor: pointer;">
+          ☕
+        </div>
+      `,
+      iconSize: [34, 34],
+      iconAnchor: [17, 17],
+    });
+
+    const cafeMarker = L.marker(cafeCoords, {
+      icon: cafePinIcon,
+      title: "The Classic Crush Cafe — Near Natraj Point",
+      zIndexOffset: 1000,
+    }).addTo(map);
+
+    cafeMarker.bindTooltip(
+      "<div style='text-align: center; font-family: serif; font-weight: bold; color: #0F3A23; font-size: 12px;'>The Classic Crush Cafe<div style='font-family: sans-serif; font-size: 10px; font-weight: normal; color: #6E776F;'>Near Natraj Point, CSJM University</div></div>",
+      {
+        permanent: false,
+        direction: "top",
+        offset: [0, -18],
+      }
+    );
+
+    cafeMarker.on("click", () => {
+      updatePosition(cafeCoords[0], cafeCoords[1], true);
+      setBuilding("The Classic Crush Cafe (Near Natraj Point)");
+    });
 
     // Draggable delivery marker
     const marker = L.marker([selectedCoords[0], selectedCoords[1]], {

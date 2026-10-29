@@ -53,6 +53,10 @@ export const AdminCafeInfoPage: React.FC = () => {
       },
       googleMapsUrl: mapsUrl.trim(),
       googleMapsEmbedUrl: mapsEmbedUrl.trim(),
+      coordinates: cafeInfo.coordinates || {
+        lat: 26.500720,
+        lng: 80.268059,
+      },
     });
     showToast("Cafe details updated! All customer buttons and pages are synced.");
   };
@@ -113,7 +117,7 @@ export const AdminCafeInfoPage: React.FC = () => {
               <input
                 type="text"
                 required
-                placeholder="+919876543210"
+                placeholder="+918090205081"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 className="w-full px-3 py-2 bg-[#FCFAF7] border border-[#E5DFD5] rounded-xl text-xs text-[#1C241E]"
@@ -127,7 +131,7 @@ export const AdminCafeInfoPage: React.FC = () => {
               <input
                 type="text"
                 required
-                placeholder="+91 98765 43210"
+                placeholder="+91 80902 05081"
                 value={phoneDisplay}
                 onChange={(e) => setPhoneDisplay(e.target.value)}
                 className="w-full px-3 py-2 bg-[#FCFAF7] border border-[#E5DFD5] rounded-xl text-xs text-[#1C241E]"
@@ -136,12 +140,12 @@ export const AdminCafeInfoPage: React.FC = () => {
 
             <div>
               <label className="block font-semibold uppercase tracking-wider text-[#3E4340] mb-1">
-                WhatsApp Number (without + or spaces, e.g. 919876543210)
+                WhatsApp Number (without + or spaces, e.g. 918090205081)
               </label>
               <input
                 type="text"
                 required
-                placeholder="919876543210"
+                placeholder="918090205081"
                 value={whatsappNumber}
                 onChange={(e) => setWhatsappNumber(e.target.value)}
                 className="w-full px-3 py-2 bg-[#FCFAF7] border border-[#E5DFD5] rounded-xl text-xs text-[#1C241E]"
@@ -155,7 +159,7 @@ export const AdminCafeInfoPage: React.FC = () => {
               <input
                 type="text"
                 required
-                placeholder="+91 98765 43210"
+                placeholder="+91 80902 05081"
                 value={whatsappDisplay}
                 onChange={(e) => setWhatsappDisplay(e.target.value)}
                 className="w-full px-3 py-2 bg-[#FCFAF7] border border-[#E5DFD5] rounded-xl text-xs text-[#1C241E]"
@@ -243,7 +247,7 @@ export const AdminCafeInfoPage: React.FC = () => {
               </label>
               <input
                 type="text"
-                placeholder="Opposite Central Library"
+                placeholder="Near Natraj Point"
                 value={landmark}
                 onChange={(e) => setLandmark(e.target.value)}
                 className="w-full px-3 py-2 bg-[#FCFAF7] border border-[#E5DFD5] rounded-xl text-xs text-[#1C241E]"

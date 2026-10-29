@@ -111,7 +111,7 @@ export const VisitUsPage: React.FC = () => {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FAF6F0] border border-[#E2D9CC] text-xs font-semibold text-[#0F3A23] hover:bg-[#E8DFD1]"
                       >
                         <Phone className="w-3.5 h-3.5" />
-                        <span>{cafeInfo.phone}</span>
+                        <span>{cafeInfo.phoneDisplay || cafeInfo.phone}</span>
                       </a>
                       <a
                         href={whatsappLink}

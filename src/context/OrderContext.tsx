@@ -170,7 +170,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const generateWhatsAppUrl = () => {
     const cafeName = cafeInfo.name || "The Classic Crush";
-    const waNumber = cafeInfo.whatsappNumber || "919876543210";
+    const waNumber = cafeInfo.whatsappNumber || "918090205081";
 
     if (items.length === 0) {
       const msg = `Hi ${cafeName}! 👋 I am visiting your website and would like to order or check today's specials.`;

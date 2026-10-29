@@ -167,6 +167,14 @@ export const CSJMU_LANDMARKS: CampusLandmark[] = [
     lng: 80.2650,
     description: "University primary health & dispensary block",
   },
+  {
+    id: "classic-crush-cafe",
+    name: "The Classic Crush Cafe (Near Natraj Point)",
+    category: "amenity",
+    lat: 26.500720,
+    lng: 80.268059,
+    description: "The Classic Crush Cafe, near Natraj Point, CSJM University",
+  },
 ];
 
 /**

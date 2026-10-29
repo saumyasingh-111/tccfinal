@@ -300,11 +300,16 @@ export const HomePage: React.FC = () => {
                       Our Location
                     </h3>
                     <p className="text-xs text-[#162820]/80 mt-0.5 leading-relaxed">
-                      {cafeInfo.address.street}, {cafeInfo.address.area}
+                      {cafeInfo.address.street}
                     </p>
                     <p className="text-xs font-semibold text-[#0F3A23]">
                       {cafeInfo.address.city}
                     </p>
+                    {cafeInfo.address.landmark && (
+                      <p className="text-[11px] text-[#6E776F] italic mt-0.5">
+                        Landmark: {cafeInfo.address.landmark}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -337,7 +342,7 @@ export const HomePage: React.FC = () => {
                       href={`tel:${cafeInfo.phone}`}
                       className="text-xs font-medium text-[#0F3A23] hover:underline block mt-0.5"
                     >
-                      {cafeInfo.phone}
+                      {cafeInfo.phoneDisplay || cafeInfo.phone}
                     </a>
                   </div>
                 </div>

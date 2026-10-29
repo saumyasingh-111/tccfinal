@@ -59,6 +59,21 @@ export const Footer: React.FC = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-[#D4A359]" />
               <span>Open Daily: {cafeInfo.timings.hours}</span>
             </div>
+            <div className="pt-2 text-xs text-[#FAF6F0]/75 space-y-1.5">
+              <p className="flex items-start gap-2">
+                <span className="text-[#D4A359] shrink-0">📍</span>
+                <span>{cafeInfo.address.street}, {cafeInfo.address.city}</span>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="text-[#D4A359] shrink-0">📞</span>
+                <a
+                  href={`tel:${cafeInfo.phone}`}
+                  className="hover:text-white transition-colors underline decoration-[#D4A359]/40 underline-offset-2"
+                >
+                  {cafeInfo.phoneDisplay || cafeInfo.phone}
+                </a>
+              </p>
+            </div>
           </div>
 
           {/* Quick Navigation */}

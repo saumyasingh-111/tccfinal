@@ -801,7 +801,7 @@ export const AdminGiftingPage: React.FC = () => {
                   type="text"
                   value={settingsWa}
                   onChange={(e) => setSettingsWa(e.target.value)}
-                  placeholder="919876543210"
+                  placeholder="918090205081"
                   className="w-full px-3 py-2 rounded-xl border border-[#E5DFD5] bg-[#FCFAF7] text-xs text-[#1C241E]"
                 />
               </div>

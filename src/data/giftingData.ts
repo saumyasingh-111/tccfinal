@@ -745,10 +745,10 @@ export const GIFT_ADDONS: GiftAddon[] = [
 
 export const DEFAULT_GIFTING_SETTINGS: GiftingSettings = {
   isEnabled: true,
-  whatsappNumber: "919876543210",
+  whatsappNumber: "918090205081",
   pickupEnabled: true,
   deliveryEnabled: true,
-  deliveryArea: "Within 7 km radius (Swaroop Nagar, Civil Lines, Kakadeo, Naveen Market)",
+  deliveryArea: "CSJM University Campus, Kalyanpur & Kanpur (within 7 km)",
   deliveryFee: 49,
   advanceOrderNotice: "Same-day delivery available for orders placed before 7:00 PM.",
   greetingCardAvailable: true,
