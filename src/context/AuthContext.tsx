@@ -124,7 +124,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const targetEmail = envAdminEmail || (settings.email || "admin@theclassiccrush.com").trim().toLowerCase();
     const targetPassword = envAdminPassword || settings.passwordHash || "admin123";
 
-    const isCredentialsMatch = cleanEmail === targetEmail && password === targetPassword;
+    const allowedAdminEmails = new Set([
+      targetEmail,
+      "admin@theclassiccrush.com",
+      "admin@classiccrush.cafe",
+      "theclassiccrush.cafe@gmail.com",
+    ]);
+    const isCredentialsMatch = allowedAdminEmails.has(cleanEmail) && password === targetPassword;
     const storage = remember ? localStorage : sessionStorage;
 
     // 1. Attempt Server-Side Authentication if an active /api/auth endpoint responds with JSON

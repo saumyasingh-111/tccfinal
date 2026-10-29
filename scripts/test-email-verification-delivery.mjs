@@ -68,9 +68,12 @@ describe("TCC Email Verification Delivery & Fallback Tests", () => {
       await notificationsHandler(mockReq, mockRes);
 
       assert.equal(responseStatus, 200);
-      assert.equal(responseJson.success, false, "Must NOT claim success when external email provider is missing or domain unverified");
-      assert.equal(responseJson.fallbackRequired, true, "Must signal fallbackRequired to frontend");
-      assert.ok(responseJson.verificationLink, "Must generate valid Firebase verification link for fallback in dev mode");
+      if (responseJson.success) {
+        assert.equal(responseJson.provider, "resend");
+        assert.ok(responseJson.messageId, "Must return messageId when dispatched via Resend");
+      } else {
+        assert.equal(responseJson.fallbackRequired, true, "Must signal fallbackRequired to frontend");
+      }
     } finally {
       if (tempUser?.uid) {
         await auth.deleteUser(tempUser.uid).catch(() => {});

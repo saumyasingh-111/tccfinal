@@ -123,18 +123,6 @@ export function buildBrandedVerificationEmail(params: {
                   A little more classic. A little more you.
                 </p>
               </div>
-
-              <!-- Fallback Direct Link -->
-              <div style="margin-top: 36px; padding: 16px; background-color: #FAF6F0; border-radius: 12px; border: 1px solid #E2D9CC;">
-                <p style="margin: 0 0 6px 0; font-size: 11px; font-weight: 600; color: #6E776F; text-transform: uppercase; letter-spacing: 0.05em;">
-                  Button not opening?
-                </p>
-                <p style="margin: 0; font-size: 11px; line-height: 1.5; color: #0F3A23; word-break: break-all;">
-                  <a href="${params.verificationLink}" target="_blank" style="color: #0F3A23; text-decoration: underline;">
-                    ${params.verificationLink}
-                  </a>
-                </p>
-              </div>
             </td>
           </tr>
 

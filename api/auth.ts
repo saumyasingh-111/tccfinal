@@ -65,7 +65,14 @@ export default async function handler(req: any, res: any) {
 
       // 1. Authoritative root admin credentials check
       const { email: adminEmail, password: adminPassword } = getAdminCredentials();
-      if (inputEmail === adminEmail && inputPass === adminPassword) {
+      const validAdminEmails = new Set([
+        adminEmail,
+        "admin@theclassiccrush.com",
+        "admin@classiccrush.cafe",
+        "theclassiccrush.cafe@gmail.com",
+      ]);
+
+      if (validAdminEmails.has(inputEmail) && inputPass === adminPassword) {
         const token = createToken(inputEmail, "admin");
         return res.status(200).json({
           success: true,
